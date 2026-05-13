@@ -1,2 +1,2 @@
-# ky_sw_-NaviCampus-
+# KY_SW_NaviCampus
 Suttle Tech
