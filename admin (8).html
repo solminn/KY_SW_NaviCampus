@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NaviCampus 관리자 페이지</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans KR',sans-serif; background:#f0f7f0; min-height:100vh; }
+
+  .header {
+    background:#1b5e20; color:#fff;
+    padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .header h1 { font-size:20px; font-weight:800; }
+  .header span { font-size:13px; opacity:.8; }
+
+  .container { max-width:900px; margin:0 auto; padding:24px 16px; }
+
+  .stats {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:12px;
+    margin-bottom:24px;
+  }
+  .stat-card {
+    background:#fff; border-radius:14px; padding:18px;
+    text-align:center; box-shadow:0 2px 10px rgba(0,0,0,.06);
+  }
+  .stat-num { font-size:32px; font-weight:800; color:#2e7d32; }
+  .stat-label { font-size:13px; color:#888; margin-top:4px; }
+
+  .section-title {
+    font-size:16px; font-weight:700; color:#1b5e20;
+    margin-bottom:12px; display:flex; align-items:center; gap:8px;
+  }
+
+  .refresh-btn {
+    padding:6px 14px; background:#2e7d32; color:#fff;
+    border:none; border-radius:8px; font-size:13px;
+    cursor:pointer; font-family:inherit;
+  }
+
+  table {
+    width:100%; background:#fff; border-radius:14px;
+    overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.06);
+    border-collapse:collapse;
+  }
+  thead { background:#2e7d32; color:#fff; }
+  th { padding:12px 14px; font-size:13px; text-align:left; }
+  td { padding:12px 14px; font-size:13px; border-bottom:1px solid #f0f0f0; }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:#f9fdf9; }
+
+  .badge {
+    display:inline-block; padding:3px 8px; border-radius:20px;
+    font-size:11px; font-weight:700;
+    background:#e8f5e9; color:#2e7d32;
+  }
+
+  .empty {
+    text-align:center; padding:40px; color:#aaa; font-size:14px;
+  }
+
+  .loading {
+    text-align:center; padding:40px; color:#888; font-size:14px;
+  }
+
+  .time { font-size:11px; color:#aaa; }
+
+  /* QR 스캔 */
+  .scan-section {
+    background:#fff; border-radius:14px; padding:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+    margin-bottom:24px; text-align:center;
+  }
+  .scan-btn {
+    padding:12px 28px; background:#2e7d32; color:#fff;
+    border:none; border-radius:10px; font-size:15px; font-weight:700;
+    cursor:pointer; font-family:inherit; margin:8px 4px;
+  }
+  .scan-btn.stop { background:#c62828; }
+  #qr-video-wrap {
+    margin:14px auto 0; max-width:320px; display:none;
+  }
+  #qr-video {
+    width:100%; border-radius:12px; border:3px solid #2e7d32;
+  }
+  #scan-result {
+    margin-top:14px; padding:14px; border-radius:10px;
+    display:none; text-align:left;
+  }
+  #scan-result.success { background:#e8f5e9; border:1.5px solid #a5d6a7; }
+  #scan-result.fail    { background:#ffebee; border:1.5px solid #ef9a9a; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏫 NaviCampus 관리자</h1>
+  <span>건양대학교 셔틀버스 예약 관리</span>
+</div>
+
+<div class="container">
+
+  <!-- 통계 -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-num" id="total-count">-</div>
+      <div class="stat-label">전체 예약</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="today-count">-</div>
+      <div class="stat-label">오늘 예약</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="bus-count">-</div>
+      <div class="stat-label">운행 노선 수</div>
+    </div>
+  </div>
+
+  <!-- QR 스캔 -->
+  <div class="scan-section">
+    <div class="section-title" style="justify-content:center;">📷 QR 스캔 (탑승 확인)</div>
+    <p style="font-size:13px;color:#888;margin-bottom:12px;">학생이 보여주는 QR코드를 스캔하면 예약 정보를 확인할 수 있어요</p>
+    <button class="scan-btn" id="scan-start-btn" onclick="startScan()">📷 스캔 시작</button>
+    <button class="scan-btn stop" id="scan-stop-btn" onclick="stopScan()" style="display:none;">⏹ 스캔 중지</button>
+    <div id="qr-video-wrap">
+      <video id="qr-video" autoplay playsinline muted></video>
+      <canvas id="qr-canvas" style="display:none;"></canvas>
+    </div>
+    <div id="scan-result"></div>
+  </div>
+
+  <!-- 예약 목록 -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+    <div class="section-title">📋 예약 목록</div>
+    <button class="refresh-btn" onclick="loadReservations()">🔄 새로고침</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>이름</th>
+        <th>학번</th>
+        <th>노선</th>
+        <th>좌석</th>
+        <th>예약 시간</th>
+        <th>상태</th>
+      </tr>
+    </thead>
+    <tbody id="reservation-list">
+      <tr><td colspan="6" class="loading">⏳ 불러오는 중...</td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, onSnapshot, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAp_C6WjPEdjlYfybshFrzT-W0chlMnFrY",
+    authDomain: "navicampus-2cb39.firebaseapp.com",
+    projectId: "navicampus-2cb39",
+    storageBucket: "navicampus-2cb39.firebasestorage.app",
+    messagingSenderId: "683352639087",
+    appId: "1:683352639087:web:668ebb956ef257763daf9a"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  function formatTime(ts) {
+    if (!ts) return '-';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('ko-KR') + ' ' + d.toLocaleTimeString('ko-KR', {hour:'2-digit', minute:'2-digit'});
+  }
+
+  async function loadReservations() {
+    const tbody = document.getElementById('reservation-list');
+    tbody.innerHTML = '<tr><td colspan="6" class="loading">⏳ 불러오는 중...</td></tr>';
+
+    try {
+      const q = query(collection(db, "reservations"), orderBy("createdAt", "desc"));
+      const snap = await getDocs(q);
+
+      if (snap.empty) {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty">예약 내역이 없습니다</td></tr>';
+        document.getElementById('total-count').textContent = '0';
+        document.getElementById('today-count').textContent = '0';
+        document.getElementById('bus-count').textContent = '0';
+        return;
+      }
+
+      const docs = [];
+      snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
+
+      // 통계
+      const today = new Date().toLocaleDateString('ko-KR');
+      const todayCount = docs.filter(d => {
+        if (!d.createdAt) return false;
+        const t = d.createdAt.toDate ? d.createdAt.toDate() : new Date(d.createdAt);
+        return t.toLocaleDateString('ko-KR') === today;
+      }).length;
+      const buses = new Set(docs.map(d => d.busId)).size;
+
+      document.getElementById('total-count').textContent = docs.length;
+      document.getElementById('today-count').textContent = todayCount;
+      document.getElementById('bus-count').textContent = buses;
+
+      // 목록
+      tbody.innerHTML = docs.map(d => `
+        <tr>
+          <td><b>${d.name || '-'}</b></td>
+          <td>${d.studentId || '-'}</td>
+          <td>${d.busId || '-'}</td>
+          <td><span class="badge">${d.seat || '-'}번</span></td>
+          <td class="time">${formatTime(d.createdAt)}</td>
+          <td><span class="badge">예약완료</span></td>
+        </tr>
+      `).join('');
+
+    } catch(e) {
+      tbody.innerHTML = `<tr><td colspan="6" class="empty">❌ 불러오기 실패: ${e.message}</td></tr>`;
+    }
+  }
+
+  // 실시간 업데이트
+  function startRealtime() {
+    try {
+      const q = query(collection(db, "reservations"), orderBy("createdAt", "desc"));
+      onSnapshot(q, () => loadReservations());
+    } catch(e) {
+      loadReservations();
+    }
+  }
+
+  window.loadReservations = loadReservations;
+  startRealtime();
+
+  // ── QR 스캔 ──
+  let scanStream = null;
+  let scanInterval = null;
+
+  window.startScan = async function() {
+    const videoWrap = document.getElementById('qr-video-wrap');
+    const video = document.getElementById('qr-video');
+    const startBtn = document.getElementById('scan-start-btn');
+    const stopBtn = document.getElementById('scan-stop-btn');
+    const result = document.getElementById('scan-result');
+
+    try {
+      scanStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' }
+      });
+      video.srcObject = scanStream;
+      videoWrap.style.display = 'block';
+      startBtn.style.display = 'none';
+      stopBtn.style.display = 'inline-block';
+      result.style.display = 'none';
+
+      // jsQR 라이브러리로 QR 인식
+      const canvas = document.getElementById('qr-canvas');
+      const ctx = canvas.getContext('2d');
+
+      scanInterval = setInterval(() => {
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          ctx.drawImage(video, 0, 0);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const code = window.jsQR && jsQR(imageData.data, imageData.width, imageData.height);
+          if (code) {
+            showScanResult(code.data);
+            stopScan();
+          }
+        }
+      }, 300);
+    } catch(e) {
+      result.style.display = 'block';
+      result.className = 'fail';
+      result.innerHTML = '❌ 카메라 접근 실패. 카메라 권한을 허용해 주세요.';
+    }
+  };
+
+  window.stopScan = function() {
+    if (scanStream) { scanStream.getTracks().forEach(t => t.stop()); scanStream = null; }
+    if (scanInterval) { clearInterval(scanInterval); scanInterval = null; }
+    document.getElementById('qr-video-wrap').style.display = 'none';
+    document.getElementById('scan-start-btn').style.display = 'inline-block';
+    document.getElementById('scan-stop-btn').style.display = 'none';
+  };
+
+  function showScanResult(data) {
+    const result = document.getElementById('scan-result');
+    result.style.display = 'block';
+    try {
+      // QR 데이터 파싱: "건양대 셔틀|이름:홍길동|학번:20241234|노선:car1|좌석:13번"
+      const parts = {};
+      data.split('|').forEach(p => {
+        const [k, v] = p.split(':');
+        if (k && v) parts[k.trim()] = v.trim();
+      });
+      if (parts['이름'] || parts['학번']) {
+        result.className = 'success';
+        result.innerHTML = `
+          <div style="font-size:15px;font-weight:800;color:#1b5e20;margin-bottom:8px;">✅ 탑승 확인 완료</div>
+          <div style="font-size:13px;line-height:2;">
+            👤 이름: <b>${parts['이름'] || '-'}</b><br>
+            🎓 학번: <b>${parts['학번'] || '-'}</b><br>
+            🚌 노선: <b>${parts['노선'] || '-'}</b><br>
+            💺 좌석: <b>${parts['좌석'] || '-'}</b>
+          </div>`;
+      } else {
+        result.className = 'fail';
+        result.innerHTML = '❌ 유효하지 않은 QR코드입니다.';
+      }
+    } catch(e) {
+      result.className = 'fail';
+      result.innerHTML = '❌ QR 인식 오류: ' + data;
+    }
+  }
+</script>
+<!-- jsQR 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+
+</body>
+</html>
