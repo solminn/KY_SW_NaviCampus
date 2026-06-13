@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<meta name="theme-color" content="#1a237e">
+<title>국립공주대학교 셔틀버스</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{font-family:'Noto Sans KR',sans-serif;background:#f0f0f8;color:#222;}
+a{text-decoration:none;color:inherit;}
+:root{--c:#1a237e;--c2:#283593;--cl:#7986cb;--cp:#e8eaf6;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:#fff;border-bottom:3px solid var(--c);box-shadow:0 2px 12px rgba(0,0,0,.08);}
+.nav-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:58px;gap:12px;}
+.nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.nav-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--c),var(--c2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+.nav-title{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--c);}
+.nav-sub{font-size:10px;color:#888;margin-left:3px;}
+.nav-btns{display:flex;gap:6px;}
+.nav-btns button{padding:6px 13px;border-radius:18px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.btn-ol{background:transparent;border:2px solid var(--c);color:var(--c);}
+.btn-ol:hover{background:var(--cp);}
+.btn-fi{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;border:none;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0d1462,#1a237e 45%,#3949ab 100%);padding:44px 20px 52px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.04'%3E%3Cpath d='M20 20h4v4h-4zm0-20h4v4h-4zM0 20h4v4H0zM0 0h4v4H0z'/%3E%3C/g%3E%3C/svg%3E");}
+.hero-in{position:relative;z-index:2;max-width:1100px;margin:0 auto;}
+.hero h1{font-family:'Poppins',sans-serif;font-size:clamp(26px,5vw,48px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:10px;text-shadow:0 2px 10px rgba(0,0,0,.25);}
+.hero h1 span{color:#9fa8da;}
+.hero p{font-size:14px;color:rgba(255,255,255,.82);margin-bottom:22px;}
+.hero-stats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px;}
+.hstat{background:rgba(255,255,255,.12);border-radius:10px;padding:8px 16px;text-align:center;color:#fff;}
+.hstat .n{font-family:'Poppins',sans-serif;font-size:20px;font-weight:800;line-height:1;}
+.hstat .l{font-size:10px;opacity:.8;margin-top:2px;}
+.hero-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.hero-btns button{padding:11px 22px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.hbtn-m{background:#fff;color:var(--c);box-shadow:0 4px 14px rgba(0,0,0,.18);}
+.hbtn-m:hover{transform:translateY(-2px);}
+.hbtn-s{background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.45)!important;}
+
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:28px 20px 60px;}
+
+/* 대시보드 */
+.dash{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:28px;}
+.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 3px 14px rgba(0,0,0,.07);}
+.card-label{font-size:10px;font-weight:700;color:#999;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;}
+
+/* 운행현황 */
+.arr-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f5f5f5;}
+.arr-item:last-child{border-bottom:none;}
+.arr-name{font-weight:700;font-size:12px;color:var(--c);}
+.arr-sub{font-size:10px;color:#bbb;margin-top:1px;}
+.arr-badges{display:flex;gap:4px;flex-wrap:wrap;}
+.badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;}
+.badge-b{background:var(--c);color:#fff;}
+.badge-g{background:#f0f0f0;color:#555;}
+
+/* 날씨 */
+.wx-card{background:linear-gradient(135deg,#e8eaf6,#c5cae9);border-radius:14px;padding:18px;border:1px solid #9fa8da;}
+.wx-title{font-size:11px;font-weight:700;color:var(--c);margin-bottom:10px;}
+.wx-main{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.6);border-radius:10px;padding:12px;margin-bottom:8px;}
+.wx-temp{font-family:'Poppins',sans-serif;font-size:34px;font-weight:900;color:var(--c);line-height:1;}
+.wx-desc{font-size:11px;color:#283593;margin-top:3px;}
+.wx-info{font-size:11px;color:#555;line-height:1.6;text-align:right;}
+.wx-advice{background:rgba(255,255,255,.5);border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;}
+.wx-adv{font-size:12px;font-weight:700;color:var(--c);}
+
+/* 지연률+좌석 */
+.delay-row{display:flex;gap:6px;margin-bottom:12px;}
+.delay-box{flex:1;border-radius:10px;padding:10px 6px;text-align:center;}
+.delay-num{font-family:'Poppins',sans-serif;font-size:20px;font-weight:800;line-height:1;}
+.delay-lbl{font-size:10px;font-weight:700;margin-top:3px;}
+
+/* 좌석 버스 */
+.seat-bus{background:#f8f8ff;border-radius:12px;padding:10px;margin:8px 0;}
+.seat-driver{text-align:center;font-size:10px;color:#888;margin-bottom:6px;padding-bottom:6px;border-bottom:2px dashed #ddd;}
+.seat-rows{display:flex;flex-direction:column;gap:3px;}
+.seat-row{display:grid;grid-template-columns:1fr 1fr 10px 1fr 1fr;gap:3px;align-items:center;}
+.seat{border-radius:6px;border:2px solid #ddd;height:26px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;cursor:pointer;transition:.2s;}
+.seat.empty{background:#fff;border-color:#9fa8da;color:var(--c);}
+.seat.empty:hover{background:var(--cp);}
+.seat.booked{background:var(--c);border-color:var(--c);color:#fff;cursor:not-allowed;}
+.seat.mine{background:#7986cb;border-color:var(--c);color:#fff;}
+.seat-legend{display:flex;gap:10px;font-size:10px;color:#888;margin-top:6px;}
+.seat-dot{width:8px;height:8px;border-radius:3px;display:inline-block;margin-right:3px;}
+
+/* 탭 */
+.tabs{display:flex;gap:3px;margin-bottom:22px;background:#fff;border-radius:12px;padding:5px;box-shadow:0 2px 10px rgba(0,0,0,.06);width:fit-content;flex-wrap:wrap;}
+.tab-btn{padding:7px 16px;border-radius:9px;font-size:13px;font-weight:700;border:none;background:transparent;color:#777;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;white-space:nowrap;}
+.tab-btn.on{background:var(--c);color:#fff;}
+.tab-pane{display:none;}
+.tab-pane.show{display:block;}
+
+/* 지도 */
+.map-wrap{background:#fff;border-radius:14px;box-shadow:0 3px 14px rgba(0,0,0,.08);overflow:hidden;margin-bottom:28px;}
+.map-head{padding:16px 20px 0;}
+.map-head h3{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--c);margin-bottom:3px;}
+.map-head p{font-size:12px;color:#bbb;margin-bottom:10px;}
+.map-cats{display:flex;gap:6px;padding:10px 20px;border-bottom:1px solid #f0f0f0;flex-wrap:wrap;}
+.mcat{padding:6px 14px;border-radius:18px;font-size:12px;font-weight:700;border:2px solid #ddd;background:#fff;color:#555;cursor:pointer;transition:.2s;}
+.mcat.on{background:var(--c);border-color:var(--c);color:#fff;}
+.map-routes{display:flex;gap:5px;flex-wrap:wrap;padding:8px 20px;}
+.mroute{padding:5px 11px;border-radius:18px;font-size:11px;font-weight:700;border:2px solid #ddd;background:#fff;color:#555;cursor:pointer;transition:.2s;}
+.mroute.on{background:var(--c);border-color:var(--c);color:#fff;}
+.mroute:hover:not(.on){border-color:var(--cl);background:var(--cp);}
+.map-dirs{display:flex;gap:6px;padding:6px 20px 8px;}
+.mdir{padding:5px 13px;border-radius:18px;font-size:11px;font-weight:700;border:2px solid #ddd;background:#fff;color:#555;cursor:pointer;transition:.2s;}
+.mdir.on{background:#1565c0;border-color:#1565c0;color:#fff;}
+.map-body{display:flex;min-height:280px;}
+.map-svg{flex:1;}
+.map-panel{width:210px;background:#fff;padding:16px;border-left:1px solid #f0f0f0;flex-shrink:0;}
+.panel-title{font-size:13px;font-weight:800;color:var(--c);margin-bottom:12px;}
+.panel-row{margin-bottom:8px;}
+.panel-label{font-size:10px;color:#bbb;margin-bottom:2px;}
+.panel-val{font-family:'Poppins',sans-serif;font-size:20px;font-weight:800;color:var(--c);}
+.panel-sm{font-size:12px;font-weight:700;color:#333;}
+.pstop{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid #f5f5f5;font-size:11px;}
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--c);flex-shrink:0;}
+
+/* 시간표 */
+.tt-card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 3px 14px rgba(0,0,0,.07);margin-bottom:14px;}
+.tt-title{font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;color:var(--c);margin-bottom:14px;}
+.tt-table{width:100%;border-collapse:collapse;min-width:420px;}
+.tt-table th{padding:9px 12px;text-align:left;font-size:11px;font-weight:700;color:var(--c);background:var(--cp);}
+.tt-table td{padding:9px 12px;font-size:12px;border-bottom:1px solid #f0f0f0;}
+.tt-table tr:nth-child(even) td{background:#fafafa;}
+.chip{display:inline-block;background:var(--c);color:#fff;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:8px;margin:1px;}
+
+/* 정류장 */
+.stop-card{background:#fff;border-radius:12px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:10px;border-left:4px solid var(--c);}
+.stop-title{font-weight:800;font-size:13px;color:var(--c);margin-bottom:8px;}
+.stop-chips{display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
+.stop-chip{background:var(--cp);color:var(--c);border:1.5px solid #9fa8da;border-radius:18px;padding:3px 10px;font-size:11px;font-weight:600;}
+
+/* 이용안내 */
+.info-box{padding:14px;border-radius:10px;margin-bottom:10px;}
+.warn{background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:10px 13px;font-size:11px;color:#795548;margin-bottom:14px;}
+
+/* FOOTER */
+footer{background:#1a1a1a;color:#aaa;padding:28px 20px;text-align:center;}
+.foot-logo{font-family:'Poppins',sans-serif;font-size:14px;font-weight:800;color:#fff;margin-bottom:6px;}
+footer p{font-size:11px;line-height:1.8;}
+
+/* 반응형 */
+@media(max-width:900px){.dash{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){
+  .nav-in{padding:0 12px;height:52px;}
+  .nav-title{font-size:13px;}
+  .nav-sub{display:none;}
+  .nav-btns button{font-size:11px;padding:5px 8px;}
+  .hero{padding:28px 14px 36px;}
+  .hero h1{font-size:22px;}
+  .hero-btns{flex-direction:column;}
+  .hero-btns button{width:100%;}
+  .main{padding:20px 14px 48px;}
+  .dash{grid-template-columns:1fr;}
+  .map-body{flex-direction:column;}
+  .map-panel{width:100%;border-left:none;border-top:1px solid #f0f0f0;}
+}
+
+/* ── 실시간 도착 애니메이션 ── */
+.arr-time { font-family:'Poppins',sans-serif; font-size:22px; font-weight:900; color:var(--c); white-space:nowrap; }
+.arr-time span { font-size:12px; font-weight:400; color:#aaa; }
+.badge-live { font-size:11px; padding:3px 10px; border-radius:20px; background:var(--cp); color:var(--c); font-weight:700; }
+.arr-item-go { border-left:3px solid var(--c); padding-left:8px; margin-bottom:6px; }
+
+ .cong-yellow .sec-sub { font-size:14px; color:#888; margin-bottom:22px; }
+.feat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-bottom:32px; }
+.feat-card { background:#fff; border-radius:14px; padding:22px 18px; box-shadow:0 3px 14px rgba(0,0,0,.07); border:1px solid #eee; cursor:pointer; transition:.2s; }
+.feat-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.11); }
+.feat-icon { font-size:32px; margin-bottom:10px; }
+.feat-card h3 { font-size:15px; font-weight:700; color:#222; margin-bottom:6px; }
+.feat-card p { font-size:13px; color:#888; line-height:1.6; margin-bottom:12px; }
+.feat-btn { display:inline-flex; align-items:center; gap:4px; padding:6px 14px; border-radius:18px; background:var(--cp); color:var(--c); font-size:12px; font-weight:700; border:1.5px solid var(--cl); cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:.2s; }
+.feat-btn:hover { background:var(--c); color:#fff; }
+@media(max-width:640px){ .feat-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:640px){ .info-inline-grid { grid-template-columns:1fr !important; } }
+
+
+/* ── 좌석예약 (건양대 구조 동일) ── */
+.kj-booking-wrap { background:#fff; border-radius:14px; padding:24px; box-shadow:0 3px 14px rgba(0,0,0,.07); }
+.kj-booking-cats { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+.kj-bcat { padding:8px 20px; border-radius:24px; font-size:13px; font-weight:700; border:2px solid #ddd; background:#fff; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:.2s; }
+.kj-bcat.on { background:#1a237e; border-color:#1a237e; color:#fff; box-shadow:0 4px 12px rgba(26,35,126,.25); }
+.kj-bsec { display:none; }
+.kj-bsec.on { display:block; }
+.kj-step { font-size:12px; font-weight:700; color:#555; margin-bottom:8px; }
+.kj-chips { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+.kj-chip { padding:7px 16px; border-radius:18px; font-size:13px; font-weight:600; border:2px solid #ddd; background:#fff; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:.2s; }
+.kj-chip.on { border-color:#1a237e; background:#e8eaf6; color:#1a237e; }
+.kj-times { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
+.kj-tbtn { padding:8px 13px; border-radius:10px; border:2px solid #ddd; background:#fff; cursor:pointer; font-size:11px; font-weight:700; color:#555; font-family:'Noto Sans KR',sans-serif; text-align:center; transition:.2s; }
+.kj-tbtn span { font-size:10px; font-weight:400; color:#aaa; display:block; }
+.kj-tbtn:hover { border-color:#7986cb; color:#1a237e; }
+.kj-tbtn.on { background:linear-gradient(135deg,#1a237e,#283593); border-color:#1a237e; color:#fff; box-shadow:0 3px 10px rgba(26,35,126,.3); }
+.kj-tbtn.on span { color:rgba(255,255,255,.8); }
+.kj-seat-legend { display:flex; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
+.kj-seat-legend span { font-size:11px; color:#777; display:flex; align-items:center; gap:5px; }
+.kj-sdot { width:13px; height:13px; border-radius:3px; display:inline-block; }
+.kj-sdot.avail { background:#e8eaf6; border:1.5px solid #9fa8da; }
+.kj-sdot.taken { background:#ffebee; border:1.5px solid #ef9a9a; }
+.kj-sdot.mine  { background:#1a237e; border:1.5px solid #0d1462; }
+.kj-sdot.sel   { background:#ff8f00; border:1.5px solid #e65100; }
+.kj-sgrid { overflow-x:auto; padding-bottom:4px; }
+.kj-seat { width:34px; height:34px; border-radius:7px; border:none; cursor:pointer; font-size:10px; font-weight:700; transition:.18s; font-family:'Noto Sans KR',sans-serif; flex-shrink:0; }
+.kj-seat.avail { background:#e8eaf6; color:#1a237e; border:1.5px solid #9fa8da; }
+.kj-seat.avail:hover { background:#c5cae9; transform:scale(1.08); }
+.kj-seat.taken { background:#ffebee; color:#c62828; border:1.5px solid #ef9a9a; cursor:not-allowed; }
+.kj-seat.mine  { background:#1a237e; color:#fff; border:1.5px solid #0d1462; box-shadow:0 3px 10px rgba(26,35,126,.35); }
+.kj-seat.sel   { background:linear-gradient(135deg,#ff8f00,#ffa000); color:#fff; border:1.5px solid #e65100; transform:scale(1.1); box-shadow:0 3px 10px rgba(255,143,0,.4); }
+.kj-seat-window { background:#b3e5fc; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:9px; color:#0277bd; font-weight:700; width:34px; }
+.kj-seat-aisle { background:transparent; display:flex; align-items:center; justify-content:center; font-size:9px; color:#ccc; width:20px; border-top:1px dashed #eee; border-bottom:1px dashed #eee; }
+.kj-seat-col { text-align:center; font-size:9px; color:#bbb; width:34px; }
+.kj-seat-back { display:flex; gap:5px; justify-content:center; margin-top:10px; position:relative; }
+.kj-seat-back::before { content:'맨 뒷줄'; position:absolute; top:-16px; left:50%; transform:translateX(-50%); font-size:10px; color:#aaa; white-space:nowrap; }
+.kj-reserve-btn { width:100%; padding:11px; background:#1a237e; color:#fff; border:none; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Noto Sans KR',sans-serif; margin-top:12px; transition:.2s; }
+.kj-reserve-btn:hover { background:#0d1462; }
+.kj-cancel-btn { width:100%; padding:9px; background:#f5f5f5; color:#555; border:none; border-radius:10px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Noto Sans KR',sans-serif; margin-top:6px; }
+.kj-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:rgba(26,35,126,.93); color:#fff; padding:10px 24px; border-radius:24px; font-size:13px; font-weight:700; z-index:9999; opacity:0; transition:opacity .3s; pointer-events:none; font-family:'Noto Sans KR',sans-serif; white-space:nowrap; }
+.kj-toast.show { opacity:1; }
+
+
+/* ── 지연률 카드 (건양대 참고) ── */
+.kj-delay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;}
+.kj-delay-card{border-radius:10px;padding:10px 12px;border:1.5px solid #e0e0e0;background:#fafafa;}
+.kj-delay-ok{border-color:#c8e6c9;background:#f1f8f1;}
+.kj-delay-warn{border-color:#ffe082;background:#fffde7;}
+.kj-delay-danger{border-color:#ffcdd2;background:#fff5f5;}
+.kj-delay-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.kj-dcar{font-size:10px;font-weight:800;color:#222;}
+.kj-dbadge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;}
+.kj-dok{background:#e8f5e9;color:#2e7d32;}
+.kj-dwarn{background:#fff8e1;color:#f57c00;}
+.kj-ddanger{background:#ffebee;color:#c62828;}
+.kj-dpct{font-size:24px;font-weight:900;color:var(--c);line-height:1;margin-bottom:5px;}
+.kj-dbar-bg{height:5px;background:#e0e0e0;border-radius:3px;overflow:hidden;margin-bottom:5px;}
+.kj-dbar{height:100%;border-radius:3px;transition:width .8s ease;}
+.kj-dmeta{font-size:10px;color:#777;}
+.kj-dmeta strong{color:#333;}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+<button onclick="location.href='index.html'" style="position:fixed;top:14px;left:14px;z-index:9999;background:#fff;color:#1a237e;border:2px solid #1a237e;border-radius:18px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.15);">← 목록</button>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-icon">🏛️</div>
+      <span class="nav-title">국립공주대학교</span>
+      <span class="nav-sub">셔틀버스</span>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-ol" onclick="goTab('tab-map')">🗺️ 노선도</button>
+      <button class="btn-fi" onclick="goTab('tab-tt',null);document.querySelector('.tabs').scrollIntoView({behavior:'smooth'})">📅 시간표</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-in">
+    <h1>국립공주대학교<br><span>셔틀버스</span> 서비스</h1>
+    <p>공주·천안·예산 캠퍼스 순환버스 · 대전·세종·논산 무료 등교버스</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">9</div><div class="l">운행 노선</div></div>
+      <div class="hstat"><div class="n">07:00</div><div class="l">빠른 첫차</div></div>
+      <div class="hstat"><div class="n">19:20</div><div class="l">늦은 막차</div></div>
+      <div class="hstat"><div class="n">무료</div><div class="l">탑승 요금</div></div>
+    </div>
+    <div class="hero-btns">
+      <button class="hbtn-m" onclick="document.getElementById('map-wrap').scrollIntoView({behavior:'smooth'})">🗺️ 노선 지도</button>
+      <button class="hbtn-s" onclick="goTab('tab-tt',null);document.querySelector('.tabs').scrollIntoView({behavior:'smooth'})">📅 시간표 보기</button>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- 주요서비스 -->
+  <div style="margin-bottom:8px;">
+    <div class="sec-title">주요 서비스</div>
+    <div class="sec-sub">공주대 셔틀의 모든 기능을 웹에서 편리하게 이용하세요.</div>
+    <div class="feat-grid">
+      <div class="feat-card" onclick="document.getElementById('map-wrap').scrollIntoView({behavior:'smooth'})">
+        <div class="feat-icon">🚌</div>
+        <h3>실시간 버스 위치</h3>
+        <p>버스의 현재 위치와 도착 예정 시간을 실시간으로 확인합니다.</p>
+        <button class="feat-btn">실시간 현황 →</button>
+      </div>
+      <div class="feat-card" onclick="goTab('tab-tt',null)">
+        <div class="feat-icon">📅</div>
+        <h3>시간표 확인</h3>
+        <p>순환버스·등교버스 전 노선 시간표를 한 번에 확인하세요.</p>
+        <button class="feat-btn">시간표 보기 →</button>
+      </div>
+      <div class="feat-card" onclick="goTab('tab-stops',null)">
+        <div class="feat-icon">📍</div>
+        <h3>정류장 안내</h3>
+        <p>각 노선별 정류장 위치와 순서를 확인하세요.</p>
+        <button class="feat-btn">정류장 보기 →</button>
+      </div>
+      <div class="feat-card" onclick="document.getElementById('seat-bus').scrollIntoView({behavior:'smooth'})">
+        <div class="feat-icon">🎫</div>
+        <h3>좌석 예약</h3>
+        <p>미리 좌석을 선택하고 예약해 편리하게 탑승하세요.</p>
+        <button class="feat-btn">예약하기 →</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 이용안내 인라인 -->
+  <div style="margin-bottom:22px;">
+    <div class="sec-title" style="font-size:16px;margin-bottom:12px;">ℹ️ 이용안내</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="info-box" style="background:var(--cp);border-left:4px solid var(--c);border-radius:10px;padding:14px;margin-bottom:0;">
+        <h4 style="color:var(--c);margin-bottom:8px;font-size:13px;">🔄 순환버스</h4>
+        <ul style="font-size:12px;color:#555;line-height:1.9;list-style:none;">
+          <li>✅ 학기 중 월~금 운행 (방학·공휴일 제외)</li>
+          <li>✅ 재학생 무료 탑승 · 등교+하교 양방향</li>
+          <li>✅ 문의: 041-850-8845 (신관캠)</li>
+        </ul>
+      </div>
+      <div class="info-box" style="background:var(--cp);border-left:4px solid var(--c);border-radius:10px;padding:14px;margin-bottom:0;">
+        <h4 style="color:var(--c);margin-bottom:8px;font-size:13px;">🚌 무료 등교버스</h4>
+        <ul style="font-size:12px;color:#555;line-height:1.9;list-style:none;">
+          <li>✅ 대전·세종·논산·공주시내 → 공주캠</li>
+          <li>⚠️ 등교 전용 (하교버스 없음)</li>
+          <li>✅ 문의: 041-850-8034</li>
+        </ul>
+      </div>
+      <div class="info-box" style="background:#fff8e1;border-left:4px solid #f57c00;border-radius:10px;padding:14px;margin-bottom:0;">
+        <h4 style="color:#f57c00;margin-bottom:8px;font-size:13px;">⚠️ 안내</h4>
+        <p style="font-size:12px;color:#555;line-height:1.7;">이 페이지는 <strong>임시 데이터</strong>입니다.<br>정확한 정보는 반드시 <a href="https://www.kongju.ac.kr/KNU/16872/subview.do" target="_blank" style="color:var(--c);font-weight:700;">공주대 공식 홈페이지</a>에서 확인하세요.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 대시보드 -->
+  <div class="dash">
+
+    <!-- 실시간 도착정보 -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div class="card-label" style="margin-bottom:0;">🔄 순환버스 도착 정보</div>
+        <span class="badge-live">실시간</span>
+      </div>
+      <div class="arr-item" id="karr0">
+        <div><div class="arr-name">천안↔공주 1호차</div><div class="arr-sub" id="kstop0">현재: 천안터미널</div></div>
+        <div class="arr-time" id="kmin0">8<span>분 후</span></div>
+      </div>
+      <div class="arr-item" id="karr1">
+        <div><div class="arr-name">천안↔공주 2호차</div><div class="arr-sub" id="kstop1">현재: 두정역</div></div>
+        <div class="arr-time" id="kmin1">14<span>분 후</span></div>
+      </div>
+      <div class="arr-item" id="karr2">
+        <div><div class="arr-name">예산↔공주</div><div class="arr-sub" id="kstop2">현재: 예산터미널</div></div>
+        <div class="arr-time" id="kmin2">22<span>분 후</span></div>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">🚌 대전(유성·현충원)</div><div class="arr-sub">무료 등교버스</div></div>
+        <div class="arr-badges"><span class="badge badge-b">07:10 첫차</span></div>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">🚌 세종·논산 등교</div><div class="arr-sub">무료 등교버스</div></div>
+        <div class="arr-badges"><span class="badge badge-b">07:00 첫차</span></div>
+      </div>
+
+    </div>
+
+    <!-- 날씨 -->
+    <div class="wx-card" style="padding:14px 16px;align-self:start;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div class="wx-title" style="margin-bottom:0;">🌤️ 공주 현재 날씨</div>
+        <div style="font-size:10px;color:#888;">충남 공주시</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="font-size:42px;" id="wx-icon">⏳</div>
+        <div>
+          <div class="wx-temp" id="wx-temp" style="line-height:1;">--°</div>
+          <div class="wx-desc" id="wx-desc" style="font-size:12px;color:#555;margin-top:2px;">로딩 중...</div>
+        </div>
+        <div style="flex:1;font-size:11px;color:#666;line-height:1.7;text-align:right;">
+          <div id="wx-detail">습도 -- · 체감 --°</div>
+          <div id="wx-wind">바람 --m/s</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:rgba(255,255,255,.55);border-radius:8px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:10px;color:#888;">탑승 시 참고</div>
+        <div class="wx-adv" id="wx-advice" style="font-size:12px;font-weight:700;color:var(--c);">날씨 확인 중</div>
+      </div>
+    </div>
+
+        <!-- 지연률 카드 (건양대 스타일) -->
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div style="padding:14px 16px 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0f0f8;">
+        <div style="font-size:13px;font-weight:800;color:#333;">⏱️ 노선별 지연률</div>
+        <span style="font-size:11px;padding:3px 10px;border-radius:20px;background:var(--cp);color:var(--c);font-weight:700;">오늘</span>
+      </div>
+      <div style="padding:12px 16px;">
+        <div class="kj-delay-grid">
+          <div class="kj-delay-card kj-delay-ok">
+            <div class="kj-delay-hd"><span class="kj-dcar">🔄 천안↔공주 1호차</span><span class="kj-dbadge kj-dok">정상</span></div>
+            <div class="kj-dpct">5%</div>
+            <div class="kj-dbar-bg"><div class="kj-dbar" style="width:5%;background:#66bb6a"></div></div>
+            <div class="kj-dmeta">평균 지연 <strong>1분</strong> · 오늘 10회</div>
+          </div>
+          <div class="kj-delay-card kj-delay-warn">
+            <div class="kj-delay-hd"><span class="kj-dcar">🔄 천안↔공주 2호차</span><span class="kj-dbadge kj-dwarn">주의</span></div>
+            <div class="kj-dpct" style="color:#f57c00">28%</div>
+            <div class="kj-dbar-bg"><div class="kj-dbar" style="width:28%;background:#ffa726"></div></div>
+            <div class="kj-dmeta">평균 지연 <strong>7분</strong> · 오늘 8회</div>
+          </div>
+          <div class="kj-delay-card kj-delay-ok">
+            <div class="kj-delay-hd"><span class="kj-dcar">🔄 예산↔공주</span><span class="kj-dbadge kj-dok">정상</span></div>
+            <div class="kj-dpct">8%</div>
+            <div class="kj-dbar-bg"><div class="kj-dbar" style="width:8%;background:#66bb6a"></div></div>
+            <div class="kj-dmeta">평균 지연 <strong>2분</strong> · 오늘 6회</div>
+          </div>
+          <div class="kj-delay-card kj-delay-danger">
+            <div class="kj-delay-hd"><span class="kj-dcar">🚌 대전(유성)</span><span class="kj-dbadge kj-ddanger">지연</span></div>
+            <div class="kj-dpct" style="color:#c62828">52%</div>
+            <div class="kj-dbar-bg"><div class="kj-dbar" style="width:52%;background:#ef5350"></div></div>
+            <div class="kj-dmeta">평균 지연 <strong>13분</strong> · 오늘 5회</div>
+          </div>
+          <div class="kj-delay-card kj-delay-ok">
+            <div class="kj-delay-hd"><span class="kj-dcar">🚌 세종(조치원)</span><span class="kj-dbadge kj-dok">정상</span></div>
+            <div class="kj-dpct">3%</div>
+            <div class="kj-dbar-bg"><div class="kj-dbar" style="width:3%;background:#66bb6a"></div></div>
+            <div class="kj-dmeta">평균 지연 <strong>1분</strong> · 오늘 4회</div>
+          </div>
+          <div class="kj-delay-card kj-delay-ok">
+            <div class="kj-delay-hd"><span class="kj-dcar">🚌 논산·부여</span><span class="kj-dbadge kj-dok">정상</span></div>
+            <div class="kj-dpct">11%</div>
+            <div class="kj-dbar-bg"><div class="kj-dbar" style="width:11%;background:#66bb6a"></div></div>
+            <div class="kj-dmeta">평균 지연 <strong>3분</strong> · 오늘 3회</div>
+          </div>
+        </div>
+        <!-- 주간 추이 미니 차트 -->
+        <div style="margin-top:12px;padding:10px 12px;background:#fafafa;border-radius:10px;border:1px solid #eee;">
+          <div style="font-size:11px;font-weight:700;color:var(--c);margin-bottom:8px;">📈 최근 7일 평균 지연률</div>
+          <svg width="100%" height="52" viewBox="0 0 400 52" preserveAspectRatio="none">
+            <line x1="0" y1="13" x2="400" y2="13" stroke="#e8eaf6" stroke-width="1"/>
+            <line x1="0" y1="26" x2="400" y2="26" stroke="#e8eaf6" stroke-width="1"/>
+            <line x1="0" y1="39" x2="400" y2="39" stroke="#e8eaf6" stroke-width="1"/>
+            <polyline points="0,40 57,35 114,38 171,28 229,31 286,22 343,26 400,18"
+              fill="none" stroke="var(--c)" stroke-width="2" stroke-linejoin="round"/>
+            <polyline points="0,40 57,35 114,38 171,28 229,31 286,22 343,26 400,18 400,52 0,52"
+              fill="var(--cp)" stroke="none" opacity="0.5"/>
+            <circle cx="0" cy="40" r="2.5" fill="var(--c)"/>
+            <circle cx="57" cy="35" r="2.5" fill="var(--c)"/>
+            <circle cx="114" cy="38" r="2.5" fill="var(--c)"/>
+            <circle cx="171" cy="28" r="2.5" fill="var(--c)"/>
+            <circle cx="229" cy="31" r="2.5" fill="#ffa726"/>
+            <circle cx="286" cy="22" r="2.5" fill="var(--c)"/>
+            <circle cx="343" cy="26" r="2.5" fill="var(--c)"/>
+            <circle cx="400" cy="18" r="2.5" fill="var(--c)"/>
+          </svg>
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:#aaa;margin-top:2px;">
+            <span>5/17</span><span>5/18</span><span>5/19</span><span>5/20</span><span>5/21</span><span>5/22</span><span>5/23</span><span>오늘</span>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:6px;font-size:10px;color:#555;flex-wrap:wrap;">
+            <span>📊 금주 평균: <strong style="color:var(--c)">18.2%</strong></span>
+            <span>⬇️ 전주 대비: <strong style="color:#2e7d32">-2.8%p 개선</strong></span>
+            <span>🏆 정시 우수: <strong>세종노선</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 좌석예약 섹션 -->
+  <div style="margin-bottom:28px;" id="booking">
+    <div class="sec-title">🎫 좌석 예약</div>
+    <div class="sec-sub">원하는 노선과 좌석을 선택하고 예약하세요.</div>
+    <div class="kj-booking-wrap">
+      <!-- 카테고리 탭 -->
+      <div class="kj-booking-cats">
+        <button class="kj-bcat on" onclick="kjBcat('circ',this)">🔄 순환버스</button>
+        <button class="kj-bcat" onclick="kjBcat('free',this)">🚌 무료 등교버스</button>
+      </div>
+
+      <!-- 순환버스 -->
+      <div class="kj-bsec on" id="kjbsec-circ">
+        <div class="kj-step">① 노선 선택</div>
+        <div class="kj-chips" id="kjchip-circ">
+          <button class="kj-chip on" onclick="kjChip(this,'circ','천안→공주 1호차')">🔄 천안→공주 1호차</button>
+          <button class="kj-chip" onclick="kjChip(this,'circ','천안→공주 2호차')">🔄 천안→공주 2호차</button>
+          <button class="kj-chip" onclick="kjChip(this,'circ','예산→공주')">🔄 예산→공주</button>
+          <button class="kj-chip" onclick="kjChip(this,'circ','예산→신창역')">🔄 예산→신창역</button>
+        </div>
+        <div class="kj-step">② 회차 선택</div>
+        <div class="kj-times" id="kjtime-circ">
+          <button class="kj-tbtn on" onclick="kjTime(this,'circ','1회·07:30')">1회<span>07:30</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'circ','2회·07:50')">2회<span>07:50</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'circ','3회·08:10')">3회<span>08:10</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'circ','4회·08:30')">4회<span>08:30</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'circ','5회·08:45')">5회<span>08:45</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'circ','6회·09:00')">6회<span>09:00</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'circ','7회·17:30')">7회<span>17:30</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'circ','8회·18:00')">8회<span>18:00</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'circ','9회·18:40')">9회<span>18:40</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'circ','10회·19:20')">10회<span>19:20</span></button>
+        </div>
+        <div class="kj-step">③ 좌석 선택</div>
+        <div class="kj-seat-legend">
+          <span><span class="kj-sdot avail"></span>빈 좌석</span>
+          <span><span class="kj-sdot taken"></span>예약됨</span>
+          <span><span class="kj-sdot sel"></span>선택 중</span>
+          <span><span class="kj-sdot mine"></span>내 좌석</span>
+        </div>
+        <div class="kj-sgrid" id="kjsg-circ"></div>
+        <button class="kj-reserve-btn" onclick="kjReserve('circ')">✅ 예약하기</button>
+        <button class="kj-cancel-btn" onclick="kjCancel('circ')">❌ 예약 취소</button>
+      </div>
+
+      <!-- 무료 등교버스 -->
+      <div class="kj-bsec" id="kjbsec-free">
+        <div class="kj-step">① 노선 선택</div>
+        <div class="kj-chips" id="kjchip-free">
+          <button class="kj-chip on" onclick="kjChip(this,'free','대전(유성·현충원)')">🚌 대전(유성·현충원)</button>
+          <button class="kj-chip" onclick="kjChip(this,'free','세종(조치원)')">🚌 세종(조치원)</button>
+          <button class="kj-chip" onclick="kjChip(this,'free','논산·부여')">🚌 논산·부여</button>
+          <button class="kj-chip" onclick="kjChip(this,'free','공주시내')">🚌 공주시내</button>
+        </div>
+        <div class="kj-step">② 회차 선택</div>
+        <div class="kj-times" id="kjtime-free">
+          <button class="kj-tbtn on" onclick="kjTime(this,'free','1회·07:10')">1회<span>07:10</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'free','2회·07:25')">2회<span>07:25</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'free','3회·07:40')">3회<span>07:40</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'free','4회·08:00')">4회<span>08:00</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'free','5회·08:30')">5회<span>08:30</span></button>
+          <button class="kj-tbtn" onclick="kjTime(this,'free','6회·08:50')">6회<span>08:50</span></button>
+        </div>
+        <div class="kj-step">③ 좌석 선택</div>
+        <div class="kj-seat-legend">
+          <span><span class="kj-sdot avail"></span>빈 좌석</span>
+          <span><span class="kj-sdot taken"></span>예약됨</span>
+          <span><span class="kj-sdot sel"></span>선택 중</span>
+          <span><span class="kj-sdot mine"></span>내 좌석</span>
+        </div>
+        <div class="kj-sgrid" id="kjsg-free"></div>
+        <button class="kj-reserve-btn" onclick="kjReserve('free')">✅ 예약하기</button>
+        <button class="kj-cancel-btn" onclick="kjCancel('free')">❌ 예약 취소</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 탭 -->
+  <div class="tabs">
+    <button class="tab-btn on" onclick="goTab('tab-map',this)">🗺️ 노선지도</button>
+    <button class="tab-btn" onclick="goTab('tab-tt',this)">📅 시간표</button>
+    <button class="tab-btn" onclick="goTab('tab-stops',this)">📍 정류장</button>
+  </div>
+
+  <!-- 노선지도 -->
+  <div id="tab-map" class="tab-pane show">
+    <div class="map-wrap" id="map-wrap">
+      <div class="map-head"><h3>🗺️ 노선 지도</h3><p>카테고리·노선 버튼으로 경로 확인 (임시 데이터)</p></div>
+      <div class="map-cats">
+        <button class="mcat on" onclick="setCat('circ',this)">🔄 순환버스</button>
+        <button class="mcat" onclick="setCat('go',this)">🚌 등교버스</button>
+      </div>
+      <div class="map-routes" id="rtab-circ">
+        <button class="mroute on" onclick="setRoute('c1',this)">천안↔공주 1호차</button>
+        <button class="mroute" onclick="setRoute('c2',this)">천안↔공주 2호차</button>
+        <button class="mroute" onclick="setRoute('c3',this)">천안↔두정/터미널</button>
+        <button class="mroute" onclick="setRoute('c4',this)">예산↔공주</button>
+        <button class="mroute" onclick="setRoute('c5',this)">예산↔신창역</button>
+      </div>
+      <div class="map-routes" id="rtab-go" style="display:none">
+        <button class="mroute on" onclick="setRoute('g1',this)">대전(유성·현충원)</button>
+        <button class="mroute" onclick="setRoute('g2',this)">세종(조치원)</button>
+        <button class="mroute" onclick="setRoute('g3',this)">논산·부여</button>
+        <button class="mroute" onclick="setRoute('g4',this)">공주시내</button>
+      </div>
+      <div class="map-dirs" id="dir-wrap">
+        <button class="mdir on" onclick="setDir('go',this)">🌅 등교</button>
+        <button class="mdir" onclick="setDir('back',this)">🌆 하교</button>
+      </div>
+      <div class="map-body">
+        <div class="map-svg" style="min-height:420px;"><div id="kj-leaflet-map" style="width:100%;height:420px;"></div>
+          <svg id="map-svg" style="display:none;" viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-height:260px;">
+            <defs><filter id="shd"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-opacity="0.13"/></filter></defs>
+            <rect width="680" height="420" fill="#f0f0f8"/>
+            <rect x="0" y="378" width="680" height="42" fill="#e8eaf6"/>
+            <text x="55" y="54" fill="#ccc" font-size="11" font-weight="700" font-family="sans-serif">천안캠</text>
+            <text x="572" y="54" fill="#ccc" font-size="11" font-weight="700" font-family="sans-serif">예산캠</text>
+            <text x="40" y="268" fill="#ccc" font-size="11" font-weight="700" font-family="sans-serif">대전</text>
+            <text x="262" y="37" fill="#ccc" font-size="11" font-weight="700" font-family="sans-serif">세종</text>
+            <text x="344" y="416" fill="#ccc" font-size="10" font-weight="700" font-family="sans-serif">논산</text>
+            <text x="424" y="416" fill="#ccc" font-size="10" font-weight="700" font-family="sans-serif">공주시내</text>
+            <!-- 공주캠 -->
+            <rect x="295" y="364" width="100" height="40" rx="9" fill="#1a237e" filter="url(#shd)"/>
+            <text x="345" y="381" text-anchor="middle" fill="#fff" font-size="9" font-weight="800" font-family="sans-serif">국립공주대학교</text>
+            <text x="345" y="395" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="8" font-family="sans-serif">공주캠퍼스</text>
+            <!-- 캠퍼스 박스 -->
+            <rect x="42" y="37" width="64" height="25" rx="6" fill="#1565c0" opacity=".85"/>
+            <text x="74" y="53" text-anchor="middle" fill="#fff" font-size="9" font-weight="700" font-family="sans-serif">천안캠</text>
+            <rect x="564" y="37" width="64" height="25" rx="6" fill="#6a1b9a" opacity=".85"/>
+            <text x="596" y="53" text-anchor="middle" fill="#fff" font-size="9" font-weight="700" font-family="sans-serif">예산캠</text>
+
+            <!-- c1-go -->
+            <g id="L-c1-go" class="layer" visibility="visible">
+              <path d="M74 62 Q130 112 198 168 Q258 222 300 294 Q322 330 340 367" stroke="#1565c0" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="74" cy="62" r="7" fill="#1565c0" stroke="white" stroke-width="2.5"/>
+              <circle cx="130" cy="110" r="5" fill="#1565c0" stroke="white" stroke-width="2"/><text x="143" y="106" fill="#1565c0" font-size="9" font-weight="700" font-family="sans-serif">두정역</text>
+              <circle cx="172" cy="144" r="5" fill="#1565c0" stroke="white" stroke-width="2"/><text x="185" y="140" fill="#1565c0" font-size="9" font-weight="700" font-family="sans-serif">천안터미널</text>
+              <circle cx="206" cy="172" r="5" fill="#1565c0" stroke="white" stroke-width="2"/><text x="219" y="168" fill="#1565c0" font-size="9" font-weight="700" font-family="sans-serif">천안여고</text>
+              <circle cx="340" cy="367" r="7" fill="#1565c0" stroke="white" stroke-width="2.5"/>
+              <rect x="12" y="64" width="162" height="52" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="20" y="80" fill="#1565c0" font-size="9.5" font-weight="800" font-family="sans-serif">🔄 천안↔공주 1호차</text>
+              <text x="20" y="93" fill="#555" font-size="8" font-family="sans-serif">등교 07:30 · 하교 19:20</text>
+              <text x="20" y="104" fill="#555" font-size="8" font-family="sans-serif">월~금(학기중) · 무료</text>
+            </g>
+            <!-- c1-back -->
+            <g id="L-c1-back" class="layer" visibility="hidden" style="display:none">
+              <path d="M340 367 Q322 330 300 294 Q258 222 198 168 Q130 112 74 62" stroke="#1565c0" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="340" cy="367" r="7" fill="#1565c0" stroke="white" stroke-width="2.5"/>
+              <circle cx="74" cy="62" r="7" fill="#1565c0" stroke="white" stroke-width="2.5"/>
+              <rect x="12" y="64" width="164" height="52" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="20" y="80" fill="#1565c0" font-size="9.5" font-weight="800" font-family="sans-serif">🔄 공주↔천안 1호차 (하교)</text>
+              <text x="20" y="93" fill="#555" font-size="8" font-family="sans-serif">첫차 17:30 · 막차 19:20</text>
+              <text x="20" y="104" fill="#555" font-size="8" font-family="sans-serif">공주캠 출발</text>
+            </g>
+            <!-- c2-go -->
+            <g id="L-c2-go" class="layer" visibility="hidden" style="display:none">
+              <path d="M74 62 Q148 138 222 222 Q278 292 340 367" stroke="#0277bd" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="74" cy="62" r="7" fill="#0277bd" stroke="white" stroke-width="2.5"/>
+              <circle cx="148" cy="134" r="5" fill="#0277bd" stroke="white" stroke-width="2"/><text x="161" y="130" fill="#0277bd" font-size="9" font-weight="700" font-family="sans-serif">두정역</text>
+              <circle cx="340" cy="367" r="7" fill="#0277bd" stroke="white" stroke-width="2.5"/>
+              <rect x="12" y="64" width="154" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="20" y="80" fill="#0277bd" font-size="9.5" font-weight="800" font-family="sans-serif">🔄 천안↔공주 2호차</text>
+              <text x="20" y="94" fill="#555" font-size="8" font-family="sans-serif">등교 07:50 · 하교 18:40</text>
+            </g>
+            <!-- c2-back -->
+            <g id="L-c2-back" class="layer" visibility="hidden" style="display:none">
+              <path d="M340 367 Q278 292 222 222 Q148 138 74 62" stroke="#0277bd" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="340" cy="367" r="7" fill="#0277bd" stroke="white" stroke-width="2.5"/>
+              <circle cx="74" cy="62" r="7" fill="#0277bd" stroke="white" stroke-width="2.5"/>
+              <rect x="12" y="64" width="156" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="20" y="80" fill="#0277bd" font-size="9.5" font-weight="800" font-family="sans-serif">🔄 공주↔천안 2호차 (하교)</text>
+              <text x="20" y="94" fill="#555" font-size="8" font-family="sans-serif">첫차 18:00 · 막차 18:40</text>
+            </g>
+            <!-- c3-go -->
+            <g id="L-c3-go" class="layer" visibility="hidden" style="display:none">
+              <path d="M74 62 Q108 94 144 128" stroke="#006064" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="74" cy="62" r="7" fill="#006064" stroke="white" stroke-width="2.5"/>
+              <circle cx="114" cy="98" r="5" fill="#006064" stroke="white" stroke-width="2"/><text x="127" y="94" fill="#006064" font-size="9" font-weight="700" font-family="sans-serif">터미널</text>
+              <circle cx="144" cy="128" r="7" fill="#006064" stroke="white" stroke-width="2.5"/><text x="157" y="124" fill="#006064" font-size="9" font-weight="700" font-family="sans-serif">두정역</text>
+              <rect x="12" y="64" width="154" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="20" y="80" fill="#006064" font-size="9.5" font-weight="800" font-family="sans-serif">🔄 천안↔두정역/터미널</text>
+              <text x="20" y="94" fill="#555" font-size="8" font-family="sans-serif">08:10~17:40 · 월~금</text>
+            </g>
+            <!-- c3-back -->
+            <g id="L-c3-back" class="layer" visibility="hidden" style="display:none">
+              <path d="M144 128 Q108 94 74 62" stroke="#006064" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="144" cy="128" r="7" fill="#006064" stroke="white" stroke-width="2.5"/>
+              <circle cx="74" cy="62" r="7" fill="#006064" stroke="white" stroke-width="2.5"/>
+              <rect x="12" y="64" width="152" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="20" y="80" fill="#006064" font-size="9.5" font-weight="800" font-family="sans-serif">🔄 두정역/터미널↔천안</text>
+              <text x="20" y="94" fill="#555" font-size="8" font-family="sans-serif">17:10~17:40</text>
+            </g>
+            <!-- c4-go -->
+            <g id="L-c4-go" class="layer" visibility="hidden" style="display:none">
+              <path d="M596 62 Q532 142 464 228 Q410 298 355 367" stroke="#6a1b9a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="596" cy="62" r="7" fill="#6a1b9a" stroke="white" stroke-width="2.5"/>
+              <circle cx="532" cy="140" r="5" fill="#6a1b9a" stroke="white" stroke-width="2"/><text x="490" y="136" fill="#6a1b9a" font-size="9" font-weight="700" font-family="sans-serif">예산터미널</text>
+              <circle cx="355" cy="367" r="7" fill="#6a1b9a" stroke="white" stroke-width="2.5"/>
+              <rect x="510" y="64" width="150" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="518" y="80" fill="#6a1b9a" font-size="9.5" font-weight="800" font-family="sans-serif">🔄 예산↔공주 (등교)</text>
+              <text x="518" y="94" fill="#555" font-size="8" font-family="sans-serif">07:40~09:00 · 월~금</text>
+            </g>
+            <!-- c4-back -->
+            <g id="L-c4-back" class="layer" visibility="hidden" style="display:none">
+              <path d="M355 367 Q410 298 464 228 Q532 142 596 62" stroke="#6a1b9a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="355" cy="367" r="7" fill="#6a1b9a" stroke="white" stroke-width="2.5"/>
+              <circle cx="596" cy="62" r="7" fill="#6a1b9a" stroke="white" stroke-width="2.5"/>
+              <rect x="510" y="64" width="152" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="518" y="80" fill="#6a1b9a" font-size="9.5" font-weight="800" font-family="sans-serif">🔄 공주↔예산 (하교)</text>
+              <text x="518" y="94" fill="#555" font-size="8" font-family="sans-serif">17:30~18:30</text>
+            </g>
+            <!-- c5-go -->
+            <g id="L-c5-go" class="layer" visibility="hidden" style="display:none">
+              <path d="M596 62 Q616 106 630 152" stroke="#00695c" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="596" cy="62" r="7" fill="#00695c" stroke="white" stroke-width="2.5"/>
+              <circle cx="618" cy="118" r="5" fill="#00695c" stroke="white" stroke-width="2"/><text x="568" y="114" fill="#00695c" font-size="9" font-weight="700" font-family="sans-serif">예산읍내</text>
+              <circle cx="630" cy="152" r="7" fill="#00695c" stroke="white" stroke-width="2.5"/><text x="568" y="148" fill="#00695c" font-size="9" font-weight="700" font-family="sans-serif">신창역</text>
+              <rect x="510" y="64" width="140" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="518" y="80" fill="#00695c" font-size="9.5" font-weight="800" font-family="sans-serif">🔄 예산↔신창역</text>
+              <text x="518" y="94" fill="#555" font-size="8" font-family="sans-serif">07:50~18:10 · 월~금</text>
+            </g>
+            <!-- c5-back -->
+            <g id="L-c5-back" class="layer" visibility="hidden" style="display:none">
+              <path d="M630 152 Q616 106 596 62" stroke="#00695c" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="630" cy="152" r="7" fill="#00695c" stroke="white" stroke-width="2.5"/>
+              <circle cx="596" cy="62" r="7" fill="#00695c" stroke="white" stroke-width="2.5"/>
+              <rect x="510" y="64" width="140" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="518" y="80" fill="#00695c" font-size="9.5" font-weight="800" font-family="sans-serif">🔄 신창역↔예산 (하교)</text>
+              <text x="518" y="94" fill="#555" font-size="8" font-family="sans-serif">17:20~18:10</text>
+            </g>
+            <!-- g1-go -->
+            <g id="L-g1-go" class="layer" visibility="hidden" style="display:none">
+              <path d="M72 260 Q140 294 218 323 Q276 346 340 367" stroke="#c62828" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="72" cy="260" r="7" fill="#c62828" stroke="white" stroke-width="2.5"/><text x="86" y="256" fill="#c62828" font-size="9" font-weight="700" font-family="sans-serif">현충원역</text>
+              <circle cx="108" cy="274" r="5" fill="#c62828" stroke="white" stroke-width="2"/><text x="122" y="270" fill="#c62828" font-size="9" font-weight="700" font-family="sans-serif">유성온천역</text>
+              <circle cx="340" cy="367" r="7" fill="#c62828" stroke="white" stroke-width="2.5"/>
+              <rect x="12" y="220" width="157" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="20" y="236" fill="#c62828" font-size="9.5" font-weight="800" font-family="sans-serif">🚌 대전(유성) 등교버스</text>
+              <text x="20" y="250" fill="#555" font-size="8" font-family="sans-serif">07:10~08:50 · 등교전용 무료</text>
+            </g>
+            <!-- g2-go -->
+            <g id="L-g2-go" class="layer" visibility="hidden" style="display:none">
+              <path d="M280 34 Q296 116 316 214 Q330 294 340 367" stroke="#e65100" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="280" cy="34" r="7" fill="#e65100" stroke="white" stroke-width="2.5"/><text x="294" y="30" fill="#e65100" font-size="9" font-weight="700" font-family="sans-serif">조치원역</text>
+              <circle cx="298" cy="126" r="5" fill="#e65100" stroke="white" stroke-width="2"/><text x="312" y="122" fill="#e65100" font-size="9" font-weight="700" font-family="sans-serif">세종청사</text>
+              <circle cx="340" cy="367" r="7" fill="#e65100" stroke="white" stroke-width="2.5"/>
+              <rect x="344" y="100" width="152" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="352" y="116" fill="#e65100" font-size="9.5" font-weight="800" font-family="sans-serif">🚌 세종(조치원) 등교</text>
+              <text x="352" y="130" fill="#555" font-size="8" font-family="sans-serif">07:20~08:50 · 등교전용 무료</text>
+            </g>
+            <!-- g3-go -->
+            <g id="L-g3-go" class="layer" visibility="hidden" style="display:none">
+              <path d="M358 413 Q350 392 344 375" stroke="#558b2f" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="358" cy="413" r="7" fill="#558b2f" stroke="white" stroke-width="2.5"/><text x="296" y="409" fill="#558b2f" font-size="9" font-weight="700" font-family="sans-serif">논산터미널</text>
+              <circle cx="344" cy="375" r="7" fill="#558b2f" stroke="white" stroke-width="2.5"/>
+              <rect x="12" y="330" width="152" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="20" y="346" fill="#558b2f" font-size="9.5" font-weight="800" font-family="sans-serif">🚌 논산 등교버스</text>
+              <text x="20" y="360" fill="#555" font-size="8" font-family="sans-serif">07:00~08:30 · 등교전용 무료</text>
+            </g>
+            <!-- g4-go -->
+            <g id="L-g4-go" class="layer" visibility="hidden" style="display:none">
+              <path d="M438 413 Q412 398 377 380" stroke="#4e342e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="438" cy="413" r="7" fill="#4e342e" stroke="white" stroke-width="2.5"/><text x="442" y="409" fill="#4e342e" font-size="9" font-weight="700" font-family="sans-serif">공주터미널</text>
+              <circle cx="377" cy="380" r="7" fill="#4e342e" stroke="white" stroke-width="2.5"/>
+              <rect x="510" y="330" width="152" height="42" rx="7" fill="white" opacity=".96" filter="url(#shd)"/>
+              <text x="518" y="346" fill="#4e342e" font-size="9.5" font-weight="800" font-family="sans-serif">🚌 공주시내 등교버스</text>
+              <text x="518" y="360" fill="#555" font-size="8" font-family="sans-serif">07:30~08:05 · 등교전용 무료</text>
+            </g>
+          </svg>
+        </div>
+        <div class="map-panel">
+          <div class="panel-title" id="p-title">🔄 천안↔공주 1호차</div>
+          <div class="panel-row"><div class="panel-label">첫차</div><div class="panel-val" id="p-first">07:30</div></div>
+          <div class="panel-row"><div class="panel-label">막차</div><div class="panel-val" id="p-last">19:20</div></div>
+          <div class="panel-row"><div class="panel-label">운행</div><div class="panel-sm" id="p-interval">월~금(학기중)</div></div>
+          <div style="margin-top:12px;"><div class="panel-label" style="margin-bottom:6px;">정류장</div><div id="p-stops">
+            <div class="pstop"><span class="pdot"></span>천안캠퍼스</div>
+            <div class="pstop"><span class="pdot"></span>두정역</div>
+            <div class="pstop"><span class="pdot"></span>천안터미널</div>
+            <div class="pstop"><span class="pdot"></span>천안여고</div>
+            <div class="pstop"><span class="pdot"></span>공주캠퍼스</div>
+          </div></div>
+          <div style="margin-top:12px;background:var(--cp);border-radius:8px;padding:8px;font-size:10px;color:var(--c);font-weight:600;">⚠️ 임시 데이터<br>공식 홈페이지 확인 필요</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시간표 -->
+  <div id="tab-tt" class="tab-pane">
+    <div class="warn">⚠️ 임시 데이터입니다. 정확한 정보는 <a href="https://www.kongju.ac.kr/KNU/16872/subview.do" target="_blank" style="color:var(--c);font-weight:700;">공주대 공식 홈페이지</a>에서 확인하세요.</div>
+    <div class="tt-card">
+      <div class="tt-title">🔄 순환버스 시간표</div>
+      <div style="overflow-x:auto;">
+        <table class="tt-table">
+          <thead><tr><th>노선</th><th>등교 첫차</th><th>등교 막차</th><th>하교 첫차</th><th>하교 막차</th><th>운행일</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700;color:#1565c0;">천안↔공주 1호차</td><td><span class="chip" style="background:#1565c0;">07:30</span></td><td><span class="chip" style="background:#1565c0;">09:20</span></td><td><span class="chip" style="background:#555;">17:30</span></td><td><span class="chip" style="background:#555;">19:20</span></td><td>월~금</td></tr>
+            <tr><td style="font-weight:700;color:#0277bd;">천안↔공주 2호차</td><td><span class="chip" style="background:#0277bd;">07:50</span></td><td><span class="chip" style="background:#0277bd;">09:00</span></td><td><span class="chip" style="background:#555;">18:00</span></td><td><span class="chip" style="background:#555;">18:40</span></td><td>월~금</td></tr>
+            <tr><td style="font-weight:700;color:#006064;">천안↔두정/터미널</td><td><span class="chip" style="background:#006064;">08:10</span></td><td><span class="chip" style="background:#006064;">08:45</span></td><td><span class="chip" style="background:#555;">17:10</span></td><td><span class="chip" style="background:#555;">17:40</span></td><td>월~금</td></tr>
+            <tr><td style="font-weight:700;color:#6a1b9a;">예산↔공주</td><td><span class="chip" style="background:#6a1b9a;">07:40</span></td><td><span class="chip" style="background:#6a1b9a;">09:00</span></td><td><span class="chip" style="background:#555;">17:30</span></td><td><span class="chip" style="background:#555;">18:30</span></td><td>월~금</td></tr>
+            <tr><td style="font-weight:700;color:#00695c;">예산↔신창역</td><td><span class="chip" style="background:#00695c;">07:50</span></td><td><span class="chip" style="background:#00695c;">08:40</span></td><td><span class="chip" style="background:#555;">17:20</span></td><td><span class="chip" style="background:#555;">18:10</span></td><td>월~금</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tt-card">
+      <div class="tt-title">🚌 무료 등교버스 시간표</div>
+      <div style="overflow-x:auto;">
+        <table class="tt-table">
+          <thead><tr><th>노선</th><th>첫차</th><th>막차</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700;color:#c62828;">대전(유성·현충원역)</td><td><span class="chip" style="background:#c62828;">07:10</span></td><td><span class="chip" style="background:#c62828;">08:50</span></td><td style="font-size:11px;">등교전용 무료</td></tr>
+            <tr><td style="font-weight:700;color:#e65100;">세종(조치원역)</td><td><span class="chip" style="background:#e65100;">07:20</span></td><td><span class="chip" style="background:#e65100;">08:50</span></td><td style="font-size:11px;">등교전용 무료</td></tr>
+            <tr><td style="font-weight:700;color:#558b2f;">논산·부여</td><td><span class="chip" style="background:#558b2f;">07:00</span></td><td><span class="chip" style="background:#558b2f;">08:30</span></td><td style="font-size:11px;">등교전용 무료</td></tr>
+            <tr><td style="font-weight:700;color:#4e342e;">공주시내</td><td><span class="chip" style="background:#4e342e;">07:30</span></td><td><span class="chip" style="background:#4e342e;">08:05</span></td><td style="font-size:11px;">등교전용 무료</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 정류장 -->
+  <div id="tab-stops" class="tab-pane">
+    <div class="stop-card"><div class="stop-title">🔄 천안↔공주 1호차</div><div class="stop-chips"><span class="stop-chip">천안캠</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">두정역</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">천안터미널</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">천안여고</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">공주캠</span></div></div>
+    <div class="stop-card"><div class="stop-title">🔄 천안↔공주 2호차</div><div class="stop-chips"><span class="stop-chip">천안캠</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">두정역</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">공주캠</span></div></div>
+    <div class="stop-card"><div class="stop-title">🔄 예산↔공주</div><div class="stop-chips"><span class="stop-chip">예산캠</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">예산터미널</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">공주캠</span></div></div>
+    <div class="stop-card"><div class="stop-title">🔄 예산↔신창역</div><div class="stop-chips"><span class="stop-chip">예산캠</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">예산읍내</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">신창역 1번출구</span></div></div>
+    <div class="stop-card" style="border-left-color:#c62828;"><div class="stop-title" style="color:#c62828;">🚌 대전(유성) 등교버스</div><div class="stop-chips"><span class="stop-chip" style="background:#ffebee;color:#c62828;border-color:#ef9a9a;">현충원역</span><span style="color:#c62828;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#ffebee;color:#c62828;border-color:#ef9a9a;">유성온천역</span><span style="color:#c62828;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#ffebee;color:#c62828;border-color:#ef9a9a;">유성IC</span><span style="color:#c62828;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#ffebee;color:#c62828;border-color:#ef9a9a;">공주캠</span></div></div>
+    <div class="stop-card" style="border-left-color:#e65100;"><div class="stop-title" style="color:#e65100;">🚌 세종(조치원) 등교버스</div><div class="stop-chips"><span class="stop-chip" style="background:#fff3e0;color:#e65100;border-color:#ffcc80;">조치원역</span><span style="color:#e65100;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#fff3e0;color:#e65100;border-color:#ffcc80;">세종청사</span><span style="color:#e65100;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#fff3e0;color:#e65100;border-color:#ffcc80;">의당</span><span style="color:#e65100;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#fff3e0;color:#e65100;border-color:#ffcc80;">공주캠</span></div></div>
+  </div>
+
+
+
+</div>
+
+<footer>
+  <div class="foot-logo">🏛️ 국립공주대학교 셔틀버스</div>
+  <p>순환버스 041-850-8845 · 등교버스 041-850-8034<br>
+  <a href="https://www.kongju.ac.kr" target="_blank" style="color:var(--cl);">www.kongju.ac.kr</a></p>
+</footer>
+
+<script>
+/* ── 탭 전환 ── */
+function goTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(function(el){ el.classList.remove('show'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('on'); });
+  var el = document.getElementById(id);
+  if(el) el.classList.add('show');
+  if(btn) {
+    btn.classList.add('on');
+  } else {
+    document.querySelectorAll('.tab-btn').forEach(function(b){
+      var oc = b.getAttribute('onclick')||'';
+      if(oc.indexOf("'"+id+"'") !== -1) b.classList.add('on');
+    });
+  }
+}
+
+/* ── 노선 데이터 ── */
+var RD = {
+  c1:{t:'🔄 천안↔공주 1호차',go:{f:'07:30',l:'19:20',i:'월~금(학기중)',s:['천안캠퍼스','두정역','천안터미널','천안여고','공주캠퍼스']},back:{f:'17:30',l:'19:20',i:'월~금',s:['공주캠퍼스','천안여고','천안터미널','두정역','천안캠퍼스']}},
+  c2:{t:'🔄 천안↔공주 2호차',go:{f:'07:50',l:'09:00',i:'월~금',s:['천안캠퍼스','두정역','공주캠퍼스']},back:{f:'18:00',l:'18:40',i:'월~금',s:['공주캠퍼스','두정역','천안캠퍼스']}},
+  c3:{t:'🔄 천안↔두정/터미널',go:{f:'08:10',l:'08:45',i:'월~금',s:['천안캠퍼스','터미널','두정역']},back:{f:'17:10',l:'17:40',i:'월~금',s:['두정역','터미널','천안캠퍼스']}},
+  c4:{t:'🔄 예산↔공주',go:{f:'07:40',l:'09:00',i:'월~금',s:['예산캠퍼스','예산터미널','공주캠퍼스']},back:{f:'17:30',l:'18:30',i:'월~금',s:['공주캠퍼스','예산터미널','예산캠퍼스']}},
+  c5:{t:'🔄 예산↔신창역',go:{f:'07:50',l:'08:40',i:'월~금',s:['예산캠퍼스','예산읍내','신창역 1번출구']},back:{f:'17:20',l:'18:10',i:'월~금',s:['신창역 1번출구','예산읍내','예산캠퍼스']}},
+  g1:{t:'🚌 대전(유성) 등교',go:{f:'07:10',l:'08:50',i:'등교전용',s:['현충원역','유성온천역','유성IC','공주캠퍼스']},back:null},
+  g2:{t:'🚌 세종(조치원) 등교',go:{f:'07:20',l:'08:50',i:'등교전용',s:['조치원역','세종청사','의당','공주캠퍼스']},back:null},
+  g3:{t:'🚌 논산·부여 등교',go:{f:'07:00',l:'08:30',i:'등교전용',s:['논산터미널','연무','공주캠퍼스']},back:null},
+  g4:{t:'🚌 공주시내 등교',go:{f:'07:30',l:'08:05',i:'등교전용',s:['공주시청','공주터미널','공주캠퍼스']},back:null}
+};
+var curR='c1', curD='go', curCat='circ';
+
+function updatePanel() {
+  var d=RD[curR]; if(!d) return;
+  var dd=(curD==='back'&&d.back)?d.back:d.go;
+  document.getElementById('p-title').textContent=d.t;
+  document.getElementById('p-first').textContent=dd.f;
+  document.getElementById('p-last').textContent=dd.l;
+  document.getElementById('p-interval').textContent=dd.i;
+  document.getElementById('p-stops').innerHTML=dd.s.map(function(s){
+    return '<div class="pstop"><span class="pdot"></span>'+s+'</div>';
+  }).join('');
+}
+
+function updateLayers() {
+  document.querySelectorAll('#map-svg .layer').forEach(function(el){
+    el.setAttribute('visibility','hidden'); el.style.display='none';
+  });
+  var el=document.getElementById('L-'+curR+'-'+curD);
+  if(el){ el.setAttribute('visibility','visible'); el.style.display=''; }
+  updatePanel();
+}
+
+function setCat(cat, btn) {
+  curCat=cat;
+  document.querySelectorAll('.mcat').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  document.getElementById('rtab-circ').style.display=cat==='circ'?'flex':'none';
+  document.getElementById('rtab-go').style.display=cat==='go'?'flex':'none';
+  document.getElementById('dir-wrap').style.display=cat==='circ'?'flex':'none';
+  /* 등교버스는 go방향만 있으므로 강제 설정 */
+  if(cat==='go') {
+    curD='go';
+    document.querySelectorAll('.mdir').forEach(function(b){b.classList.remove('on');});
+    var goBtn=document.querySelector('.mdir');
+    if(goBtn) goBtn.classList.add('on');
+  }
+  var firstBtn=document.querySelector('#rtab-'+cat+' .mroute');
+  if(firstBtn) {
+    var rid=firstBtn.getAttribute('onclick').match(/'(\w+)'/)[1];
+    setRoute(rid, firstBtn);
+  }
+}
+
+function setRoute(rid, btn) {
+  curR=rid;
+  document.querySelectorAll('#rtab-'+curCat+' .mroute').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  updateLayers();
+}
+
+function setDir(dir, btn) {
+  curD=dir;
+  document.querySelectorAll('.mdir').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  updateLayers();
+}
+
+
+/* ── 날씨 (XHR + 4초 타임아웃 → 시뮬레이션 fallback) ── */
+function loadWeather() {
+  var ICONS = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌦️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️'};
+  var DESCS = {0:'맑음',1:'대체로 맑음',2:'구름 조금',3:'흐림',45:'안개',48:'안개',51:'이슬비',61:'비',71:'눈',80:'소나기',95:'뇌우'};
+  function applyWeather(t,f,h,w,code){
+    document.getElementById('wx-temp').textContent=t+'°';
+    document.getElementById('wx-desc').textContent=DESCS[code]||'맑음';
+    document.getElementById('wx-detail').textContent='습도 '+h+'% · 체감 '+f+'°';
+    document.getElementById('wx-wind').textContent='바람 '+w+'m/s';
+    document.getElementById('wx-icon').textContent=ICONS[code]||'☀️';
+    var adv='✅ 정상 탑승';
+    if(code>=61&&code<=65)adv='☔ 우산 챙기세요';
+    else if(code>=71&&code<=75)adv='🧤 방한 필수';
+    else if(code>=80)adv='⛈️ 기상 악화 주의';
+    else if(t<=0)adv='🥶 동파 주의';
+    else if(t>=33)adv='🥵 폭염 주의';
+    document.getElementById('wx-advice').textContent=adv;
+  }
+  function useFallback(){
+    var mo=new Date().getMonth();
+    var temps=[2,4,9,15,20,24,27,28,24,18,11,4];
+    var codes=[0,1,2,1,0,61,80,80,1,0,1,3];
+    var t=temps[mo]+Math.round((Math.random()-.5)*4);
+    applyWeather(t,t-2,60+Math.round(Math.random()*20),(1+Math.random()*3).toFixed(1),codes[mo]);
+  }
+  var xhr=new XMLHttpRequest(),done=false;
+  var url='https://api.open-meteo.com/v1/forecast?latitude=36.4468&longitude=127.1198&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=Asia%2FSeoul';
+  var timer=setTimeout(function(){if(!done){done=true;xhr.abort();useFallback();}},4000);
+  xhr.open('GET',url,true);
+  xhr.onreadystatechange=function(){
+    if(xhr.readyState!==4||done)return;
+    done=true;clearTimeout(timer);
+    if(xhr.status===200){
+      try{var d=JSON.parse(xhr.responseText),c=d.current;
+        applyWeather(Math.round(c.temperature_2m),Math.round(c.apparent_temperature),c.relative_humidity_2m,c.wind_speed_10m.toFixed(1),c.weather_code);
+      }catch(e){useFallback();}
+    }else{useFallback();}
+  };
+  xhr.onerror=function(){if(!done){done=true;clearTimeout(timer);useFallback();}};
+  try{xhr.send();}catch(e){if(!done){done=true;clearTimeout(timer);useFallback();}}
+}
+
+/* ── 실시간 도착정보 시뮬레이션 ── */
+var arrData = [
+  {min:8,  stops:['천안터미널','두정역','천안여고','공주시내'], cur:0, total:45, count:23},
+  {min:14, stops:['두정역','천안캠퍼스','공주 진입'], cur:1, total:45, count:38},
+  {min:22, stops:['예산터미널','예산읍내','공주 진입'], cur:0, total:30, count:12}
+];
+
+function updateArr() {
+  arrData.forEach(function(d, i) {
+    d.min = d.min <= 1 ? Math.floor(Math.random()*12)+6 : d.min - 1;
+    d.count = Math.max(0, Math.min(d.total, d.count + Math.floor(Math.random()*3)-1));
+    var minEl = document.getElementById('kmin'+i);
+    var stopEl = document.getElementById('kstop'+i);
+    var cntEl  = document.getElementById('kcnt'+i);
+    var congEl = document.getElementById('kcong'+i);
+    if(minEl) minEl.innerHTML = d.min + '<span>분 후</span>';
+    if(stopEl) stopEl.textContent = '현재: ' + d.stops[d.cur % d.stops.length];
+    if(cntEl)  cntEl.textContent = d.count + '/' + d.total + '명';
+    if(congEl) {
+      var r = d.count / d.total;
+      congEl.className = 'cong-box ' + (r < 0.5 ? 'cong-green' : r < 0.8 ? 'cong-yellow' : 'cong-red');
+      congEl.querySelector('.cong-icon').textContent = r < 0.5 ? '🟢' : r < 0.8 ? '🟡' : '🔴';
+    }
+    d.cur++;
+  });
+}
+setInterval(updateArr, 30000); // 30초마다 갱신
+
+
+/* ── 좌석예약 (건양대 구조 동일, 45석) ── */
+var kjSeatData = {};
+var kjMySeats  = {};
+var kjSelSeat  = { circ: null, free: null };
+var kjCurBus   = { circ: '천안→공주 1호차__1회·07:30', free: '대전(유성·현충원)__1회·07:10' };
+
+function kjEnsureSeats(busId) {
+  if (!kjSeatData[busId]) {
+    var total = 45;
+    var taken = new Set();
+    while (taken.size < 10) taken.add(Math.floor(Math.random()*total)+1);
+    kjSeatData[busId] = Array.from({length:total}, function(_,i){
+      return { id: i+1, taken: taken.has(i+1) };
+    });
+  }
+}
+
+function kjMakeSeat(s, busId, cat) {
+  var btn = document.createElement('button');
+  var isMine = (s.id === kjMySeats[busId]);
+  var isSel  = (s.id === kjSelSeat[cat]);
+  btn.className = 'kj-seat ' + (isMine ? 'mine' : s.taken ? 'taken' : isSel ? 'sel' : 'avail');
+  btn.textContent = s.id;
+  btn.disabled = s.taken && !isMine;
+  btn.onclick = (function(sid){ return function(){
+    kjSelSeat[cat] = sid;
+    kjRenderSeats(cat);
+    kjToast(sid + '번 좌석 선택됨 🟠');
+  }; })(s.id);
+  return btn;
+}
+
+function kjMakeWin(label) {
+  var d = document.createElement('div');
+  d.className = 'kj-seat-window';
+  d.textContent = label;
+  return d;
+}
+
+function kjMakeAisle(label) {
+  var d = document.createElement('div');
+  d.className = 'kj-seat-aisle';
+  if(label) d.textContent = label;
+  return d;
+}
+
+function kjRenderSeats(cat) {
+  var busId = kjCurBus[cat];
+  kjEnsureSeats(busId);
+  var wrap = document.getElementById('kjsg-' + cat);
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  var sd = kjSeatData[busId];
+
+  /* 사진 레이아웃:
+     위쪽: 21 23 25 27 29 31 33 35 37 39 | 통로 | 41
+           22 24 26 28 30 32 34 36 38 40 |      | 42
+     [통로]
+     아래: 1  3  5  7  9 11 13 15 17 19 |      | 44
+           2  4  6  8 10 12 14 16 18 20 |      | 45
+     43번: 오른쪽 보조 (통로 우측)
+     운전석: 맨 앞 */
+
+  var scrollWrap = document.createElement('div');
+  scrollWrap.style.cssText = 'overflow-x:auto;padding-bottom:8px;';
+  var inner = document.createElement('div');
+  inner.style.cssText = 'min-width:520px;';
+
+  function makeRow(ids, hasAisle, rightId) {
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:5px;margin-bottom:5px;';
+    ids.forEach(function(id){ row.appendChild(kjMakeSeat(sd[id-1], busId, cat)); });
+    if(hasAisle){ var a=document.createElement('div'); a.style.cssText='width:22px;flex-shrink:0;'; row.appendChild(a); }
+    if(rightId){ row.appendChild(kjMakeSeat(sd[rightId-1], busId, cat)); }
+    return row;
+  }
+  function makeAisleRow() {
+    var row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:5px;margin-bottom:5px;';
+    var lbl=document.createElement('div');
+    lbl.style.cssText='flex:1;font-size:10px;color:#bbb;padding-left:2px;';
+    lbl.textContent='통로';
+    row.appendChild(lbl);
+    return row;
+  }
+
+  /* 레이아웃:
+     [21 23 25 27 29 31 33 35 37 39 | gap | 41]
+     [22 24 26 28 30 32 34 36 38 40 | gap | 42]
+     [           통로              | gap | 43]  ← 42↔44 가운데
+     [ 1  3  5  7  9 11 13 15 17 19 | gap | 44]
+     [ 2  4  6  8 10 12 14 16 18 20 | gap | 45]
+     [← 앞  🚌운전석]
+  */
+  inner.appendChild(makeRow([21,23,25,27,29,31,33,35,37,39], true, 41));
+  inner.appendChild(makeRow([22,24,26,28,30,32,34,36,38,40], true, 42));
+
+  // 통로 행 + 43번 (42와 44 사이 정중앙 — 오른쪽 열에 맞게)
+  // 10개 좌석(34px) + 9개 gap(5px) = 385px, aisle 22px → 오른쪽 열 시작
+  var aisleRow=document.createElement('div');
+  aisleRow.style.cssText='display:flex;align-items:center;margin-bottom:5px;';
+  var aisleLbl=document.createElement('div');
+  aisleLbl.style.cssText='width:'+(34*10 + 5*9)+'px;flex-shrink:0;font-size:10px;color:#bbb;padding-left:2px;display:flex;align-items:center;';
+  aisleLbl.textContent='통로';
+  var aisleGap=document.createElement('div');
+  aisleGap.style.cssText='width:32px;flex-shrink:0;'; // gap(5) + aisle(22) + gap(5)
+  aisleRow.appendChild(aisleLbl);
+  aisleRow.appendChild(aisleGap);
+  aisleRow.appendChild(kjMakeSeat(sd[42], busId, cat)); // 43번
+  inner.appendChild(aisleRow);
+
+  inner.appendChild(makeRow([1,3,5,7,9,11,13,15,17,19], true, 44));
+  inner.appendChild(makeRow([2,4,6,8,10,12,14,16,18,20], true, 45));
+
+  // 운전석 행
+  var frontRow=document.createElement('div');
+  frontRow.style.cssText='display:flex;align-items:center;gap:8px;margin-top:6px;padding-top:6px;border-top:1px dashed #e0e0e0;';
+  var arr=document.createElement('div'); arr.style.cssText='font-size:10px;color:#aaa;flex-shrink:0;'; arr.textContent='← 앞';
+  var dseat=document.createElement('div');
+  dseat.style.cssText='padding:5px 14px;background:#e8f5e9;border:2px solid #a5d6a7;border-radius:10px;font-size:11px;font-weight:700;color:#2e7d32;white-space:nowrap;flex-shrink:0;';
+  dseat.textContent='🚌 운전석';
+  frontRow.appendChild(arr);
+  frontRow.appendChild(dseat);
+  inner.appendChild(frontRow);
+
+  scrollWrap.appendChild(inner);
+  wrap.appendChild(scrollWrap);
+}
+
+function kjBcat(cat, btn) {
+  document.querySelectorAll('.kj-bcat').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  document.querySelectorAll('.kj-bsec').forEach(function(s){ s.classList.remove('on'); });
+  document.getElementById('kjbsec-'+cat).classList.add('on');
+  kjRenderSeats(cat);
+}
+window.kjBcat = kjBcat;
+
+function kjChip(btn, cat, route) {
+  document.querySelectorAll('#kjchip-'+cat+' .kj-chip').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  var time = kjCurBus[cat].split('__')[1];
+  kjCurBus[cat] = route + '__' + time;
+  kjSelSeat[cat] = null;
+  kjRenderSeats(cat);
+}
+window.kjChip = kjChip;
+
+function kjTime(btn, cat, time) {
+  document.querySelectorAll('#kjtime-'+cat+' .kj-tbtn').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  var route = kjCurBus[cat].split('__')[0];
+  kjCurBus[cat] = route + '__' + time;
+  kjSelSeat[cat] = null;
+  kjRenderSeats(cat);
+}
+window.kjTime = kjTime;
+
+function kjReserve(cat) {
+  var busId = kjCurBus[cat];
+  if (!kjSelSeat[cat]) { kjToast('좌석을 먼저 선택하세요.'); return; }
+  if (kjMySeats[busId]) { kjToast('이미 예약된 좌석이 있습니다.'); return; }
+  kjMySeats[busId] = kjSelSeat[cat];
+  kjToast(busId + ' ' + kjSelSeat[cat] + '번 예약 완료! ✅');
+  kjSelSeat[cat] = null;
+  kjRenderSeats(cat);
+}
+window.kjReserve = kjReserve;
+
+function kjCancel(cat) {
+  var busId = kjCurBus[cat];
+  if (!kjMySeats[busId]) { kjToast('취소할 예약이 없습니다.'); return; }
+  kjToast(kjMySeats[busId] + '번 예약이 취소됐습니다.');
+  delete kjMySeats[busId];
+  kjRenderSeats(cat);
+}
+window.kjCancel = kjCancel;
+
+function kjToast(msg) {
+  var t = document.getElementById('kj-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'kj-toast';
+    t.className = 'kj-toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+/* ── 초기화 ── */
+window.goTab=goTab;
+window.setCat=setCat;
+window.setRoute=setRoute;
+window.setDir=setDir;
+
+kjRenderSeats("circ");
+kjRenderSeats("free");
+loadWeather();
+updateLayers();
+</script>
+
+<script>
+(function(){
+  var WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',71:'❄️',80:'🌦️',95:'⛈️'};
+  var WD={0:'맑음',1:'대체로 맑음',2:'구름 조금',3:'흐림',45:'안개',51:'이슬비',61:'비',71:'눈',80:'소나기',95:'뇌우'};
+  var WA={0:'외출하기 좋은 날씨예요!',1:'날씨가 맑아요',2:'구름이 조금 있어요',3:'흐린 날씨예요',45:'안개가 끼었어요',51:'가벼운 비가 내려요',61:'비가 내리고 있어요',71:'눈이 내리고 있어요',80:'소나기가 내릴 수 있어요',95:'뇌우 주의!'};
+
+  // 공주캠퍼스 좌표
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=36.4468&longitude=127.1198&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=Asia%2FSeoul')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var c=data.current;
+      var code=c.weather_code;
+      if(document.getElementById('wx-temp'))   document.getElementById('wx-temp').textContent=Math.round(c.temperature_2m)+'°';
+      if(document.getElementById('wx-desc'))   document.getElementById('wx-desc').textContent=WD[code]||'--';
+      if(document.getElementById('wx-icon'))   document.getElementById('wx-icon').textContent=WI[code]||'🌡️';
+      if(document.getElementById('wx-detail')) document.getElementById('wx-detail').textContent='체감 '+Math.round(c.apparent_temperature)+'° · 습도 '+c.relative_humidity_2m+'%';
+      if(document.getElementById('wx-wind'))   document.getElementById('wx-wind').textContent='바람 '+c.wind_speed_10m.toFixed(1)+'m/s';
+      if(document.getElementById('wx-advice')) document.getElementById('wx-advice').textContent=WA[code]||'날씨 정보';
+    }).catch(function(){});
+})();
+</script>
+
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app = initializeApp({apiKey:"AIzaSyAp_C6WjPEdjlYfybshFrzT-W0chlMnFrY",authDomain:"navicampus-2cb39.firebaseapp.com",projectId:"navicampus-2cb39",storageBucket:"navicampus-2cb39.firebasestorage.app",messagingSenderId:"683352639087",appId:"1:683352639087:web:668ebb956ef257763daf9a"});
+const db = getFirestore(app);
+window.kjSaveRes = async function(name, sid, busId, seat) {
+  try { await addDoc(collection(db,"reservations"),{name,studentId:sid,busId,seat,school:"공주대학교",createdAt:serverTimestamp()}); } catch(e) { console.error(e); }
+};
+</script>
+
+<script>
+// ── kjReserve 덮어쓰기 ──
+window._kjReserveQR = function(cat) {
+  var busId = kjCurBus[cat];
+  if (!kjSelSeat[cat]) { kjToast('좌석을 먼저 선택하세요.'); return; }
+  if (kjMySeats[busId]) { kjToast('이미 예약된 좌석이 있습니다.'); return; }
+  var seat = kjSelSeat[cat];
+
+  var overlay = document.createElement('div');
+  overlay.id = 'kj-res-modal';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  var box = document.createElement('div');
+  box.style.cssText = 'background:#fff;border-radius:18px;padding:28px 22px;width:310px;max-width:92vw;box-shadow:0 10px 40px rgba(0,0,0,.25);';
+  box.innerHTML =
+    '<div style="font-size:18px;font-weight:800;color:#1a237e;margin-bottom:18px;">✏️ 예약 정보 입력</div>'+
+    '<div style="margin-bottom:12px;"><div style="font-size:13px;color:#555;margin-bottom:5px;">이름</div>'+
+    '<input id="kjrn" type="text" placeholder="홍길동" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid #ddd;border-radius:9px;font-size:15px;outline:none;font-family:inherit;"></div>'+
+    '<div style="margin-bottom:22px;"><div style="font-size:13px;color:#555;margin-bottom:5px;">학번</div>'+
+    '<input id="kjrs" type="text" placeholder="20241234" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid #ddd;border-radius:9px;font-size:15px;outline:none;font-family:inherit;"></div>'+
+    '<div style="display:flex;gap:10px;" id="kj-modal-btns"></div>';
+
+  var cancelBtn = document.createElement('button');
+  cancelBtn.textContent = '취소';
+  cancelBtn.style.cssText = 'flex:1;padding:12px;border:1.5px solid #ddd;background:#fff;border-radius:9px;font-size:14px;cursor:pointer;font-family:inherit;';
+  cancelBtn.onclick = function() { overlay.remove(); };
+
+  var confirmBtn = document.createElement('button');
+  confirmBtn.textContent = '예약 확정';
+  confirmBtn.style.cssText = 'flex:1;padding:12px;background:#1a237e;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;';
+  confirmBtn.onclick = function() {
+    var name = document.getElementById('kjrn').value.trim();
+    var sid  = document.getElementById('kjrs').value.trim();
+    if (!name) { alert('이름을 입력해 주세요.'); return; }
+    if (!sid)  { alert('학번을 입력해 주세요.'); return; }
+    kjMySeats[busId] = seat;
+    kjSelSeat[cat] = null;
+    overlay.remove();
+    kjRenderSeats(cat);
+    kjToast(seat + '번 예약 완료! ✅');
+    if (window.kjSaveRes) window.kjSaveRes(name, sid, busId, seat);
+    // QR 팝업
+    var ex=document.getElementById('kj-qr-popup'); if(ex) ex.remove();
+    var qd=encodeURIComponent('공주대 셔틀|이름:'+name+'|학번:'+sid+'|노선:'+busId+'|좌석:'+seat+'번');
+    var qrOverlay=document.createElement('div'); qrOverlay.id='kj-qr-popup';
+    qrOverlay.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;';
+    var qrBox=document.createElement('div');
+    qrBox.style.cssText='background:#fff;border-radius:20px;padding:30px 22px;width:300px;max-width:92vw;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.3);';
+    qrBox.innerHTML=
+      '<div style="font-size:22px;font-weight:800;color:#1a237e;margin-bottom:4px;">✅ 예약 완료!</div>'+
+      '<div style="font-size:13px;color:#888;margin-bottom:18px;">탑승 시 QR코드를 보여주세요</div>'+
+      '<div style="background:#f5f5f5;border-radius:12px;padding:14px;display:inline-block;margin-bottom:14px;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+qd+'" width="150" height="150" style="display:block;border-radius:6px;"></div>'+
+      '<div style="font-size:17px;font-weight:700;color:#222;margin-bottom:3px;">'+name+'</div>'+
+      '<div style="font-size:13px;color:#999;margin-bottom:3px;">'+sid+'</div>'+
+      '<div style="font-size:14px;color:#1a237e;font-weight:600;margin-bottom:20px;">'+busId+' · '+seat+'번 좌석</div>';
+    var closeBtn=document.createElement('button');
+    closeBtn.textContent='확인';
+    closeBtn.style.cssText='width:100%;padding:13px;background:#1a237e;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;';
+    closeBtn.onclick=function(){qrOverlay.remove();};
+    qrBox.appendChild(closeBtn);
+    qrOverlay.appendChild(qrBox);
+    document.body.appendChild(qrOverlay);
+  };
+
+  box.querySelector('#kj-modal-btns').appendChild(cancelBtn);
+  box.querySelector('#kj-modal-btns').appendChild(confirmBtn);
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  setTimeout(function(){var n=document.getElementById('kjrn');if(n)n.focus();},100);
+};
+
+window.kjReserve = function(cat) {
+  window._kjReserveQR(cat);
+};
+
+// ── Leaflet 지도 ──
+var KJ_MAP=null, KJ_RL=null;
+var KJ_ROUTES = {
+  'c1':{name:'천안↔공주 1호차',color:'#1a237e',stops:[
+    {lat:36.7995,lng:127.1590,name:'천안캠퍼스'},
+    {lat:36.8066,lng:127.0803,name:'천안터미널'},
+    {lat:36.8260,lng:127.1410,name:'두정역'},
+    {lat:36.7820,lng:127.0788,name:'천안여고'},
+    {lat:36.4734,lng:127.1196,name:'공주캠퍼스'}
+  ]},
+  'c2':{name:'천안↔공주 2호차',color:'#1565c0',stops:[
+    {lat:36.7995,lng:127.1590,name:'천안캠퍼스'},
+    {lat:36.8260,lng:127.1410,name:'두정역'},
+    {lat:36.8066,lng:127.0803,name:'천안터미널'},
+    {lat:36.4734,lng:127.1196,name:'공주캠퍼스'}
+  ]},
+  'c3':{name:'천안↔두정/터미널',color:'#0277bd',stops:[
+    {lat:36.8260,lng:127.1410,name:'두정역'},
+    {lat:36.8066,lng:127.0803,name:'천안터미널'},
+    {lat:36.4734,lng:127.1196,name:'공주캠퍼스'}
+  ]},
+  'c4':{name:'예산↔공주',color:'#4527a0',stops:[
+    {lat:36.6839,lng:126.8449,name:'예산캠퍼스'},
+    {lat:36.4734,lng:127.1196,name:'공주캠퍼스'}
+  ]},
+  'c5':{name:'예산↔신창역',color:'#6200ea',stops:[
+    {lat:36.6839,lng:126.8449,name:'예산캠퍼스'},
+    {lat:36.7842,lng:126.8934,name:'신창역'},
+    {lat:36.4734,lng:127.1196,name:'공주캠퍼스'}
+  ]},
+  'g1':{name:'대전(유성·현충원)',color:'#2e7d32',stops:[
+    {lat:36.3621,lng:127.3561,name:'유성온천역'},
+    {lat:36.3280,lng:127.3354,name:'현충원'},
+    {lat:36.4734,lng:127.1196,name:'공주캠퍼스'}
+  ]},
+  'g2':{name:'세종(조치원)',color:'#1b5e20',stops:[
+    {lat:36.5992,lng:127.0062,name:'조치원역'},
+    {lat:36.4734,lng:127.1196,name:'공주캠퍼스'}
+  ]},
+  'g3':{name:'논산·부여',color:'#33691e',stops:[
+    {lat:36.1855,lng:127.0982,name:'논산터미널'},
+    {lat:36.2760,lng:126.9103,name:'부여터미널'},
+    {lat:36.4734,lng:127.1196,name:'공주캠퍼스'}
+  ]},
+  'g4':{name:'공주시내',color:'#558b2f',stops:[
+    {lat:36.4470,lng:127.1190,name:'공주터미널'},
+    {lat:36.4734,lng:127.1196,name:'공주캠퍼스'}
+  ]}
+};
+
+window.kjDrawRoute = function(key) {
+  if(!KJ_MAP) return;
+  if(KJ_RL){KJ_MAP.removeLayer(KJ_RL);KJ_RL=null;}
+  var r=KJ_ROUTES[key]; if(!r) return;
+  var ll=r.stops.map(function(s){return[s.lat,s.lng];});
+  KJ_RL=L.polyline(ll,{color:r.color,weight:5,opacity:0.85}).addTo(KJ_MAP);
+  KJ_MAP.fitBounds(KJ_RL.getBounds(),{padding:[30,30]});
+  var first=r.stops[0], last=r.stops[r.stops.length-1];
+  function mkIcon(color){return L.divIcon({html:'<div style="width:14px;height:14px;border-radius:50%;background:'+color+';border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);"></div>',iconSize:[14,14],iconAnchor:[7,7],className:''});}
+  L.marker([first.lat,first.lng],{icon:mkIcon(r.color)}).addTo(KJ_MAP).bindPopup('<b>🚌 출발: '+first.name+'</b>');
+  L.marker([last.lat,last.lng],{icon:mkIcon('#e53935')}).addTo(KJ_MAP).bindPopup('<b>🏫 도착: '+last.name+'</b>');
+};
+
+function kjInitMap(){
+  var el=document.getElementById('kj-leaflet-map');
+  if(!el||typeof L==='undefined'){setTimeout(kjInitMap,500);return;}
+  if(KJ_MAP){try{KJ_MAP.remove();}catch(e){}KJ_MAP=null;}
+  KJ_MAP=L.map('kj-leaflet-map').setView([36.4734,127.1196],10);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(KJ_MAP);
+  setTimeout(function(){if(KJ_MAP)KJ_MAP.invalidateSize();},400);
+  window.kjDrawRoute('c1');
+}
+
+// setRoute에 Leaflet 연동
+var _origSetRoute = window.setRoute;
+window.setRoute = function(rid, btn) {
+  if(_origSetRoute) _origSetRoute(rid, btn);
+  window.kjDrawRoute(rid);
+};
+
+// goTab에서 지도탭 클릭시 크기 재계산
+var _origGoTab = window.goTab;
+window.goTab = function(id, btn) {
+  if(_origGoTab) _origGoTab(id, btn);
+  if(id==='tab-map') setTimeout(function(){if(KJ_MAP)KJ_MAP.invalidateSize();},200);
+};
+
+window.addEventListener('load', function(){setTimeout(kjInitMap,300);});
+</script>
+
+</body>
+</html>
