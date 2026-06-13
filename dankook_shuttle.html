@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<meta name="theme-color" content="#b71c1c">
+<title>단국대학교 셔틀버스</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{font-family:'Noto Sans KR',sans-serif;background:#fdf5f5;color:#222;}
+a{text-decoration:none;color:inherit;}
+:root{--c:#b71c1c;--c2:#c62828;--cl:#ef9a9a;--cp:#ffebee;}
+
+nav{position:sticky;top:0;z-index:200;background:#fff;border-bottom:3px solid var(--c);box-shadow:0 2px 12px rgba(0,0,0,.08);}
+.nav-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:58px;gap:12px;}
+.nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.nav-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--c),var(--c2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+.nav-title{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--c);}
+.nav-sub{font-size:10px;color:#888;margin-left:3px;}
+.nav-btns{display:flex;gap:6px;}
+.nav-btns button{padding:6px 13px;border-radius:18px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.btn-ol{background:transparent;border:2px solid var(--c);color:var(--c);}
+.btn-ol:hover{background:var(--cp);}
+.btn-fi{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;border:none;}
+
+.hero{background:linear-gradient(135deg,#4a0000,#b71c1c 45%,#e53935 100%);padding:44px 20px 52px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.04'%3E%3Cpath d='M20 20h4v4h-4zm0-20h4v4h-4zM0 20h4v4H0zM0 0h4v4H0z'/%3E%3C/g%3E%3C/svg%3E");}
+.hero-in{position:relative;z-index:2;max-width:1100px;margin:0 auto;}
+.hero h1{font-family:'Poppins',sans-serif;font-size:clamp(26px,5vw,48px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:10px;text-shadow:0 2px 10px rgba(0,0,0,.25);}
+.hero h1 span{color:#ffcdd2;}
+.hero p{font-size:14px;color:rgba(255,255,255,.82);margin-bottom:22px;}
+.hero-stats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px;}
+.hstat{background:rgba(255,255,255,.12);border-radius:10px;padding:8px 16px;text-align:center;color:#fff;}
+.hstat .n{font-family:'Poppins',sans-serif;font-size:20px;font-weight:800;line-height:1;}
+.hstat .l{font-size:10px;opacity:.8;margin-top:2px;}
+.hero-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.hero-btns button{padding:11px 22px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.hbtn-m{background:#fff;color:var(--c);box-shadow:0 4px 14px rgba(0,0,0,.18);}
+.hbtn-m:hover{transform:translateY(-2px);}
+.hbtn-s{background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.45)!important;}
+
+.main{max-width:1100px;margin:0 auto;padding:28px 20px 60px;}
+.dash{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:28px;}
+.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 3px 14px rgba(0,0,0,.07);}
+.card-label{font-size:10px;font-weight:700;color:#999;letter-spacing:.5px;margin-bottom:12px;}
+
+.arr-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f5f5f5;}
+.arr-item:last-child{border-bottom:none;}
+.arr-name{font-weight:700;font-size:12px;color:var(--c);}
+.arr-sub{font-size:10px;color:#bbb;margin-top:1px;}
+.arr-time{font-family:'Poppins',sans-serif;font-size:22px;font-weight:900;color:var(--c);white-space:nowrap;}
+.arr-time span{font-size:12px;font-weight:400;color:#aaa;}
+.arr-badges{display:flex;gap:4px;flex-wrap:wrap;}
+.badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
+.badge-b{background:var(--c);color:#fff;}
+.badge-live{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--cp);color:var(--c);font-weight:700;}
+
+.wx-card{background:linear-gradient(135deg,#ffebee,#ffcdd2);border-radius:14px;padding:18px;border:1px solid #ef9a9a;}
+.wx-temp{font-family:'Poppins',sans-serif;font-size:34px;font-weight:900;color:var(--c);line-height:1;}
+.wx-adv{font-size:12px;font-weight:700;color:var(--c);}
+
+.dk-delay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+.dk-delay-card{border-radius:10px;padding:10px 12px;border:1.5px solid #e0e0e0;background:#fafafa;}
+.dk-delay-ok{border-color:#ffcdd2;background:#fff5f5;}
+.dk-delay-warn{border-color:#ffe082;background:#fffde7;}
+.dk-delay-danger{border-color:#ffcdd2;background:#fff5f5;}
+.dk-delay-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.dk-dcar{font-size:10px;font-weight:800;color:#222;}
+.dk-dbadge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;}
+.dk-dok{background:var(--cp);color:var(--c);}
+.dk-dwarn{background:#fff8e1;color:#f57c00;}
+.dk-ddanger{background:#ffebee;color:#c62828;}
+.dk-dpct{font-size:24px;font-weight:900;color:var(--c);line-height:1;margin-bottom:5px;}
+.dk-dbar-bg{height:5px;background:#e0e0e0;border-radius:3px;overflow:hidden;margin-bottom:5px;}
+.dk-dbar{height:100%;border-radius:3px;}
+.dk-dmeta{font-size:10px;color:#777;}
+.dk-dmeta strong{color:#333;}
+
+.tabs{display:flex;gap:3px;margin-bottom:22px;background:#fff;border-radius:12px;padding:5px;box-shadow:0 2px 10px rgba(0,0,0,.06);width:fit-content;flex-wrap:wrap;}
+.tab-btn{padding:7px 16px;border-radius:9px;font-size:13px;font-weight:700;border:none;background:transparent;color:#777;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;white-space:nowrap;}
+.tab-btn.on{background:var(--c);color:#fff;}
+.tab-pane{display:none;}
+.tab-pane.show{display:block;}
+
+.map-wrap{background:#fff;border-radius:14px;box-shadow:0 3px 14px rgba(0,0,0,.08);overflow:hidden;margin-bottom:28px;}
+.map-head{padding:16px 20px 0;}
+.map-head h3{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--c);margin-bottom:3px;}
+.map-head p{font-size:12px;color:#bbb;margin-bottom:10px;}
+.map-cats{display:flex;gap:6px;padding:10px 20px;border-bottom:1px solid #f0f0f0;flex-wrap:wrap;}
+.mcat{padding:6px 14px;border-radius:18px;font-size:12px;font-weight:700;border:2px solid #ddd;background:#fff;color:#555;cursor:pointer;transition:.2s;}
+.mcat.on{background:var(--c);border-color:var(--c);color:#fff;}
+.map-routes{display:flex;gap:5px;flex-wrap:wrap;padding:8px 20px;}
+.mroute{padding:5px 11px;border-radius:18px;font-size:11px;font-weight:700;border:2px solid #ddd;background:#fff;color:#555;cursor:pointer;transition:.2s;}
+.mroute.on{background:var(--c);border-color:var(--c);color:#fff;}
+.mroute:hover:not(.on){border-color:var(--cl);background:var(--cp);}
+.map-body{display:flex;min-height:320px;}
+.map-panel{width:200px;background:#fff;padding:14px;border-left:1px solid #f0f0f0;flex-shrink:0;}
+.panel-title{font-size:13px;font-weight:800;color:var(--c);margin-bottom:10px;}
+.panel-row{margin-bottom:8px;}
+.panel-label{font-size:10px;color:#bbb;margin-bottom:2px;}
+.panel-val{font-family:'Poppins',sans-serif;font-size:18px;font-weight:800;color:var(--c);}
+.panel-sm{font-size:12px;font-weight:700;color:#333;}
+.pstop{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid #f5f5f5;font-size:11px;}
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--c);flex-shrink:0;}
+
+.tt-card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 3px 14px rgba(0,0,0,.07);margin-bottom:14px;}
+.tt-title{font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;color:var(--c);margin-bottom:14px;}
+.tt-table{width:100%;border-collapse:collapse;min-width:380px;}
+.tt-table th{padding:9px 12px;text-align:left;font-size:11px;font-weight:700;color:var(--c);background:var(--cp);}
+.tt-table td{padding:9px 12px;font-size:12px;border-bottom:1px solid #f0f0f0;}
+.tt-table tr:nth-child(even) td{background:#fafafa;}
+.chip{display:inline-block;background:var(--c);color:#fff;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:8px;margin:1px;}
+.chip-gray{background:#757575;}
+.chip-warn{background:#f57c00;}
+
+.stop-card{background:#fff;border-radius:12px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:10px;border-left:4px solid var(--c);}
+.stop-title{font-weight:800;font-size:13px;color:var(--c);margin-bottom:8px;}
+.stop-chips{display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
+.stop-chip{background:var(--cp);color:var(--c);border:1.5px solid #ef9a9a;border-radius:18px;padding:3px 10px;font-size:11px;font-weight:600;}
+
+/* 좌석예약 */
+.dk-booking-wrap{background:#fff;border-radius:14px;padding:24px;box-shadow:0 3px 14px rgba(0,0,0,.07);}
+.dk-booking-cats{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.dk-bcat{padding:8px 20px;border-radius:24px;font-size:13px;font-weight:700;border:2px solid #ddd;background:#fff;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.dk-bcat.on{background:var(--c);border-color:var(--c);color:#fff;box-shadow:0 4px 12px rgba(183,28,28,.25);}
+.dk-bsec{display:none;}
+.dk-bsec.on{display:block;}
+.dk-step{font-size:12px;font-weight:700;color:#555;margin-bottom:8px;}
+.dk-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.dk-chip{padding:7px 16px;border-radius:18px;font-size:13px;font-weight:600;border:2px solid #ddd;background:#fff;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.dk-chip.on{border-color:var(--c);background:var(--cp);color:var(--c);}
+.dk-times{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.dk-tbtn{padding:8px 13px;border-radius:10px;border:2px solid #ddd;background:#fff;cursor:pointer;font-size:11px;font-weight:700;color:#555;font-family:'Noto Sans KR',sans-serif;text-align:center;transition:.2s;}
+.dk-tbtn span{font-size:10px;font-weight:400;color:#aaa;display:block;}
+.dk-tbtn.on{background:linear-gradient(135deg,var(--c),var(--c2));border-color:var(--c);color:#fff;box-shadow:0 3px 10px rgba(183,28,28,.3);}
+.dk-tbtn.on span{color:rgba(255,255,255,.8);}
+.dk-tbtn.disabled-time{opacity:.45;cursor:not-allowed;}
+.dk-seat-legend{display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.dk-seat-legend span{font-size:11px;color:#777;display:flex;align-items:center;gap:5px;}
+.dk-sdot{width:13px;height:13px;border-radius:3px;display:inline-block;}
+.dk-sdot.avail{background:var(--cp);border:1.5px solid #ef9a9a;}
+.dk-sdot.taken{background:#ffebee;border:1.5px solid #ef9a9a;}
+.dk-sdot.mine{background:var(--c);border:1.5px solid #7f0000;}
+.dk-sdot.sel{background:#ff8f00;border:1.5px solid #e65100;}
+.dk-sgrid{overflow-x:auto;padding-bottom:4px;}
+.dk-seat{width:34px;height:34px;border-radius:7px;border:none;cursor:pointer;font-size:10px;font-weight:700;transition:.18s;font-family:'Noto Sans KR',sans-serif;flex-shrink:0;}
+.dk-seat.avail{background:var(--cp);color:var(--c);border:1.5px solid #ef9a9a;}
+.dk-seat.avail:hover{background:#ffcdd2;transform:scale(1.08);}
+.dk-seat.taken{background:#ffebee;color:#c62828;border:1.5px solid #ef9a9a;cursor:not-allowed;}
+.dk-seat.mine{background:var(--c);color:#fff;border:1.5px solid #7f0000;box-shadow:0 3px 10px rgba(183,28,28,.35);}
+.dk-seat.sel{background:linear-gradient(135deg,#ff8f00,#ffa000);color:#fff;border:1.5px solid #e65100;transform:scale(1.1);box-shadow:0 3px 10px rgba(255,143,0,.4);}
+.dk-reserve-btn{width:100%;padding:11px;background:var(--c);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:12px;transition:.2s;}
+.dk-reserve-btn:hover{background:#7f0000;}
+.dk-cancel-btn{width:100%;padding:9px;background:#f5f5f5;color:#555;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:6px;}
+.dk-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(183,28,28,.93);color:#fff;padding:10px 24px;border-radius:24px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.dk-toast.show{opacity:1;}
+
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:32px;}
+.feat-card{background:#fff;border-radius:14px;padding:22px 18px;box-shadow:0 3px 14px rgba(0,0,0,.07);border:1px solid #eee;cursor:pointer;transition:.2s;}
+.feat-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.11);}
+.feat-icon{font-size:32px;margin-bottom:10px;}
+.feat-card h3{font-size:15px;font-weight:700;color:#222;margin-bottom:6px;}
+.feat-card p{font-size:13px;color:#888;line-height:1.6;margin-bottom:12px;}
+.feat-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border-radius:18px;background:var(--cp);color:var(--c);font-size:12px;font-weight:700;border:1.5px solid var(--cl);cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.feat-btn:hover{background:var(--c);color:#fff;}
+
+footer{background:#1a1a1a;color:#aaa;padding:28px 20px;text-align:center;}
+.foot-logo{font-family:'Poppins',sans-serif;font-size:14px;font-weight:800;color:#fff;margin-bottom:6px;}
+footer p{font-size:11px;line-height:1.8;}
+
+@media(max-width:900px){.dash{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){
+  .nav-in{padding:0 12px;height:52px;}
+  .nav-title{font-size:13px;}
+  .nav-sub{display:none;}
+  .nav-btns button{font-size:11px;padding:5px 8px;}
+  .hero{padding:28px 14px 36px;}
+  .hero h1{font-size:22px;}
+  .hero-btns{flex-direction:column;}
+  .hero-btns button{width:100%;}
+  .main{padding:20px 14px 48px;}
+  .dash{grid-template-columns:1fr;}
+  .map-body{flex-direction:column;}
+  .map-panel{width:100%;border-left:none;border-top:1px solid #f0f0f0;}
+  .feat-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+<button onclick="location.href='index.html'" style="position:fixed;top:14px;left:14px;z-index:9999;background:#fff;color:#b71c1c;border:2px solid #b71c1c;border-radius:18px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.15);">← 목록</button>
+
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-icon">🚌</div>
+      <span class="nav-title">단국대학교</span>
+      <span class="nav-sub">셔틀버스</span>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-ol" onclick="goTab('tab-map')">🗺️ 노선도</button>
+      <button class="btn-fi" onclick="goTab('tab-tt',null);document.querySelector('.tabs').scrollIntoView({behavior:'smooth'})">📅 시간표</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-in">
+    <h1>단국대학교<br><span>셔틀버스</span> 서비스</h1>
+    <p>두정역·천안역·천안터미널 → 학교 · 학기 중 월~금 운행</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">3</div><div class="l">운행 노선</div></div>
+      <div class="hstat"><div class="n">08:30</div><div class="l">첫차(두정)</div></div>
+      <div class="hstat"><div class="n">17:10</div><div class="l">막차 하교</div></div>
+      <div class="hstat"><div class="n">무료</div><div class="l">탑승 요금</div></div>
+    </div>
+    <div class="hero-btns">
+      <button class="hbtn-m" onclick="document.getElementById('dk-map-wrap').scrollIntoView({behavior:'smooth'})">🗺️ 노선 지도</button>
+      <button class="hbtn-s" onclick="goTab('tab-tt',null);document.querySelector('.tabs').scrollIntoView({behavior:'smooth'})">📅 시간표 보기</button>
+    </div>
+  </div>
+</section>
+
+<div class="main">
+
+  <!-- 주요서비스 -->
+  <div style="margin-bottom:24px;">
+    <div style="font-size:18px;font-weight:800;color:#222;margin-bottom:6px;">주요 서비스</div>
+    <div class="feat-grid">
+      <div class="feat-card" onclick="document.getElementById('dk-map-wrap').scrollIntoView({behavior:'smooth'})">
+        <div class="feat-icon">🚌</div>
+        <h3>노선 지도</h3>
+        <p>두정역·천안역·천안터미널 3개 노선의 정류장과 경로를 지도로 확인하세요.</p>
+        <button class="feat-btn">노선 보기 →</button>
+      </div>
+      <div class="feat-card" onclick="goTab('tab-tt',null)">
+        <div class="feat-icon">📅</div>
+        <h3>시간표 확인</h3>
+        <p>등교·하교 전 노선 시간표를 요일별로 확인하세요. 금요일은 일부 감축 운행합니다.</p>
+        <button class="feat-btn">시간표 →</button>
+      </div>
+      <div class="feat-card" onclick="goTab('tab-stops',null)">
+        <div class="feat-icon">📍</div>
+        <h3>정류장 안내</h3>
+        <p>노선별 정확한 탑승 장소를 확인하세요.</p>
+        <button class="feat-btn">정류장 →</button>
+      </div>
+      <div class="feat-card" onclick="document.getElementById('dk-booking').scrollIntoView({behavior:'smooth'})">
+        <div class="feat-icon">🎫</div>
+        <h3>좌석 예약</h3>
+        <p>원하는 노선·회차 좌석을 미리 선택해 편리하게 탑승하세요.</p>
+        <button class="feat-btn">예약하기 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이용안내 -->
+  <div style="margin-bottom:22px;">
+    <div style="font-size:16px;font-weight:800;color:#222;margin-bottom:12px;">ℹ️ 이용안내</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;" class="info-inline-grid">
+      <div style="background:var(--cp);border-left:4px solid var(--c);border-radius:10px;padding:14px;">
+        <h4 style="color:var(--c);margin-bottom:8px;font-size:13px;">🚌 등교 셔틀</h4>
+        <ul style="font-size:12px;color:#555;line-height:1.9;list-style:none;">
+          <li>✅ 두정역 출발: 08:30~10:00</li>
+          <li>✅ 천안역 출발: 08:40~09:00</li>
+          <li>✅ 천안터미널: 08:40, 09:00</li>
+        </ul>
+      </div>
+      <div style="background:var(--cp);border-left:4px solid var(--c);border-radius:10px;padding:14px;">
+        <h4 style="color:var(--c);margin-bottom:8px;font-size:13px;">🏫 하교 셔틀</h4>
+        <ul style="font-size:12px;color:#555;line-height:1.9;list-style:none;">
+          <li>✅ 학생회관 앞 출발</li>
+          <li>✅ 두정역: 12:30~17:10</li>
+          <li>✅ 천안역·터미널: 12:30~17:00</li>
+        </ul>
+      </div>
+      <div style="background:#fff8e1;border-left:4px solid #f57c00;border-radius:10px;padding:14px;">
+        <h4 style="color:#f57c00;margin-bottom:8px;font-size:13px;">⚠️ 금요일 안내</h4>
+        <p style="font-size:12px;color:#555;line-height:1.7;">금요일은 일부 회차 <strong>감축 운행</strong>합니다. 시간표에서 금요일X 표시 확인 필요. <a href="https://www.dankook.ac.kr/-334" target="_blank" style="color:var(--c);font-weight:700;">공식 홈페이지</a> 참조.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 대시보드 -->
+  <div class="dash">
+
+    <!-- 도착정보 -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div class="card-label" style="margin-bottom:0;">🚌 셔틀버스 현황</div>
+        <span class="badge-live">실시간</span>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">두정역 → 학교</div><div class="arr-sub" id="dk-stop0">현재: 두정역 출발</div></div>
+        <div class="arr-time" id="dk-min0">10<span>분 후</span></div>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">천안역 → 학교</div><div class="arr-sub" id="dk-stop1">현재: 천안역 출발</div></div>
+        <div class="arr-time" id="dk-min1">16<span>분 후</span></div>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">천안터미널 → 학교</div><div class="arr-sub" id="dk-stop2">현재: 터미널 출발</div></div>
+        <div class="arr-time" id="dk-min2">22<span>분 후</span></div>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">🏫 학교 → 두정역 (하교)</div><div class="arr-sub">학생회관 앞 출발</div></div>
+        <div class="arr-badges"><span class="badge badge-b">17:10 막차</span></div>
+      </div>
+    </div>
+
+    <!-- 날씨 -->
+    <div class="wx-card" style="padding:14px 16px;align-self:start;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="font-size:11px;font-weight:700;color:var(--c);">🌤️ 천안 현재 날씨</div>
+        <div style="font-size:10px;color:#888;">충남 천안시</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="font-size:42px;" id="dk-wx-icon">⏳</div>
+        <div>
+          <div class="wx-temp" id="dk-wx-temp">--°</div>
+          <div style="font-size:11px;color:#c62828;margin-top:2px;" id="dk-wx-desc">로딩 중...</div>
+        </div>
+        <div style="flex:1;font-size:11px;color:#666;line-height:1.7;text-align:right;">
+          <div id="dk-wx-detail">습도 -- · 체감 --°</div>
+          <div id="dk-wx-wind">바람 --m/s</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:rgba(255,255,255,.55);border-radius:8px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:10px;color:#888;">탑승 시 참고</div>
+        <div class="wx-adv" id="dk-wx-advice">날씨 확인 중</div>
+      </div>
+    </div>
+
+    <!-- 지연률 -->
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div style="padding:14px 16px 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #fff0f0;">
+        <div style="font-size:13px;font-weight:800;color:#333;">⏱️ 노선별 지연률</div>
+        <span style="font-size:11px;padding:3px 10px;border-radius:20px;background:var(--cp);color:var(--c);font-weight:700;">오늘</span>
+      </div>
+      <div style="padding:12px 16px;">
+        <div class="dk-delay-grid">
+          <div class="dk-delay-card dk-delay-ok">
+            <div class="dk-delay-hd"><span class="dk-dcar">두정역 노선</span><span class="dk-dbadge dk-dok">정상</span></div>
+            <div class="dk-dpct">8%</div>
+            <div class="dk-dbar-bg"><div class="dk-dbar" style="width:8%;background:#e57373"></div></div>
+            <div class="dk-dmeta">평균 <strong>2분</strong> 지연</div>
+          </div>
+          <div class="dk-delay-card dk-delay-warn">
+            <div class="dk-delay-hd"><span class="dk-dcar">천안역 노선</span><span class="dk-dbadge dk-dwarn">주의</span></div>
+            <div class="dk-dpct" style="color:#f57c00">21%</div>
+            <div class="dk-dbar-bg"><div class="dk-dbar" style="width:21%;background:#ffa726"></div></div>
+            <div class="dk-dmeta">평균 <strong>5분</strong> 지연</div>
+          </div>
+          <div class="dk-delay-card dk-delay-ok">
+            <div class="dk-delay-hd"><span class="dk-dcar">터미널 노선</span><span class="dk-dbadge dk-dok">정상</span></div>
+            <div class="dk-dpct">5%</div>
+            <div class="dk-dbar-bg"><div class="dk-dbar" style="width:5%;background:#e57373"></div></div>
+            <div class="dk-dmeta">평균 <strong>1분</strong> 지연</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;padding:8px 10px;background:#fafafa;border-radius:8px;border:1px solid #eee;font-size:10px;color:#555;">
+          📊 금주 평균: <strong style="color:var(--c)">11.3%</strong> &nbsp;⬇️ 전주 대비: <strong style="color:#2e7d32">-1.2%p 개선</strong>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 좌석예약 -->
+  <div style="margin-bottom:28px;" id="dk-booking">
+    <div style="font-size:18px;font-weight:800;color:#222;margin-bottom:6px;">🎫 좌석 예약</div>
+    <div style="font-size:14px;color:#888;margin-bottom:16px;">원하는 노선과 회차를 선택하고 좌석을 예약하세요.</div>
+    <div class="dk-booking-wrap">
+      <div class="dk-booking-cats">
+        <button class="dk-bcat on" onclick="dkBcat('go',this)">🌅 등교</button>
+        <button class="dk-bcat" onclick="dkBcat('back',this)">🌇 하교</button>
+      </div>
+
+      <!-- 등교 -->
+      <div class="dk-bsec on" id="dkbsec-go">
+        <div class="dk-step">① 노선 선택</div>
+        <div class="dk-chips" id="dkchip-go">
+          <button class="dk-chip on" onclick="dkChip(this,'go','두정역→학교')">🚌 두정역 → 학교</button>
+          <button class="dk-chip" onclick="dkChip(this,'go','천안역→학교')">🚌 천안역 → 학교</button>
+          <button class="dk-chip" onclick="dkChip(this,'go','천안터미널→학교')">🚌 천안터미널 → 학교</button>
+        </div>
+        <div class="dk-step">② 회차 선택</div>
+        <div class="dk-times" id="dktime-go">
+          <button class="dk-tbtn on" onclick="dkTime(this,'go','08:30')">1회<span>08:30</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'go','08:35')">2회<span>08:35</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'go','08:40')">3회<span>08:40</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'go','08:45')">4회<span>08:45</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'go','08:50')">5회<span>08:50</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'go','08:55')">6회<span>08:55</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'go','09:00')">7회<span>09:00</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'go','09:05')">8회<span>09:05</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'go','09:10')">9회<span>09:10</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'go','10:00')">10회<span>10:00</span></button>
+        </div>
+        <div class="dk-step">③ 좌석 선택</div>
+        <div class="dk-seat-legend">
+          <span><span class="dk-sdot avail"></span>빈 좌석</span>
+          <span><span class="dk-sdot taken"></span>예약됨</span>
+          <span><span class="dk-sdot sel"></span>선택 중</span>
+          <span><span class="dk-sdot mine"></span>내 좌석</span>
+        </div>
+        <div class="dk-sgrid" id="dksg-go"></div>
+        <button class="dk-reserve-btn" onclick="dkReserve('go')">✅ 예약하기</button>
+        <button class="dk-cancel-btn" onclick="dkCancel('go')">❌ 예약 취소</button>
+      </div>
+
+      <!-- 하교 -->
+      <div class="dk-bsec" id="dkbsec-back">
+        <div class="dk-step">① 노선 선택</div>
+        <div class="dk-chips" id="dkchip-back">
+          <button class="dk-chip on" onclick="dkChip(this,'back','학교→두정역')">🏫 학교 → 두정역</button>
+          <button class="dk-chip" onclick="dkChip(this,'back','학교→천안역')">🏫 학교 → 천안역</button>
+          <button class="dk-chip" onclick="dkChip(this,'back','학교→천안터미널')">🏫 학교 → 천안터미널</button>
+        </div>
+        <div class="dk-step">② 회차 선택</div>
+        <div class="dk-times" id="dktime-back">
+          <button class="dk-tbtn on" onclick="dkTime(this,'back','12:30')">1회<span>12:30</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'back','15:30')">2회<span>15:30</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'back','16:10')">3회<span>16:10</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'back','16:30')">4회<span>16:30</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'back','16:45')">5회<span>16:45</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'back','17:00')">6회<span>17:00</span></button>
+          <button class="dk-tbtn" onclick="dkTime(this,'back','17:10')">7회<span>17:10</span></button>
+        </div>
+        <div class="dk-step">③ 좌석 선택</div>
+        <div class="dk-seat-legend">
+          <span><span class="dk-sdot avail"></span>빈 좌석</span>
+          <span><span class="dk-sdot taken"></span>예약됨</span>
+          <span><span class="dk-sdot sel"></span>선택 중</span>
+          <span><span class="dk-sdot mine"></span>내 좌석</span>
+        </div>
+        <div class="dk-sgrid" id="dksg-back"></div>
+        <button class="dk-reserve-btn" onclick="dkReserve('back')">✅ 예약하기</button>
+        <button class="dk-cancel-btn" onclick="dkCancel('back')">❌ 예약 취소</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 탭 -->
+  <div class="tabs">
+    <button class="tab-btn on" onclick="goTab('tab-map',this)">🗺️ 노선지도</button>
+    <button class="tab-btn" onclick="goTab('tab-tt',this)">📅 시간표</button>
+    <button class="tab-btn" onclick="goTab('tab-stops',this)">📍 정류장</button>
+  </div>
+
+  <!-- 노선지도 -->
+  <div id="tab-map" class="tab-pane show">
+    <div class="map-wrap" id="dk-map-wrap">
+      <div class="map-head"><h3>🗺️ 노선 지도</h3><p>노선 버튼으로 경로 확인</p></div>
+      <div class="map-cats">
+        <button class="mcat on" onclick="dkSetCat('go',this)">🌅 등교</button>
+        <button class="mcat" onclick="dkSetCat('back',this)">🌇 하교</button>
+      </div>
+      <div class="map-routes" id="dkrtab-go">
+        <button class="mroute on" onclick="dkSetRoute('r1',this)">두정역 → 학교</button>
+        <button class="mroute" onclick="dkSetRoute('r2',this)">천안역 → 학교</button>
+        <button class="mroute" onclick="dkSetRoute('r3',this)">천안터미널 → 학교</button>
+      </div>
+      <div class="map-routes" id="dkrtab-back" style="display:none">
+        <button class="mroute on" onclick="dkSetRoute('b1',this)">학교 → 두정역</button>
+        <button class="mroute" onclick="dkSetRoute('b2',this)">학교 → 천안역</button>
+        <button class="mroute" onclick="dkSetRoute('b3',this)">학교 → 천안터미널</button>
+      </div>
+      <div class="map-body">
+        <div style="flex:1;min-height:360px;"><div id="dk-leaflet-map" style="width:100%;height:360px;"></div></div>
+        <div class="map-panel">
+          <div class="panel-title" id="dk-p-title">🚌 두정역 → 학교</div>
+          <div class="panel-row"><div class="panel-label">첫차</div><div class="panel-val" id="dk-p-first">08:30</div></div>
+          <div class="panel-row"><div class="panel-label">막차</div><div class="panel-val" id="dk-p-last">10:00</div></div>
+          <div class="panel-row"><div class="panel-label">운행</div><div class="panel-sm" id="dk-p-interval">월~금(학기중)</div></div>
+          <div style="margin-top:10px;"><div class="panel-label" style="margin-bottom:6px;">정류장</div><div id="dk-p-stops">
+            <div class="pstop"><span class="pdot"></span>두정역 셔틀버스 환승시설</div>
+            <div class="pstop"><span class="pdot"></span>단국대학교</div>
+          </div></div>
+          <div style="margin-top:10px;background:var(--cp);border-radius:8px;padding:8px;font-size:10px;color:var(--c);font-weight:600;">⚠️ 금요일 일부 감축<br>운행 시간표 확인 필수</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시간표 -->
+  <div id="tab-tt" class="tab-pane">
+    <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:10px 13px;font-size:11px;color:#795548;margin-bottom:14px;">
+      ⚠️ 금요일은 일부 회차가 감축 운행됩니다. 정확한 정보는 <a href="https://www.dankook.ac.kr/-334" target="_blank" style="color:var(--c);font-weight:700;">단국대 공식 홈페이지</a>에서 확인하세요.
+    </div>
+
+    <div class="tt-card">
+      <div class="tt-title">🌅 등교 시간표</div>
+      <div style="overflow-x:auto;">
+        <table class="tt-table">
+          <thead><tr><th>노선</th><th>출발 회차</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700;color:var(--c);">두정역 → 학교</td>
+              <td>
+                <span class="chip">08:30</span>
+                <span class="chip chip-warn">08:35</span>
+                <span class="chip">08:40</span>
+                <span class="chip">08:45</span>
+                <span class="chip">08:50</span>
+                <span class="chip chip-warn">08:55</span>
+                <span class="chip">09:00</span>
+                <span class="chip chip-warn">09:05</span>
+                <span class="chip">09:10</span>
+                <span class="chip chip-warn">09:20</span>
+                <span class="chip chip-warn">09:30</span>
+                <span class="chip">10:00</span>
+              </td>
+              <td style="font-size:11px;color:#f57c00;">🟠 주황색: 금요일 운행 없음</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;color:var(--c);">천안역 → 학교</td>
+              <td>
+                <span class="chip">08:40</span>
+                <span class="chip">08:50</span>
+                <span class="chip chip-warn">08:55</span>
+                <span class="chip">09:00</span>
+              </td>
+              <td style="font-size:11px;">동부광장 건너 세기보청기 앞</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;color:var(--c);">천안터미널 → 학교</td>
+              <td>
+                <span class="chip">08:40</span>
+                <span class="chip">09:00</span>
+              </td>
+              <td style="font-size:11px;">터미널 근처 샐러디 앞</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tt-card">
+      <div class="tt-title">🌇 하교 시간표</div>
+      <div style="overflow-x:auto;">
+        <table class="tt-table">
+          <thead><tr><th>노선</th><th>출발 회차</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700;color:var(--c);">학교 → 두정역</td>
+              <td>
+                <span class="chip chip-gray">12:30</span>
+                <span class="chip chip-warn">15:30</span>
+                <span class="chip chip-warn">16:10</span>
+                <span class="chip chip-warn">16:30</span>
+                <span class="chip chip-warn">16:45</span>
+                <span class="chip chip-warn">17:00</span>
+                <span class="chip chip-warn">17:10</span>
+              </td>
+              <td style="font-size:11px;color:#555;">🔵 회색: 금요일만 운행<br>🟠 주황색: 금요일 운행 없음</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;color:var(--c);">학교 → 천안역</td>
+              <td>
+                <span class="chip chip-gray">12:30</span>
+                <span class="chip chip-warn">16:30</span>
+              </td>
+              <td style="font-size:11px;">학생회관 앞 출발</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;color:var(--c);">학교 → 천안터미널</td>
+              <td>
+                <span class="chip chip-gray">12:30</span>
+                <span class="chip chip-warn">16:30</span>
+                <span class="chip chip-warn">16:45</span>
+                <span class="chip chip-warn">17:00</span>
+              </td>
+              <td style="font-size:11px;">학생회관 앞 출발</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 정류장 -->
+  <div id="tab-stops" class="tab-pane">
+    <div class="stop-card"><div class="stop-title">🌅 두정역 → 학교 (등교)</div><div class="stop-chips"><span class="stop-chip">두정역 옆 셔틀버스 환승시설</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">단국대학교</span></div></div>
+    <div class="stop-card"><div class="stop-title">🌅 천안역 → 학교 (등교)</div><div class="stop-chips"><span class="stop-chip">동부광장 건너 세기보청기 앞</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">단국대학교</span></div></div>
+    <div class="stop-card"><div class="stop-title">🌅 천안터미널 → 학교 (등교)</div><div class="stop-chips"><span class="stop-chip">터미널 근처 샐러디 앞</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">단국대학교</span></div></div>
+    <div class="stop-card" style="border-left-color:#555;"><div class="stop-title" style="color:#555;">🌇 학교 → 두정역 (하교)</div><div class="stop-chips"><span class="stop-chip" style="background:#f5f5f5;color:#555;border-color:#bbb;">학생회관 앞</span><span style="color:#555;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#f5f5f5;color:#555;border-color:#bbb;">두정역</span></div></div>
+    <div class="stop-card" style="border-left-color:#555;"><div class="stop-title" style="color:#555;">🌇 학교 → 천안역 (하교)</div><div class="stop-chips"><span class="stop-chip" style="background:#f5f5f5;color:#555;border-color:#bbb;">학생회관 앞</span><span style="color:#555;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#f5f5f5;color:#555;border-color:#bbb;">천안역</span></div></div>
+    <div class="stop-card" style="border-left-color:#555;"><div class="stop-title" style="color:#555;">🌇 학교 → 천안터미널 (하교)</div><div class="stop-chips"><span class="stop-chip" style="background:#f5f5f5;color:#555;border-color:#bbb;">학생회관 앞</span><span style="color:#555;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#f5f5f5;color:#555;border-color:#bbb;">천안터미널</span></div></div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="foot-logo">🚌 단국대학교 셔틀버스</div>
+  <p>학생처 041-550-1114<br>
+  <a href="https://www.dankook.ac.kr" target="_blank" style="color:#ef9a9a;">www.dankook.ac.kr</a></p>
+</footer>
+
+<script>
+function goTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(function(el){ el.classList.remove('show'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('on'); });
+  var el = document.getElementById(id);
+  if(el) el.classList.add('show');
+  if(btn) btn.classList.add('on');
+  else document.querySelectorAll('.tab-btn').forEach(function(b){
+    if((b.getAttribute('onclick')||'').indexOf("'"+id+"'")!==-1) b.classList.add('on');
+  });
+  if(id==='tab-map') setTimeout(function(){if(DK_MAP)DK_MAP.invalidateSize();},200);
+}
+window.goTab = goTab;
+
+/* 노선 데이터 */
+var DK_RD = {
+  r1:{t:'🚌 두정역 → 학교',first:'08:30',last:'10:00',interval:'월~금(금요일 감축)',stops:['두정역 옆 셔틀버스 환승시설','단국대학교']},
+  r2:{t:'🚌 천안역 → 학교',first:'08:40',last:'09:00',interval:'월~금',stops:['동부광장 건너 세기보청기 앞','단국대학교']},
+  r3:{t:'🚌 천안터미널 → 학교',first:'08:40',last:'09:00',interval:'월~금',stops:['터미널 근처 샐러디 앞','단국대학교']},
+  b1:{t:'🏫 학교 → 두정역',first:'12:30',last:'17:10',interval:'월~금(금요일 감축)',stops:['학생회관 앞','두정역']},
+  b2:{t:'🏫 학교 → 천안역',first:'12:30',last:'16:30',interval:'월~금',stops:['학생회관 앞','천안역']},
+  b3:{t:'🏫 학교 → 천안터미널',first:'12:30',last:'17:00',interval:'월~금',stops:['학생회관 앞','천안터미널']}
+};
+var dkCurR='r1', dkCurCat='go';
+
+function dkUpdatePanel(){
+  var d=DK_RD[dkCurR]; if(!d) return;
+  document.getElementById('dk-p-title').textContent=d.t;
+  document.getElementById('dk-p-first').textContent=d.first;
+  document.getElementById('dk-p-last').textContent=d.last;
+  document.getElementById('dk-p-interval').textContent=d.interval;
+  document.getElementById('dk-p-stops').innerHTML=d.stops.map(function(s){
+    return '<div class="pstop"><span class="pdot"></span>'+s+'</div>';
+  }).join('');
+}
+
+function dkSetCat(cat, btn){
+  dkCurCat=cat;
+  document.querySelectorAll('.mcat').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  document.getElementById('dkrtab-go').style.display=cat==='go'?'flex':'none';
+  document.getElementById('dkrtab-back').style.display=cat==='back'?'flex':'none';
+  var first=document.querySelector('#dkrtab-'+cat+' .mroute');
+  if(first){var rid=first.getAttribute('onclick').match(/'(\w+)'/)[1];dkSetRoute(rid,first);}
+}
+window.dkSetCat=dkSetCat;
+
+function dkSetRoute(rid, btn){
+  dkCurR=rid;
+  document.querySelectorAll('#dkrtab-'+dkCurCat+' .mroute').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  dkUpdatePanel();
+  dkDrawRoute(rid);
+}
+window.dkSetRoute=dkSetRoute;
+
+/* 날씨 */
+(function(){
+  var WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',71:'❄️',80:'🌦️',95:'⛈️'};
+  var WD={0:'맑음',1:'대체로 맑음',2:'구름 조금',3:'흐림',45:'안개',51:'이슬비',61:'비',71:'눈',80:'소나기',95:'뇌우'};
+  var WA={0:'외출하기 좋은 날씨!',1:'날씨가 맑아요',3:'흐린 날씨예요',51:'가벼운 비 ☔',61:'우산 챙기세요 ☔',71:'눈이 내려요 🌨️',80:'소나기 주의 ☔',95:'뇌우 주의! ⛈️'};
+  function fallback(){
+    var mo=new Date().getMonth();
+    var tt=[1,3,8,14,19,23,26,27,23,17,10,3];
+    var cc=[0,1,2,1,0,61,80,80,1,0,1,3];
+    var t=tt[mo]+Math.round((Math.random()-.5)*4);
+    document.getElementById('dk-wx-temp').textContent=t+'°';
+    document.getElementById('dk-wx-desc').textContent=WD[cc[mo]]||'맑음';
+    document.getElementById('dk-wx-icon').textContent=WI[cc[mo]]||'☀️';
+    document.getElementById('dk-wx-detail').textContent='체감 '+(t-2)+'° · 습도 '+(60+Math.round(Math.random()*20))+'%';
+    document.getElementById('dk-wx-wind').textContent='바람 '+(1+Math.random()*3).toFixed(1)+'m/s';
+    document.getElementById('dk-wx-advice').textContent=WA[cc[mo]]||'정상 탑승 ✅';
+  }
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=36.8121&longitude=127.1086&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=Asia%2FSeoul')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var c=data.current, code=c.weather_code;
+      document.getElementById('dk-wx-temp').textContent=Math.round(c.temperature_2m)+'°';
+      document.getElementById('dk-wx-desc').textContent=WD[code]||'맑음';
+      document.getElementById('dk-wx-icon').textContent=WI[code]||'☀️';
+      document.getElementById('dk-wx-detail').textContent='체감 '+Math.round(c.apparent_temperature)+'° · 습도 '+c.relative_humidity_2m+'%';
+      document.getElementById('dk-wx-wind').textContent='바람 '+c.wind_speed_10m.toFixed(1)+'m/s';
+      document.getElementById('dk-wx-advice').textContent=WA[code]||'정상 탑승 ✅';
+    }).catch(fallback);
+})();
+
+/* 도착정보 시뮬 */
+var dkArr=[
+  {min:10,stops:['두정역 출발','학교 진입','도착 직전'],cur:0},
+  {min:16,stops:['천안역 출발','학교 진입'],cur:0},
+  {min:22,stops:['터미널 출발','학교 진입'],cur:0}
+];
+function dkUpdateArr(){
+  dkArr.forEach(function(d,i){
+    d.min=d.min<=1?Math.floor(Math.random()*10)+8:d.min-1;
+    var el=document.getElementById('dk-min'+i);
+    var sl=document.getElementById('dk-stop'+i);
+    if(el) el.innerHTML=d.min+'<span>분 후</span>';
+    if(sl) sl.textContent='현재: '+d.stops[d.cur%d.stops.length];
+    d.cur++;
+  });
+}
+setInterval(dkUpdateArr,30000);
+
+/* 좌석 예약 */
+var dkSeatData={}, dkMySeats={}, dkSelSeat={go:null,back:null};
+var dkCurBus={go:'두정역→학교__08:30', back:'학교→두정역__12:30'};
+
+function dkEnsureSeats(busId){
+  if(!dkSeatData[busId]){
+    var taken=new Set();
+    while(taken.size<8) taken.add(Math.floor(Math.random()*45)+1);
+    dkSeatData[busId]=Array.from({length:45},function(_,i){return{id:i+1,taken:taken.has(i+1)};});
+  }
+}
+
+function dkMakeSeat(s,busId,cat){
+  var btn=document.createElement('button');
+  var isMine=(s.id===dkMySeats[busId]);
+  var isSel=(s.id===dkSelSeat[cat]);
+  btn.className='dk-seat '+(isMine?'mine':s.taken?'taken':isSel?'sel':'avail');
+  btn.textContent=s.id;
+  btn.disabled=s.taken&&!isMine;
+  btn.onclick=(function(sid){return function(){dkSelSeat[cat]=sid;dkRenderSeats(cat);dkToast(sid+'번 좌석 선택됨 🟠');};})(s.id);
+  return btn;
+}
+
+function dkRenderSeats(cat){
+  var busId=dkCurBus[cat];
+  dkEnsureSeats(busId);
+  var wrap=document.getElementById('dksg-'+cat); if(!wrap) return;
+  wrap.innerHTML='';
+  var sd=dkSeatData[busId];
+  var sw=document.createElement('div'); sw.style.cssText='overflow-x:auto;padding-bottom:8px;';
+  var inner=document.createElement('div'); inner.style.cssText='min-width:520px;';
+  function makeRow(ids,rightId){
+    var row=document.createElement('div'); row.style.cssText='display:flex;align-items:center;gap:5px;margin-bottom:5px;';
+    ids.forEach(function(id){row.appendChild(dkMakeSeat(sd[id-1],busId,cat));});
+    if(rightId!==undefined){var g=document.createElement('div');g.style.cssText='width:22px;flex-shrink:0;';row.appendChild(g);row.appendChild(dkMakeSeat(sd[rightId-1],busId,cat));}
+    return row;
+  }
+  inner.appendChild(makeRow([21,23,25,27,29,31,33,35,37,39],40));
+  inner.appendChild(makeRow([22,24,26,28,30,32,34,36,38,40],41));
+  var ar=document.createElement('div');ar.style.cssText='display:flex;align-items:center;margin-bottom:5px;';
+  var al=document.createElement('div');al.style.cssText='width:'+(34*10+5*9)+'px;flex-shrink:0;font-size:10px;color:#bbb;';al.textContent='통로';
+  var ag=document.createElement('div');ag.style.cssText='width:32px;flex-shrink:0;';
+  ar.appendChild(al);ar.appendChild(ag);ar.appendChild(dkMakeSeat(sd[42],busId,cat));
+  inner.appendChild(ar);
+  inner.appendChild(makeRow([1,3,5,7,9,11,13,15,17,19],43));
+  inner.appendChild(makeRow([2,4,6,8,10,12,14,16,18,20],44));
+  var fr=document.createElement('div');fr.style.cssText='display:flex;align-items:center;gap:8px;margin-top:6px;padding-top:6px;border-top:1px dashed #e0e0e0;';
+  var fa=document.createElement('div');fa.style.cssText='font-size:10px;color:#aaa;flex-shrink:0;';fa.textContent='← 앞';
+  var fd=document.createElement('div');fd.style.cssText='padding:5px 14px;background:var(--cp);border:2px solid var(--cl);border-radius:10px;font-size:11px;font-weight:700;color:var(--c);white-space:nowrap;flex-shrink:0;';fd.textContent='🚌 운전석';
+  fr.appendChild(fa);fr.appendChild(fd);inner.appendChild(fr);
+  sw.appendChild(inner);wrap.appendChild(sw);
+}
+
+function dkBcat(cat,btn){
+  document.querySelectorAll('.dk-bcat').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  document.querySelectorAll('.dk-bsec').forEach(function(s){s.classList.remove('on');});
+  document.getElementById('dkbsec-'+cat).classList.add('on');
+  dkRenderSeats(cat);
+}
+window.dkBcat=dkBcat;
+
+function dkChip(btn,cat,route){
+  document.querySelectorAll('#dkchip-'+cat+' .dk-chip').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var t=dkCurBus[cat].split('__')[1];
+  dkCurBus[cat]=route+'__'+t;
+  dkSelSeat[cat]=null;
+  dkRenderSeats(cat);
+}
+window.dkChip=dkChip;
+
+function dkTime(btn,cat,t){
+  document.querySelectorAll('#dktime-'+cat+' .dk-tbtn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var r=dkCurBus[cat].split('__')[0];
+  dkCurBus[cat]=r+'__'+t;
+  dkSelSeat[cat]=null;
+  dkRenderSeats(cat);
+}
+window.dkTime=dkTime;
+
+function dkReserve(cat){
+  var busId=dkCurBus[cat];
+  if(!dkSelSeat[cat]){dkToast('좌석을 먼저 선택하세요.');return;}
+  if(dkMySeats[busId]){dkToast('이미 예약된 좌석이 있습니다.');return;}
+  var seat=dkSelSeat[cat];
+  var overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  var box=document.createElement('div');
+  box.style.cssText='background:#fff;border-radius:18px;padding:28px 22px;width:310px;max-width:92vw;box-shadow:0 10px 40px rgba(0,0,0,.25);';
+  box.innerHTML='<div style="font-size:18px;font-weight:800;color:var(--c);margin-bottom:18px;">✏️ 예약 정보 입력</div>'+
+    '<div style="margin-bottom:12px;"><div style="font-size:13px;color:#555;margin-bottom:5px;">이름</div>'+
+    '<input id="dkrn" type="text" placeholder="홍길동" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid #ddd;border-radius:9px;font-size:15px;outline:none;font-family:inherit;"></div>'+
+    '<div style="margin-bottom:22px;"><div style="font-size:13px;color:#555;margin-bottom:5px;">학번</div>'+
+    '<input id="dkrs" type="text" placeholder="20241234" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid #ddd;border-radius:9px;font-size:15px;outline:none;font-family:inherit;"></div>'+
+    '<div style="display:flex;gap:10px;"></div>';
+  var cb=document.createElement('button');cb.textContent='취소';cb.style.cssText='flex:1;padding:12px;border:1.5px solid #ddd;background:#fff;border-radius:9px;font-size:14px;cursor:pointer;font-family:inherit;';cb.onclick=function(){overlay.remove();};
+  var cfb=document.createElement('button');cfb.textContent='예약 확정';cfb.style.cssText='flex:1;padding:12px;background:#b71c1c;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;';
+  cfb.onclick=function(){
+    var name=document.getElementById('dkrn').value.trim();
+    var sid=document.getElementById('dkrs').value.trim();
+    if(!name){alert('이름을 입력해 주세요.');return;}
+    if(!sid){alert('학번을 입력해 주세요.');return;}
+    dkMySeats[busId]=seat;dkSelSeat[cat]=null;overlay.remove();dkRenderSeats(cat);dkToast(seat+'번 예약 완료! ✅');
+    if(window.dkSaveRes) window.dkSaveRes(name,sid,busId,seat);
+    var qd=encodeURIComponent('단국대 셔틀|이름:'+name+'|학번:'+sid+'|노선:'+busId+'|좌석:'+seat+'번');
+    var qo=document.createElement('div');qo.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;';
+    var qb=document.createElement('div');qb.style.cssText='background:#fff;border-radius:20px;padding:30px 22px;width:300px;max-width:92vw;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.3);';
+    qb.innerHTML='<div style="font-size:22px;font-weight:800;color:#b71c1c;margin-bottom:4px;">✅ 예약 완료!</div>'+
+      '<div style="font-size:13px;color:#888;margin-bottom:18px;">탑승 시 QR코드를 보여주세요</div>'+
+      '<div style="background:#f5f5f5;border-radius:12px;padding:14px;display:inline-block;margin-bottom:14px;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+qd+'" width="150" height="150" style="display:block;border-radius:6px;"></div>'+
+      '<div style="font-size:17px;font-weight:700;color:#222;margin-bottom:3px;">'+name+'</div>'+
+      '<div style="font-size:13px;color:#999;margin-bottom:3px;">'+sid+'</div>'+
+      '<div style="font-size:14px;color:#b71c1c;font-weight:600;margin-bottom:20px;">'+busId.split('__')[0]+' · '+seat+'번 좌석</div>';
+    var qclose=document.createElement('button');qclose.textContent='확인';qclose.style.cssText='width:100%;padding:13px;background:#b71c1c;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;';qclose.onclick=function(){qo.remove();};qb.appendChild(qclose);qo.appendChild(qb);document.body.appendChild(qo);
+  };
+  var btnWrap=box.querySelector('div:last-child');btnWrap.appendChild(cb);btnWrap.appendChild(cfb);
+  overlay.appendChild(box);document.body.appendChild(overlay);
+  setTimeout(function(){var n=document.getElementById('dkrn');if(n)n.focus();},100);
+}
+window.dkReserve=dkReserve;
+
+function dkCancel(cat){
+  var busId=dkCurBus[cat];
+  if(!dkMySeats[busId]){dkToast('취소할 예약이 없습니다.');return;}
+  dkToast(dkMySeats[busId]+'번 예약이 취소됐습니다.');
+  delete dkMySeats[busId];dkRenderSeats(cat);
+}
+window.dkCancel=dkCancel;
+
+function dkToast(msg){
+  var t=document.getElementById('dk-toast');
+  if(!t){t=document.createElement('div');t.id='dk-toast';t.className='dk-toast';document.body.appendChild(t);}
+  t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},2500);
+}
+
+/* Leaflet 지도 */
+var DK_MAP=null, DK_RL=null;
+var DK_ROUTES={
+  r1:{name:'두정역→학교',color:'#b71c1c',stops:[{lat:36.8260,lng:127.1410,name:'두정역 셔틀버스 환승시설'},{lat:36.8121,lng:127.1086,name:'단국대학교'}]},
+  r2:{name:'천안역→학교',color:'#c62828',stops:[{lat:36.8082,lng:127.1467,name:'천안역 동부광장 앞'},{lat:36.8121,lng:127.1086,name:'단국대학교'}]},
+  r3:{name:'천안터미널→학교',color:'#e53935',stops:[{lat:36.7968,lng:127.1347,name:'천안터미널 샐러디 앞'},{lat:36.8121,lng:127.1086,name:'단국대학교'}]},
+  b1:{name:'학교→두정역',color:'#555',stops:[{lat:36.8121,lng:127.1086,name:'단국대 학생회관 앞'},{lat:36.8260,lng:127.1410,name:'두정역'}]},
+  b2:{name:'학교→천안역',color:'#555',stops:[{lat:36.8121,lng:127.1086,name:'단국대 학생회관 앞'},{lat:36.8082,lng:127.1467,name:'천안역'}]},
+  b3:{name:'학교→천안터미널',color:'#555',stops:[{lat:36.8121,lng:127.1086,name:'단국대 학생회관 앞'},{lat:36.7968,lng:127.1347,name:'천안터미널'}]}
+};
+
+function dkDrawRoute(key){
+  if(!DK_MAP) return;
+  if(DK_RL){try{DK_MAP.removeLayer(DK_RL);}catch(e){}DK_RL=null;}
+  var r=DK_ROUTES[key]; if(!r) return;
+  var ll=r.stops.map(function(s){return[s.lat,s.lng];});
+  DK_RL=L.polyline(ll,{color:r.color,weight:5,opacity:.85}).addTo(DK_MAP);
+  DK_MAP.fitBounds(DK_RL.getBounds(),{padding:[40,40]});
+  function mkIcon(c){return L.divIcon({html:'<div style="width:14px;height:14px;border-radius:50%;background:'+c+';border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);"></div>',iconSize:[14,14],iconAnchor:[7,7],className:''});}
+  var f=r.stops[0],la=r.stops[r.stops.length-1];
+  L.marker([f.lat,f.lng],{icon:mkIcon(r.color)}).addTo(DK_MAP).bindPopup('<b>🚌 출발: '+f.name+'</b>');
+  L.marker([la.lat,la.lng],{icon:mkIcon('#e53935')}).addTo(DK_MAP).bindPopup('<b>🏫 도착: '+la.name+'</b>');
+}
+window.dkDrawRoute=dkDrawRoute;
+
+function dkInitMap(){
+  var el=document.getElementById('dk-leaflet-map');
+  if(!el||typeof L==='undefined'){setTimeout(dkInitMap,500);return;}
+  if(DK_MAP){try{DK_MAP.remove();}catch(e){}DK_MAP=null;}
+  DK_MAP=L.map('dk-leaflet-map').setView([36.815,127.125],13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(DK_MAP);
+  setTimeout(function(){if(DK_MAP)DK_MAP.invalidateSize();},400);
+  dkDrawRoute('r1');
+}
+
+window.addEventListener('load',function(){
+  dkRenderSeats('go');
+  dkRenderSeats('back');
+  dkUpdatePanel();
+  setTimeout(dkInitMap,300);
+});
+</script>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app = initializeApp({apiKey:"AIzaSyAp_C6WjPEdjlYfybshFrzT-W0chlMnFrY",authDomain:"navicampus-2cb39.firebaseapp.com",projectId:"navicampus-2cb39",storageBucket:"navicampus-2cb39.firebasestorage.app",messagingSenderId:"683352639087",appId:"1:683352639087:web:668ebb956ef257763daf9a"});
+const db = getFirestore(app);
+window.dkSaveRes = async function(name, sid, busId, seat) {
+  try { await addDoc(collection(db,"reservations"),{name,studentId:sid,busId,seat,school:"단국대학교",createdAt:serverTimestamp()}); } catch(e) { console.error(e); }
+};
+</script>
+
+</body>
+</html>
