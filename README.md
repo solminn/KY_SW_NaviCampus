@@ -14,4 +14,4 @@
 * **기사 운행 대시보드**: 실시간 노선·시간표 조회 및 실시간 교통 정보(체증/사고) 수신 기능
 * **시스템 관리자 모드**: 노선 정보(정류장, 운행 시간, 배차 간격)의 유연한 등록·수정·삭제
 # 시스템 아키텍처
-<img width="640" height="357" alt="Image" src="https://github.com/user-attachments/assets/97ef79e5-9080-4989-a3af-1548c2b51e4f" />
+<img width="1280" height="720" alt="Image" src="https://github.com/user-attachments/assets/7dc7911e-0215-43fc-86f6-275c2582b2ba" />
