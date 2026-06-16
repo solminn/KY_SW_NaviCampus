@@ -29,9 +29,11 @@
 
 # 프로젝트 구조
 KY_SW_NaviCampus/
+
 ├── index.html              
 ├── admin.html             
 │
+
 ├── dankook_shuttle.html   
 ├── kaist_shuttle.html   
 ├── kongju_shuttle.html   
