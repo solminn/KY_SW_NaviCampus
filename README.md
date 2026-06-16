@@ -28,19 +28,19 @@
 * **버전 관리:** GitHub
 
 # 프로젝트 구조
+```text
 KY_SW_NaviCampus/
-
-├── index.html              
-├── admin.html             
+├── index.html           
+├── admin.html           
 │
-
-├── dankook_shuttle.html   
-├── kaist_shuttle.html   
-├── kongju_shuttle.html   
-├── konyang_shuttle.html    
+├── dankook_shuttle.html    
+├── kaist_shuttle.html    
+├── kongju_shuttle.html    
+├── konyang_shuttle.html  
 ├── mokwon_shuttle.html 
 │
 ├── manifest.json        
-├── service-worker.js    
-├── icon-192.png         
-└── icon-512.png        
+├── service-worker.js      
+├── icon-192.png       
+├── icon-512.png        
+└── README.md
