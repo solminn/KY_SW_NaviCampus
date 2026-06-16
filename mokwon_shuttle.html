@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<meta name="theme-color" content="#4a148c">
+<title>목원대학교 셔틀버스</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{font-family:'Noto Sans KR',sans-serif;background:#f5f0fa;color:#222;}
+a{text-decoration:none;color:inherit;}
+:root{--c:#4a148c;--c2:#6a1b9a;--cl:#ce93d8;--cp:#f3e5f5;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:#fff;border-bottom:3px solid var(--c);box-shadow:0 2px 12px rgba(0,0,0,.08);}
+.nav-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:58px;gap:12px;}
+.nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.nav-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--c),var(--c2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+.nav-title{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--c);}
+.nav-sub{font-size:10px;color:#888;margin-left:3px;}
+.nav-btns{display:flex;gap:6px;}
+.nav-btns button{padding:6px 13px;border-radius:18px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.btn-ol{background:transparent;border:2px solid var(--c);color:var(--c);}
+.btn-ol:hover{background:var(--cp);}
+.btn-fi{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;border:none;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a0030,#4a148c 45%,#7b1fa2 100%);padding:44px 20px 52px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.04'%3E%3Cpath d='M20 20h4v4h-4zm0-20h4v4h-4zM0 20h4v4H0zM0 0h4v4H0z'/%3E%3C/g%3E%3C/svg%3E");}
+.hero-in{position:relative;z-index:2;max-width:1100px;margin:0 auto;}
+.hero h1{font-family:'Poppins',sans-serif;font-size:clamp(26px,5vw,48px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:10px;text-shadow:0 2px 10px rgba(0,0,0,.25);}
+.hero h1 span{color:#ce93d8;}
+.hero p{font-size:14px;color:rgba(255,255,255,.82);margin-bottom:22px;}
+.hero-stats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px;}
+.hstat{background:rgba(255,255,255,.12);border-radius:10px;padding:8px 16px;text-align:center;color:#fff;}
+.hstat .n{font-family:'Poppins',sans-serif;font-size:20px;font-weight:800;line-height:1;}
+.hstat .l{font-size:10px;opacity:.8;margin-top:2px;}
+.hero-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.hero-btns button{padding:11px 22px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.hbtn-m{background:#fff;color:var(--c);box-shadow:0 4px 14px rgba(0,0,0,.18);}
+.hbtn-m:hover{transform:translateY(-2px);}
+.hbtn-s{background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.45)!important;}
+
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:28px 20px 60px;}
+
+/* 대시보드 */
+.dash{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:28px;}
+.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 3px 14px rgba(0,0,0,.07);}
+.card-label{font-size:10px;font-weight:700;color:#999;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;}
+
+/* 운행현황 */
+.arr-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f5f5f5;}
+.arr-item:last-child{border-bottom:none;}
+.arr-name{font-weight:700;font-size:12px;color:var(--c);}
+.arr-sub{font-size:10px;color:#bbb;margin-top:1px;}
+.arr-badges{display:flex;gap:4px;flex-wrap:wrap;}
+.badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;}
+.badge-b{background:var(--c);color:#fff;}
+.badge-g{background:#f0f0f0;color:#555;}
+.arr-time{font-family:'Poppins',sans-serif;font-size:22px;font-weight:900;color:var(--c);white-space:nowrap;}
+.arr-time span{font-size:12px;font-weight:400;color:#aaa;}
+.badge-live{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--cp);color:var(--c);font-weight:700;}
+
+/* 날씨 */
+.wx-card{background:linear-gradient(135deg,#f3e5f5,#e1bee7);border-radius:14px;padding:18px;border:1px solid #ce93d8;}
+.wx-title{font-size:11px;font-weight:700;color:var(--c);margin-bottom:10px;}
+.wx-temp{font-family:'Poppins',sans-serif;font-size:34px;font-weight:900;color:var(--c);line-height:1;}
+.wx-desc{font-size:11px;color:#6a1b9a;margin-top:3px;}
+.wx-adv{font-size:12px;font-weight:700;color:var(--c);}
+
+/* 지연률 카드 */
+.mw-delay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+.mw-delay-card{border-radius:10px;padding:10px 12px;border:1.5px solid #e0e0e0;background:#fafafa;}
+.mw-delay-ok{border-color:#e1bee7;background:#f9f0fd;}
+.mw-delay-warn{border-color:#ffe082;background:#fffde7;}
+.mw-delay-danger{border-color:#ffcdd2;background:#fff5f5;}
+.mw-delay-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.mw-dcar{font-size:10px;font-weight:800;color:#222;}
+.mw-dbadge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;}
+.mw-dok{background:#f3e5f5;color:#6a1b9a;}
+.mw-dwarn{background:#fff8e1;color:#f57c00;}
+.mw-ddanger{background:#ffebee;color:#c62828;}
+.mw-dpct{font-size:24px;font-weight:900;color:var(--c);line-height:1;margin-bottom:5px;}
+.mw-dbar-bg{height:5px;background:#e0e0e0;border-radius:3px;overflow:hidden;margin-bottom:5px;}
+.mw-dbar{height:100%;border-radius:3px;transition:width .8s ease;}
+.mw-dmeta{font-size:10px;color:#777;}
+.mw-dmeta strong{color:#333;}
+
+/* 탭 */
+.tabs{display:flex;gap:3px;margin-bottom:22px;background:#fff;border-radius:12px;padding:5px;box-shadow:0 2px 10px rgba(0,0,0,.06);width:fit-content;flex-wrap:wrap;}
+.tab-btn{padding:7px 16px;border-radius:9px;font-size:13px;font-weight:700;border:none;background:transparent;color:#777;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;white-space:nowrap;}
+.tab-btn.on{background:var(--c);color:#fff;}
+.tab-pane{display:none;}
+.tab-pane.show{display:block;}
+
+/* 지도 */
+.map-wrap{background:#fff;border-radius:14px;box-shadow:0 3px 14px rgba(0,0,0,.08);overflow:hidden;margin-bottom:28px;}
+.map-head{padding:16px 20px 0;}
+.map-head h3{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--c);margin-bottom:3px;}
+.map-head p{font-size:12px;color:#bbb;margin-bottom:10px;}
+.map-cats{display:flex;gap:6px;padding:10px 20px;border-bottom:1px solid #f0f0f0;flex-wrap:wrap;}
+.mcat{padding:6px 14px;border-radius:18px;font-size:12px;font-weight:700;border:2px solid #ddd;background:#fff;color:#555;cursor:pointer;transition:.2s;}
+.mcat.on{background:var(--c);border-color:var(--c);color:#fff;}
+.map-routes{display:flex;gap:5px;flex-wrap:wrap;padding:8px 20px;}
+.mroute{padding:5px 11px;border-radius:18px;font-size:11px;font-weight:700;border:2px solid #ddd;background:#fff;color:#555;cursor:pointer;transition:.2s;}
+.mroute.on{background:var(--c);border-color:var(--c);color:#fff;}
+.mroute:hover:not(.on){border-color:var(--cl);background:var(--cp);}
+.map-body{display:flex;min-height:320px;}
+.map-panel{width:200px;background:#fff;padding:14px;border-left:1px solid #f0f0f0;flex-shrink:0;}
+.panel-title{font-size:13px;font-weight:800;color:var(--c);margin-bottom:10px;}
+.panel-row{margin-bottom:8px;}
+.panel-label{font-size:10px;color:#bbb;margin-bottom:2px;}
+.panel-val{font-family:'Poppins',sans-serif;font-size:18px;font-weight:800;color:var(--c);}
+.panel-sm{font-size:12px;font-weight:700;color:#333;}
+.pstop{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid #f5f5f5;font-size:11px;}
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--c);flex-shrink:0;}
+
+/* 시간표 */
+.tt-card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 3px 14px rgba(0,0,0,.07);margin-bottom:14px;}
+.tt-title{font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;color:var(--c);margin-bottom:14px;}
+.tt-table{width:100%;border-collapse:collapse;min-width:400px;}
+.tt-table th{padding:9px 12px;text-align:left;font-size:11px;font-weight:700;color:var(--c);background:var(--cp);}
+.tt-table td{padding:9px 12px;font-size:12px;border-bottom:1px solid #f0f0f0;}
+.tt-table tr:nth-child(even) td{background:#fafafa;}
+.chip{display:inline-block;background:var(--c);color:#fff;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:8px;margin:1px;}
+
+/* 정류장 */
+.stop-card{background:#fff;border-radius:12px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:10px;border-left:4px solid var(--c);}
+.stop-title{font-weight:800;font-size:13px;color:var(--c);margin-bottom:8px;}
+.stop-chips{display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
+.stop-chip{background:var(--cp);color:var(--c);border:1.5px solid #ce93d8;border-radius:18px;padding:3px 10px;font-size:11px;font-weight:600;}
+
+/* 좌석예약 */
+.mw-booking-wrap{background:#fff;border-radius:14px;padding:24px;box-shadow:0 3px 14px rgba(0,0,0,.07);}
+.mw-booking-cats{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.mw-bcat{padding:8px 20px;border-radius:24px;font-size:13px;font-weight:700;border:2px solid #ddd;background:#fff;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.mw-bcat.on{background:var(--c);border-color:var(--c);color:#fff;box-shadow:0 4px 12px rgba(74,20,140,.25);}
+.mw-bsec{display:none;}
+.mw-bsec.on{display:block;}
+.mw-step{font-size:12px;font-weight:700;color:#555;margin-bottom:8px;}
+.mw-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.mw-chip{padding:7px 16px;border-radius:18px;font-size:13px;font-weight:600;border:2px solid #ddd;background:#fff;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.mw-chip.on{border-color:var(--c);background:var(--cp);color:var(--c);}
+.mw-times{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.mw-tbtn{padding:8px 13px;border-radius:10px;border:2px solid #ddd;background:#fff;cursor:pointer;font-size:11px;font-weight:700;color:#555;font-family:'Noto Sans KR',sans-serif;text-align:center;transition:.2s;}
+.mw-tbtn span{font-size:10px;font-weight:400;color:#aaa;display:block;}
+.mw-tbtn.on{background:linear-gradient(135deg,var(--c),var(--c2));border-color:var(--c);color:#fff;box-shadow:0 3px 10px rgba(74,20,140,.3);}
+.mw-tbtn.on span{color:rgba(255,255,255,.8);}
+.mw-seat-legend{display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.mw-seat-legend span{font-size:11px;color:#777;display:flex;align-items:center;gap:5px;}
+.mw-sdot{width:13px;height:13px;border-radius:3px;display:inline-block;}
+.mw-sdot.avail{background:var(--cp);border:1.5px solid #ce93d8;}
+.mw-sdot.taken{background:#ffebee;border:1.5px solid #ef9a9a;}
+.mw-sdot.mine{background:var(--c);border:1.5px solid #1a0030;}
+.mw-sdot.sel{background:#ff8f00;border:1.5px solid #e65100;}
+.mw-sgrid{overflow-x:auto;padding-bottom:4px;}
+.mw-seat{width:34px;height:34px;border-radius:7px;border:none;cursor:pointer;font-size:10px;font-weight:700;transition:.18s;font-family:'Noto Sans KR',sans-serif;flex-shrink:0;}
+.mw-seat.avail{background:var(--cp);color:var(--c);border:1.5px solid #ce93d8;}
+.mw-seat.avail:hover{background:#e1bee7;transform:scale(1.08);}
+.mw-seat.taken{background:#ffebee;color:#c62828;border:1.5px solid #ef9a9a;cursor:not-allowed;}
+.mw-seat.mine{background:var(--c);color:#fff;border:1.5px solid #1a0030;box-shadow:0 3px 10px rgba(74,20,140,.35);}
+.mw-seat.sel{background:linear-gradient(135deg,#ff8f00,#ffa000);color:#fff;border:1.5px solid #e65100;transform:scale(1.1);box-shadow:0 3px 10px rgba(255,143,0,.4);}
+.mw-reserve-btn{width:100%;padding:11px;background:var(--c);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:12px;transition:.2s;}
+.mw-reserve-btn:hover{background:#1a0030;}
+.mw-cancel-btn{width:100%;padding:9px;background:#f5f5f5;color:#555;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:6px;}
+.mw-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(74,20,140,.93);color:#fff;padding:10px 24px;border-radius:24px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.mw-toast.show{opacity:1;}
+
+/* feat */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:32px;}
+.feat-card{background:#fff;border-radius:14px;padding:22px 18px;box-shadow:0 3px 14px rgba(0,0,0,.07);border:1px solid #eee;cursor:pointer;transition:.2s;}
+.feat-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.11);}
+.feat-icon{font-size:32px;margin-bottom:10px;}
+.feat-card h3{font-size:15px;font-weight:700;color:#222;margin-bottom:6px;}
+.feat-card p{font-size:13px;color:#888;line-height:1.6;margin-bottom:12px;}
+.feat-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border-radius:18px;background:var(--cp);color:var(--c);font-size:12px;font-weight:700;border:1.5px solid var(--cl);cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.feat-btn:hover{background:var(--c);color:#fff;}
+.info-box{padding:14px;border-radius:10px;margin-bottom:0;}
+
+/* footer */
+footer{background:#1a1a1a;color:#aaa;padding:28px 20px;text-align:center;}
+.foot-logo{font-family:'Poppins',sans-serif;font-size:14px;font-weight:800;color:#fff;margin-bottom:6px;}
+footer p{font-size:11px;line-height:1.8;}
+
+/* 반응형 */
+@media(max-width:900px){.dash{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){
+  .nav-in{padding:0 12px;height:52px;}
+  .nav-title{font-size:13px;}
+  .nav-sub{display:none;}
+  .nav-btns button{font-size:11px;padding:5px 8px;}
+  .hero{padding:28px 14px 36px;}
+  .hero h1{font-size:22px;}
+  .hero-btns{flex-direction:column;}
+  .hero-btns button{width:100%;}
+  .main{padding:20px 14px 48px;}
+  .dash{grid-template-columns:1fr;}
+  .map-body{flex-direction:column;}
+  .map-panel{width:100%;border-left:none;border-top:1px solid #f0f0f0;}
+  .feat-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+  window.__NC_PAGE_SCHOOL__ = "목원대학교";
+  document.addEventListener('DOMContentLoaded', function(){
+    var PAGE_SCHOOL = window.__NC_PAGE_SCHOOL__;
+    var cur = null;
+    try { cur = JSON.parse(localStorage.getItem('nc_current_user')||'null'); } catch(e){}
+    if (cur && cur.role === 'student' && cur.school && cur.school !== PAGE_SCHOOL) {
+      var blocker = document.createElement('div');
+      blocker.style.cssText = 'position:fixed;inset:0;background:#1b1b1b;color:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:30px;font-family:"Noto Sans KR",sans-serif;z-index:2147483647;';
+      blocker.innerHTML =
+        '<div style="font-size:48px;margin-bottom:16px;">🚫</div>' +
+        '<div style="font-size:18px;font-weight:700;margin-bottom:10px;">이용할 수 없는 페이지입니다</div>' +
+        '<div style="font-size:14px;color:#ccc;margin-bottom:24px;">회원가입 시 등록한 소속 학교(' + cur.school + ')와 다른 학교의 셔틀버스입니다.</div>' +
+        '<a href="index.html" style="padding:12px 28px;background:#2e7d32;color:#fff;border-radius:24px;text-decoration:none;font-weight:700;">허브사이트로 돌아가기</a>';
+      document.body.appendChild(blocker);
+      document.body.style.overflow = 'hidden';
+    }
+  });
+})();
+</script>
+
+</head>
+<body>
+<button onclick="location.href='index.html'" style="position:fixed;top:14px;left:14px;z-index:9999;background:#fff;color:#4a148c;border:2px solid #4a148c;border-radius:18px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.15);">← 목록</button>
+
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-icon">🚌</div>
+      <span class="nav-title">목원대학교</span>
+      <span class="nav-sub">셔틀버스</span>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-ol" onclick="goTab('tab-map')">🗺️ 노선도</button>
+      <button class="btn-fi" onclick="goTab('tab-tt',null);document.querySelector('.tabs').scrollIntoView({behavior:'smooth'})">📅 시간표</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-in">
+    <h1>목원대학교<br><span>통학버스</span> 서비스</h1>
+    <p>대전 시내 7개 노선 + 시외 2개 노선 · 신학대학 옆 주차장 18:10 하교</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">9</div><div class="l">운행 노선</div></div>
+      <div class="hstat"><div class="n">07:10</div><div class="l">빠른 첫차</div></div>
+      <div class="hstat"><div class="n">18:10</div><div class="l">하교 출발</div></div>
+      <div class="hstat"><div class="n">무료</div><div class="l">탑승 요금</div></div>
+    </div>
+    <div class="hero-btns">
+      <button class="hbtn-m" onclick="document.getElementById('mw-map-wrap').scrollIntoView({behavior:'smooth'})">🗺️ 노선 지도</button>
+      <button class="hbtn-s" onclick="goTab('tab-tt',null);document.querySelector('.tabs').scrollIntoView({behavior:'smooth'})">📅 시간표 보기</button>
+    </div>
+  </div>
+</section>
+
+<div class="main">
+
+  <!-- 주요서비스 -->
+  <div style="margin-bottom:24px;">
+    <div style="font-size:18px;font-weight:800;color:#222;margin-bottom:6px;">주요 서비스</div>
+    <div class="feat-grid">
+      <div class="feat-card" onclick="document.getElementById('mw-map-wrap').scrollIntoView({behavior:'smooth'})">
+        <div class="feat-icon">🚌</div>
+        <h3>노선 지도</h3>
+        <p>시내 7개·시외 2개 노선의 정류장과 경로를 지도로 확인하세요.</p>
+        <button class="feat-btn">노선 보기 →</button>
+      </div>
+      <div class="feat-card" onclick="goTab('tab-tt',null)">
+        <div class="feat-icon">📅</div>
+        <h3>시간표 확인</h3>
+        <p>전 노선 출발 시각과 주요 정류장 도착 시간을 확인하세요.</p>
+        <button class="feat-btn">시간표 →</button>
+      </div>
+      <div class="feat-card" onclick="goTab('tab-stops',null)">
+        <div class="feat-icon">📍</div>
+        <h3>정류장 안내</h3>
+        <p>노선별 정류장 목록과 순서를 한눈에 확인하세요.</p>
+        <button class="feat-btn">정류장 →</button>
+      </div>
+      <div class="feat-card" onclick="document.getElementById('mw-booking').scrollIntoView({behavior:'smooth'})">
+        <div class="feat-icon">🎫</div>
+        <h3>좌석 예약</h3>
+        <p>원하는 노선·회차 좌석을 미리 선택해 편리하게 탑승하세요.</p>
+        <button class="feat-btn">예약하기 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이용안내 -->
+  <div style="margin-bottom:22px;">
+    <div style="font-size:16px;font-weight:800;color:#222;margin-bottom:12px;">ℹ️ 이용안내</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="info-box" style="background:var(--cp);border-left:4px solid var(--c);border-radius:10px;padding:14px;">
+        <h4 style="color:var(--c);margin-bottom:8px;font-size:13px;">🏙️ 시내 통학버스</h4>
+        <ul style="font-size:12px;color:#555;line-height:1.9;list-style:none;">
+          <li>✅ 1~7호차 대전 시내 각 지역 출발</li>
+          <li>✅ 재학생 무료 탑승</li>
+          <li>✅ 하교: 신학대학 옆 주차장 18:10</li>
+        </ul>
+      </div>
+      <div class="info-box" style="background:var(--cp);border-left:4px solid var(--c);border-radius:10px;padding:14px;">
+        <h4 style="color:var(--c);margin-bottom:8px;font-size:13px;">🛣️ 시외 통학버스</h4>
+        <ul style="font-size:12px;color:#555;line-height:1.9;list-style:none;">
+          <li>✅ 시외1호: 서울(교대역·죽전·신갈)</li>
+          <li>✅ 시외2호: 경기(수원·평택)</li>
+          <li>✅ 도착 08:50 / 하교 18:10 출발</li>
+        </ul>
+      </div>
+      <div class="info-box" style="background:#fff8e1;border-left:4px solid #f57c00;border-radius:10px;padding:14px;">
+        <h4 style="color:#f57c00;margin-bottom:8px;font-size:13px;">⚠️ 안내</h4>
+        <p style="font-size:12px;color:#555;line-height:1.7;">정확한 정보는 <a href="https://www.mokwon.ac.kr/kr/html/sub05/05060301.html" target="_blank" style="color:var(--c);font-weight:700;">목원대 공식 홈페이지</a>에서 확인하세요.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 대시보드 -->
+  <div class="dash">
+
+    <!-- 도착정보 -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div class="card-label" style="margin-bottom:0;">🚌 통학버스 현황</div>
+        <span class="badge-live">실시간</span>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">1호차 · 산내·대전역</div><div class="arr-sub" id="mw-stop0">현재: 대전역 부근</div></div>
+        <div class="arr-time" id="mw-min0">12<span>분 후</span></div>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">4호차 · 세종·노은·유성</div><div class="arr-sub" id="mw-stop1">현재: 반석역</div></div>
+        <div class="arr-time" id="mw-min1">8<span>분 후</span></div>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">5호차 · 계룡·관저·가수원</div><div class="arr-sub" id="mw-stop2">현재: 관저동</div></div>
+        <div class="arr-time" id="mw-min2">18<span>분 후</span></div>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">🛣️ 시외1호 · 서울</div><div class="arr-sub">교대역 06:20 출발</div></div>
+        <div class="arr-badges"><span class="badge badge-b">08:50 도착</span></div>
+      </div>
+      <div class="arr-item">
+        <div><div class="arr-name">🛣️ 시외2호 · 경기</div><div class="arr-sub">수원 06:00 출발</div></div>
+        <div class="arr-badges"><span class="badge badge-b">08:50 도착</span></div>
+      </div>
+    </div>
+
+    <!-- 날씨 -->
+    <div class="wx-card" style="padding:14px 16px;align-self:start;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div class="wx-title" style="margin-bottom:0;">🌤️ 목원대 현재 날씨</div>
+        <div style="font-size:10px;color:#888;">대전광역시</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="font-size:42px;" id="mw-wx-icon">⏳</div>
+        <div>
+          <div class="wx-temp" id="mw-wx-temp">--°</div>
+          <div class="wx-desc" id="mw-wx-desc">로딩 중...</div>
+        </div>
+        <div style="flex:1;font-size:11px;color:#666;line-height:1.7;text-align:right;">
+          <div id="mw-wx-detail">습도 -- · 체감 --°</div>
+          <div id="mw-wx-wind">바람 --m/s</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:rgba(255,255,255,.55);border-radius:8px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:10px;color:#888;">탑승 시 참고</div>
+        <div class="wx-adv" id="mw-wx-advice">날씨 확인 중</div>
+      </div>
+    </div>
+
+    <!-- 지연률 -->
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div style="padding:14px 16px 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0f0f8;">
+        <div style="font-size:13px;font-weight:800;color:#333;">⏱️ 노선별 지연률</div>
+        <span style="font-size:11px;padding:3px 10px;border-radius:20px;background:var(--cp);color:var(--c);font-weight:700;">오늘</span>
+      </div>
+      <div style="padding:12px 16px;">
+        <div class="mw-delay-grid">
+          <div class="mw-delay-card mw-delay-ok">
+            <div class="mw-delay-hd"><span class="mw-dcar">1호차·산내</span><span class="mw-dbadge mw-dok">정상</span></div>
+            <div class="mw-dpct">6%</div>
+            <div class="mw-dbar-bg"><div class="mw-dbar" style="width:6%;background:#ab47bc"></div></div>
+            <div class="mw-dmeta">평균 <strong>1분</strong> 지연</div>
+          </div>
+          <div class="mw-delay-card mw-delay-warn">
+            <div class="mw-delay-hd"><span class="mw-dcar">2호차·법동</span><span class="mw-dbadge mw-dwarn">주의</span></div>
+            <div class="mw-dpct" style="color:#f57c00">24%</div>
+            <div class="mw-dbar-bg"><div class="mw-dbar" style="width:24%;background:#ffa726"></div></div>
+            <div class="mw-dmeta">평균 <strong>6분</strong> 지연</div>
+          </div>
+          <div class="mw-delay-card mw-delay-ok">
+            <div class="mw-delay-hd"><span class="mw-dcar">3호차·신탄진</span><span class="mw-dbadge mw-dok">정상</span></div>
+            <div class="mw-dpct">9%</div>
+            <div class="mw-dbar-bg"><div class="mw-dbar" style="width:9%;background:#ab47bc"></div></div>
+            <div class="mw-dmeta">평균 <strong>2분</strong> 지연</div>
+          </div>
+          <div class="mw-delay-card mw-delay-ok">
+            <div class="mw-delay-hd"><span class="mw-dcar">4호차·세종</span><span class="mw-dbadge mw-dok">정상</span></div>
+            <div class="mw-dpct">4%</div>
+            <div class="mw-dbar-bg"><div class="mw-dbar" style="width:4%;background:#ab47bc"></div></div>
+            <div class="mw-dmeta">평균 <strong>1분</strong> 지연</div>
+          </div>
+          <div class="mw-delay-card mw-delay-ok">
+            <div class="mw-delay-hd"><span class="mw-dcar">5호차·계룡</span><span class="mw-dbadge mw-dok">정상</span></div>
+            <div class="mw-dpct">11%</div>
+            <div class="mw-dbar-bg"><div class="mw-dbar" style="width:11%;background:#ab47bc"></div></div>
+            <div class="mw-dmeta">평균 <strong>2분</strong> 지연</div>
+          </div>
+          <div class="mw-delay-card mw-delay-danger">
+            <div class="mw-delay-hd"><span class="mw-dcar">6호차·둔산</span><span class="mw-dbadge mw-ddanger">지연</span></div>
+            <div class="mw-dpct" style="color:#c62828">38%</div>
+            <div class="mw-dbar-bg"><div class="mw-dbar" style="width:38%;background:#ef5350"></div></div>
+            <div class="mw-dmeta">평균 <strong>9분</strong> 지연</div>
+          </div>
+          <div class="mw-delay-card mw-delay-ok">
+            <div class="mw-delay-hd"><span class="mw-dcar">7호차·궁동</span><span class="mw-dbadge mw-dok">정상</span></div>
+            <div class="mw-dpct">7%</div>
+            <div class="mw-dbar-bg"><div class="mw-dbar" style="width:7%;background:#ab47bc"></div></div>
+            <div class="mw-dmeta">평균 <strong>2분</strong> 지연</div>
+          </div>
+          <div class="mw-delay-card mw-delay-ok">
+            <div class="mw-delay-hd"><span class="mw-dcar">시외1호·서울</span><span class="mw-dbadge mw-dok">정상</span></div>
+            <div class="mw-dpct">5%</div>
+            <div class="mw-dbar-bg"><div class="mw-dbar" style="width:5%;background:#ab47bc"></div></div>
+            <div class="mw-dmeta">평균 <strong>1분</strong> 지연</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;padding:8px 10px;background:#fafafa;border-radius:8px;border:1px solid #eee;font-size:10px;color:#555;">
+          📊 금주 평균: <strong style="color:var(--c)">13.0%</strong> &nbsp;⬇️ 전주 대비: <strong style="color:#2e7d32">-1.8%p 개선</strong>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 좌석예약 -->
+  <div style="margin-bottom:28px;" id="mw-booking">
+    <div style="font-size:18px;font-weight:800;color:#222;margin-bottom:6px;">🎫 좌석 예약</div>
+    <div style="font-size:14px;color:#888;margin-bottom:16px;">원하는 노선과 좌석을 선택하고 예약하세요.</div>
+    <div class="mw-booking-wrap">
+      <div class="mw-booking-cats">
+        <button class="mw-bcat on" onclick="mwBcat('city',this)">🏙️ 시내버스(1~7호차)</button>
+        <button class="mw-bcat" onclick="mwBcat('intercity',this)">🛣️ 시외버스</button>
+      </div>
+
+      <!-- 시내버스 -->
+      <div class="mw-bsec on" id="mwbsec-city">
+        <div class="mw-step">① 노선 선택</div>
+        <div class="mw-chips" id="mwchip-city">
+          <button class="mw-chip on" onclick="mwChip(this,'city','1호차·산내·대전역·정림동')">🚌 1호차·산내·대전역</button>
+          <button class="mw-chip" onclick="mwChip(this,'city','2호차·법동·터미널·용문동')">🚌 2호차·법동·터미널</button>
+          <button class="mw-chip" onclick="mwChip(this,'city','3호차·신탄진·전민동·만년동')">🚌 3호차·신탄진·전민동</button>
+          <button class="mw-chip" onclick="mwChip(this,'city','4호차·세종시·노은동·유성')">🚌 4호차·세종·노은·유성</button>
+          <button class="mw-chip" onclick="mwChip(this,'city','5호차·계룡시·관저동·가수원')">🚌 5호차·계룡·관저·가수원</button>
+          <button class="mw-chip" onclick="mwChip(this,'city','6호차·둔산동·월평동·유성')">🚌 6호차·둔산·월평·유성</button>
+          <button class="mw-chip" onclick="mwChip(this,'city','7호차·궁동·구암동·유성')">🚌 7호차·궁동·구암·유성</button>
+        </div>
+        <div class="mw-step">② 방향 선택</div>
+        <div class="mw-times" id="mwtime-city">
+          <button class="mw-tbtn on" onclick="mwTime(this,'city','등교')">등교<span>→ 목원대</span></button>
+          <button class="mw-tbtn" onclick="mwTime(this,'city','하교')">하교<span>18:10 출발</span></button>
+        </div>
+        <div class="mw-step">③ 좌석 선택</div>
+        <div class="mw-seat-legend">
+          <span><span class="mw-sdot avail"></span>빈 좌석</span>
+          <span><span class="mw-sdot taken"></span>예약됨</span>
+          <span><span class="mw-sdot sel"></span>선택 중</span>
+          <span><span class="mw-sdot mine"></span>내 좌석</span>
+        </div>
+        <div class="mw-sgrid" id="mwsg-city"></div>
+        <button class="mw-reserve-btn" onclick="mwReserve('city')">✅ 예약하기</button>
+        <button class="mw-cancel-btn" onclick="mwCancel('city')">❌ 예약 취소</button>
+      </div>
+
+      <!-- 시외버스 -->
+      <div class="mw-bsec" id="mwbsec-intercity">
+        <div class="mw-step">① 노선 선택</div>
+        <div class="mw-chips" id="mwchip-intercity">
+          <button class="mw-chip on" onclick="mwChip(this,'intercity','시외1호·서울(교대역·죽전·신갈)')">🛣️ 시외1호·서울</button>
+          <button class="mw-chip" onclick="mwChip(this,'intercity','시외2호·경기(수원·평택)')">🛣️ 시외2호·경기</button>
+        </div>
+        <div class="mw-step">② 방향 선택</div>
+        <div class="mw-times" id="mwtime-intercity">
+          <button class="mw-tbtn on" onclick="mwTime(this,'intercity','등교')">등교<span>→ 08:50 도착</span></button>
+          <button class="mw-tbtn" onclick="mwTime(this,'intercity','하교')">하교<span>18:10 출발</span></button>
+        </div>
+        <div class="mw-step">③ 좌석 선택</div>
+        <div class="mw-seat-legend">
+          <span><span class="mw-sdot avail"></span>빈 좌석</span>
+          <span><span class="mw-sdot taken"></span>예약됨</span>
+          <span><span class="mw-sdot sel"></span>선택 중</span>
+          <span><span class="mw-sdot mine"></span>내 좌석</span>
+        </div>
+        <div class="mw-sgrid" id="mwsg-intercity"></div>
+        <button class="mw-reserve-btn" onclick="mwReserve('intercity')">✅ 예약하기</button>
+        <button class="mw-cancel-btn" onclick="mwCancel('intercity')">❌ 예약 취소</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 탭 -->
+  <div class="tabs">
+    <button class="tab-btn on" onclick="goTab('tab-map',this)">🗺️ 노선지도</button>
+    <button class="tab-btn" onclick="goTab('tab-tt',this)">📅 시간표</button>
+    <button class="tab-btn" onclick="goTab('tab-stops',this)">📍 정류장</button>
+  </div>
+
+  <!-- 노선지도 -->
+  <div id="tab-map" class="tab-pane show">
+    <div class="map-wrap" id="mw-map-wrap">
+      <div class="map-head"><h3>🗺️ 노선 지도</h3><p>카테고리·노선 버튼으로 경로 확인</p></div>
+      <div class="map-cats">
+        <button class="mcat on" onclick="mwSetCat('city',this)">🏙️ 시내버스</button>
+        <button class="mcat" onclick="mwSetCat('intercity',this)">🛣️ 시외버스</button>
+      </div>
+      <div class="map-routes" id="mwrtab-city">
+        <button class="mroute on" onclick="mwSetRoute('r1',this)">1호차·산내·대전역</button>
+        <button class="mroute" onclick="mwSetRoute('r2',this)">2호차·법동·터미널</button>
+        <button class="mroute" onclick="mwSetRoute('r3',this)">3호차·신탄진·전민동</button>
+        <button class="mroute" onclick="mwSetRoute('r4',this)">4호차·세종·노은·유성</button>
+        <button class="mroute" onclick="mwSetRoute('r5',this)">5호차·계룡·관저·가수원</button>
+        <button class="mroute" onclick="mwSetRoute('r6',this)">6호차·둔산·월평·유성</button>
+        <button class="mroute" onclick="mwSetRoute('r7',this)">7호차·궁동·구암·유성</button>
+      </div>
+      <div class="map-routes" id="mwrtab-intercity" style="display:none">
+        <button class="mroute on" onclick="mwSetRoute('ex1',this)">시외1호·서울</button>
+        <button class="mroute" onclick="mwSetRoute('ex2',this)">시외2호·경기</button>
+      </div>
+      <div class="map-body">
+        <div style="flex:1;min-height:380px;"><div id="mw-leaflet-map" style="width:100%;height:380px;"></div></div>
+        <div class="map-panel">
+          <div class="panel-title" id="mw-p-title">🚌 1호차·산내·대전역</div>
+          <div class="panel-row"><div class="panel-label">첫 정류장 출발</div><div class="panel-val" id="mw-p-first">07:20</div></div>
+          <div class="panel-row"><div class="panel-label">하교 출발</div><div class="panel-val" id="mw-p-last">18:10</div></div>
+          <div class="panel-row"><div class="panel-label">운행</div><div class="panel-sm" id="mw-p-interval">월~금(학기중)</div></div>
+          <div style="margin-top:10px;"><div class="panel-label" style="margin-bottom:6px;">주요 정류장</div><div id="mw-p-stops">
+            <div class="pstop"><span class="pdot"></span>산내소방서 앞</div>
+            <div class="pstop"><span class="pdot"></span>대전역</div>
+            <div class="pstop"><span class="pdot"></span>정림동</div>
+            <div class="pstop"><span class="pdot"></span>목원대학교</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시간표 -->
+  <div id="tab-tt" class="tab-pane">
+    <div class="tt-card">
+      <div class="tt-title">🏙️ 시내 통학버스 시간표</div>
+      <div style="overflow-x:auto;">
+        <table class="tt-table">
+          <thead><tr><th>노선</th><th>첫 정류장 출발</th><th>목원대 도착(예상)</th><th>하교 출발</th><th>운행일</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700;color:#6a1b9a;">1호차·산내·대전역·정림동</td><td><span class="chip">07:20</span></td><td><span class="chip" style="background:#555;">08:10</span></td><td><span class="chip" style="background:#555;">18:10</span></td><td>월~금</td></tr>
+            <tr><td style="font-weight:700;color:#6a1b9a;">2호차·법동·터미널·용문동</td><td><span class="chip">07:15</span></td><td><span class="chip" style="background:#555;">08:10</span></td><td><span class="chip" style="background:#555;">18:10</span></td><td>월~금</td></tr>
+            <tr><td style="font-weight:700;color:#6a1b9a;">3호차·신탄진·전민동·만년동</td><td><span class="chip">07:30</span></td><td><span class="chip" style="background:#555;">08:50</span></td><td><span class="chip" style="background:#555;">18:10</span></td><td>월~금</td></tr>
+            <tr><td style="font-weight:700;color:#6a1b9a;">4호차·세종시·노은동·유성</td><td><span class="chip">07:20</span></td><td><span class="chip" style="background:#555;">08:20</span></td><td><span class="chip" style="background:#555;">18:10</span></td><td>월~금</td></tr>
+            <tr><td style="font-weight:700;color:#6a1b9a;">5호차·계룡시·관저동·가수원</td><td><span class="chip">07:10</span></td><td><span class="chip" style="background:#555;">08:05</span></td><td><span class="chip" style="background:#555;">18:10</span></td><td>월~금</td></tr>
+            <tr><td style="font-weight:700;color:#6a1b9a;">6호차·둔산동·월평동·유성</td><td><span class="chip">08:10</span></td><td><span class="chip" style="background:#555;">09:00</span></td><td><span class="chip" style="background:#555;">18:10</span></td><td>월~금</td></tr>
+            <tr><td style="font-weight:700;color:#6a1b9a;">7호차·궁동·구암동·유성</td><td><span class="chip">08:20</span></td><td><span class="chip" style="background:#555;">09:00</span></td><td><span class="chip" style="background:#555;">18:10</span></td><td>월~금</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tt-card">
+      <div class="tt-title">🛣️ 시외 통학버스 시간표</div>
+      <div style="overflow-x:auto;">
+        <table class="tt-table">
+          <thead><tr><th>노선</th><th>출발지·시각</th><th>목원대 도착</th><th>하교 출발</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700;color:#1565c0;">시외1호·서울(교대역·죽전·신갈)</td><td><span class="chip" style="background:#1565c0;">교대역 06:20</span></td><td><span class="chip" style="background:#555;">08:50</span></td><td><span class="chip" style="background:#555;">18:10</span></td></tr>
+            <tr><td style="font-weight:700;color:#0d47a1;">시외2호·경기(수원·평택)</td><td><span class="chip" style="background:#0d47a1;">수원 06:00</span></td><td><span class="chip" style="background:#555;">08:50</span></td><td><span class="chip" style="background:#555;">18:10</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:10px;padding:10px;background:#f3e5f5;border-radius:8px;font-size:12px;color:#6a1b9a;">⚠️ 하교는 신학대학 옆 주차장에서 18:10 출발 · 등교 역순 운행</div>
+    </div>
+  </div>
+
+  <!-- 정류장 -->
+  <div id="tab-stops" class="tab-pane">
+    <div class="stop-card"><div class="stop-title">🚌 1호차·산내·대전역·정림동</div><div class="stop-chips"><span class="stop-chip">산내소방서</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">은어송초교</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">효동현대아파트</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">대전역</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">정림동</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">목원대</span></div></div>
+    <div class="stop-card"><div class="stop-title">🚌 2호차·법동·터미널·용문동</div><div class="stop-chips"><span class="stop-chip">법동우체국</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">대전복합터미널</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">용문동</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">큰마을사거리</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">갈마서부농협</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">목원대</span></div></div>
+    <div class="stop-card"><div class="stop-title">🚌 3호차·신탄진·전민동·만년동</div><div class="stop-chips"><span class="stop-chip">신탄진역</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">대덕테크노밸리</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">전민동세종아파트</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">한아름102동</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">목원대</span></div></div>
+    <div class="stop-card"><div class="stop-title">🚌 4호차·세종시·노은동·유성</div><div class="stop-chips"><span class="stop-chip">도램마을</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">세종청사남측</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">반석역</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">노은역</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">유성새마을금고</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">목원대</span></div></div>
+    <div class="stop-card"><div class="stop-title">🚌 5호차·계룡시·관저동·가수원</div><div class="stop-chips"><span class="stop-chip">하나로마트앞</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">계룡시청</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">진잠사거리</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">관저2동</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">가수원네거리</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">목원대</span></div></div>
+    <div class="stop-card"><div class="stop-title">🚌 6호차·둔산동·월평동·유성</div><div class="stop-chips"><span class="stop-chip">샘머리아파트</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">탄방중학교</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">사학연금회관</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">궁동다솔아파트</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">유성온천역</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">목원대</span></div></div>
+    <div class="stop-card"><div class="stop-title">🚌 7호차·궁동·구암동·유성</div><div class="stop-chips"><span class="stop-chip">유성구청</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">궁동대학로마트</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">봉명네거리</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">유성온천역</span><span style="color:var(--c);font-weight:700;padding:0 3px;">→</span><span class="stop-chip">목원대</span></div></div>
+    <div class="stop-card" style="border-left-color:#1565c0;"><div class="stop-title" style="color:#1565c0;">🛣️ 시외1호·서울(교대역·죽전·신갈)</div><div class="stop-chips"><span class="stop-chip" style="background:#e8eaf6;color:#1565c0;border-color:#9fa8da;">교대역 9번출구</span><span style="color:#1565c0;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#e8eaf6;color:#1565c0;border-color:#9fa8da;">죽전간이정류장</span><span style="color:#1565c0;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#e8eaf6;color:#1565c0;border-color:#9fa8da;">신갈버스정류장</span><span style="color:#1565c0;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#e8eaf6;color:#1565c0;border-color:#9fa8da;">목원대(08:50)</span></div></div>
+    <div class="stop-card" style="border-left-color:#0d47a1;"><div class="stop-title" style="color:#0d47a1;">🛣️ 시외2호·경기(수원·평택)</div><div class="stop-chips"><span class="stop-chip" style="background:#e3f2fd;color:#0d47a1;border-color:#90caf9;">수원권선중앞</span><span style="color:#0d47a1;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#e3f2fd;color:#0d47a1;border-color:#90caf9;">망포역3번출구</span><span style="color:#0d47a1;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#e3f2fd;color:#0d47a1;border-color:#90caf9;">평택용이정류장</span><span style="color:#0d47a1;font-weight:700;padding:0 3px;">→</span><span class="stop-chip" style="background:#e3f2fd;color:#0d47a1;border-color:#90caf9;">목원대(08:50)</span></div></div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="foot-logo">🚌 목원대학교 셔틀버스</div>
+  <p>총무처 042-829-7114 · 학생처 042-829-7700<br>
+  <a href="https://www.mokwon.ac.kr" target="_blank" style="color:var(--cl);">www.mokwon.ac.kr</a></p>
+</footer>
+
+<script>
+/* ── 탭 ── */
+function goTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(function(el){ el.classList.remove('show'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('on'); });
+  var el = document.getElementById(id);
+  if(el) el.classList.add('show');
+  if(btn) { btn.classList.add('on'); }
+  else {
+    document.querySelectorAll('.tab-btn').forEach(function(b){
+      if((b.getAttribute('onclick')||'').indexOf("'"+id+"'")!==-1) b.classList.add('on');
+    });
+  }
+  if(id==='tab-map') setTimeout(function(){if(MW_MAP)MW_MAP.invalidateSize();},200);
+}
+window.goTab = goTab;
+
+/* ── 노선 데이터 ── */
+var MW_RD = {
+  r1:{t:'🚌 1호차·산내·대전역·정림동', first:'07:20', last:'18:10', interval:'월~금(학기중)', stops:['산내소방서 앞','은어송초등학교','효동현대아파트','대전역','정림동GS주유소','목원대학교']},
+  r2:{t:'🚌 2호차·법동·터미널·용문동', first:'07:15', last:'18:10', interval:'월~금', stops:['법동우체국','동춘당','대전복합터미널','용문동치안센터','큰마을4거리','갈마서부농협','목원대학교']},
+  r3:{t:'🚌 3호차·신탄진·전민동·만년동', first:'07:30', last:'18:10', interval:'월~금', stops:['신탄진역','대덕테크노밸리','전민동세종아파트','한아름102동','목원대학교']},
+  r4:{t:'🚌 4호차·세종시·노은동·유성', first:'07:20', last:'18:10', interval:'월~금', stops:['도램마을','세종청사남측','반석역','지족역','노은역','유성새마을금고','목원대학교']},
+  r5:{t:'🚌 5호차·계룡시·관저동·가수원', first:'07:10', last:'18:10', interval:'월~금', stops:['하나로마트앞','계룡시청','진잠4거리','관저2동','가수원네거리','목원대학교']},
+  r6:{t:'🚌 6호차·둔산동·월평동·유성', first:'08:10', last:'18:10', interval:'월~금', stops:['샘머리아파트','탄방중학교','사학연금회관','궁동다솔아파트','충대정문앞','유성온천역','목원대학교']},
+  r7:{t:'🚌 7호차·궁동·구암동·유성', first:'08:20', last:'18:10', interval:'월~금', stops:['유성구청','궁동대학로마트','봉명네거리','유성온천역','목원대학교']},
+  ex1:{t:'🛣️ 시외1호·서울(교대역·죽전·신갈)', first:'06:20(교대역)', last:'18:10', interval:'월~금', stops:['교대역9번출구','죽전간이정류장','신갈버스정류장','목원대(08:50)']},
+  ex2:{t:'🛣️ 시외2호·경기(수원·평택)', first:'06:00(수원)', last:'18:10', interval:'월~금', stops:['수원권선중앞','망포역3번출구','평택용이정류장','목원대(08:50)']}
+};
+var mwCurR='r1', mwCurCat='city';
+
+function mwUpdatePanel() {
+  var d=MW_RD[mwCurR]; if(!d) return;
+  document.getElementById('mw-p-title').textContent=d.t;
+  document.getElementById('mw-p-first').textContent=d.first;
+  document.getElementById('mw-p-last').textContent=d.last;
+  document.getElementById('mw-p-interval').textContent=d.interval;
+  document.getElementById('mw-p-stops').innerHTML=d.stops.map(function(s){
+    return '<div class="pstop"><span class="pdot"></span>'+s+'</div>';
+  }).join('');
+}
+window.mwUpdatePanel = mwUpdatePanel;
+
+function mwSetCat(cat, btn) {
+  mwCurCat=cat;
+  document.querySelectorAll('.mcat').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  document.getElementById('mwrtab-city').style.display=cat==='city'?'flex':'none';
+  document.getElementById('mwrtab-intercity').style.display=cat==='intercity'?'flex':'none';
+  var first=document.querySelector('#mwrtab-'+cat+' .mroute');
+  if(first){
+    var rid=first.getAttribute('onclick').match(/'(\w+)'/)[1];
+    mwSetRoute(rid, first);
+  }
+}
+window.mwSetCat = mwSetCat;
+
+function mwSetRoute(rid, btn) {
+  mwCurR=rid;
+  document.querySelectorAll('#mwrtab-'+mwCurCat+' .mroute').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  mwUpdatePanel();
+  mwDrawRoute(rid);
+}
+window.mwSetRoute = mwSetRoute;
+
+/* ── 날씨 ── */
+(function(){
+  var WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',71:'❄️',80:'🌦️',95:'⛈️'};
+  var WD={0:'맑음',1:'대체로 맑음',2:'구름 조금',3:'흐림',45:'안개',51:'이슬비',61:'비',71:'눈',80:'소나기',95:'뇌우'};
+  var WA={0:'외출하기 좋은 날씨!',1:'날씨가 맑아요',3:'흐린 날씨예요',51:'가벼운 비가 내려요',61:'우산 챙기세요 ☔',71:'눈이 내려요 🌨️',80:'소나기 주의 ☔',95:'뇌우 주의! ⛈️'};
+  function fallback(){
+    var mo=new Date().getMonth();
+    var tt=[2,4,9,15,20,24,27,28,24,18,11,4];
+    var cc=[0,1,2,1,0,61,80,80,1,0,1,3];
+    var t=tt[mo]+Math.round((Math.random()-.5)*4);
+    document.getElementById('mw-wx-temp').textContent=t+'°';
+    document.getElementById('mw-wx-desc').textContent=WD[cc[mo]]||'맑음';
+    document.getElementById('mw-wx-icon').textContent=WI[cc[mo]]||'☀️';
+    document.getElementById('mw-wx-detail').textContent='체감 '+(t-2)+'° · 습도 '+(60+Math.round(Math.random()*20))+'%';
+    document.getElementById('mw-wx-wind').textContent='바람 '+(1+Math.random()*3).toFixed(1)+'m/s';
+    document.getElementById('mw-wx-advice').textContent=WA[cc[mo]]||'정상 탑승 ✅';
+  }
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=36.3094&longitude=127.3349&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=Asia%2FSeoul')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var c=data.current, code=c.weather_code;
+      document.getElementById('mw-wx-temp').textContent=Math.round(c.temperature_2m)+'°';
+      document.getElementById('mw-wx-desc').textContent=WD[code]||'맑음';
+      document.getElementById('mw-wx-icon').textContent=WI[code]||'☀️';
+      document.getElementById('mw-wx-detail').textContent='체감 '+Math.round(c.apparent_temperature)+'° · 습도 '+c.relative_humidity_2m+'%';
+      document.getElementById('mw-wx-wind').textContent='바람 '+c.wind_speed_10m.toFixed(1)+'m/s';
+      document.getElementById('mw-wx-advice').textContent=WA[code]||'정상 탑승 ✅';
+    }).catch(fallback);
+})();
+
+/* ── 도착정보 시뮬레이션 ── */
+var mwArrData = [
+  {min:12, stops:['산내소방서','대전역 부근','정림동'], cur:0},
+  {min:8,  stops:['반석역','노은역 부근','유성입구'], cur:0},
+  {min:18, stops:['관저동','가수원네거리','목원대 근처'], cur:0}
+];
+function mwUpdateArr(){
+  mwArrData.forEach(function(d,i){
+    d.min=d.min<=1?Math.floor(Math.random()*12)+6:d.min-1;
+    var el=document.getElementById('mw-min'+i);
+    var sl=document.getElementById('mw-stop'+i);
+    if(el) el.innerHTML=d.min+'<span>분 후</span>';
+    if(sl) sl.textContent='현재: '+d.stops[d.cur%d.stops.length];
+    d.cur++;
+  });
+}
+setInterval(mwUpdateArr,30000);
+
+/* ── 좌석 예약 ── */
+var mwSeatData={}, mwMySeats={}, mwSelSeat={city:null,intercity:null};
+var mwCurBus={city:'1호차·산내·대전역·정림동__등교', intercity:'시외1호·서울(교대역·죽전·신갈)__등교'};
+
+function mwEnsureSeats(busId){
+  if(!mwSeatData[busId]){
+    var taken=new Set();
+    while(taken.size<10) taken.add(Math.floor(Math.random()*45)+1);
+    mwSeatData[busId]=Array.from({length:45},function(_,i){return{id:i+1,taken:taken.has(i+1)};});
+  }
+}
+
+function mwMakeSeat(s, busId, cat){
+  var btn=document.createElement('button');
+  var isMine=(s.id===mwMySeats[busId]);
+  var isSel=(s.id===mwSelSeat[cat]);
+  btn.className='mw-seat '+(isMine?'mine':s.taken?'taken':isSel?'sel':'avail');
+  btn.textContent=s.id;
+  btn.disabled=s.taken&&!isMine;
+  btn.onclick=(function(sid){return function(){mwSelSeat[cat]=sid;mwRenderSeats(cat);mwToast(sid+'번 좌석 선택됨 🟠');};})(s.id);
+  return btn;
+}
+
+function mwRenderSeats(cat){
+  var busId=mwCurBus[cat];
+  mwEnsureSeats(busId);
+  var wrap=document.getElementById('mwsg-'+cat); if(!wrap) return;
+  wrap.innerHTML='';
+  var sd=mwSeatData[busId];
+  var scrollWrap=document.createElement('div');
+  scrollWrap.style.cssText='overflow-x:auto;padding-bottom:8px;';
+  var inner=document.createElement('div');
+  inner.style.cssText='min-width:520px;';
+
+  function makeRow(ids, rightId){
+    var row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:5px;margin-bottom:5px;';
+    ids.forEach(function(id){row.appendChild(mwMakeSeat(sd[id-1],busId,cat));});
+    if(rightId!==undefined){
+      var gap=document.createElement('div'); gap.style.cssText='width:22px;flex-shrink:0;'; row.appendChild(gap);
+      row.appendChild(mwMakeSeat(sd[rightId-1],busId,cat));
+    }
+    return row;
+  }
+
+  inner.appendChild(makeRow([21,23,25,27,29,31,33,35,37,39],40));
+  inner.appendChild(makeRow([22,24,26,28,30,32,34,36,38,40],41));
+
+  var aisleRow=document.createElement('div');
+  aisleRow.style.cssText='display:flex;align-items:center;margin-bottom:5px;';
+  var aisleLbl=document.createElement('div');
+  aisleLbl.style.cssText='width:'+(34*10+5*9)+'px;flex-shrink:0;font-size:10px;color:#bbb;padding-left:2px;display:flex;align-items:center;';
+  aisleLbl.textContent='통로';
+  var aisleGap=document.createElement('div'); aisleGap.style.cssText='width:32px;flex-shrink:0;';
+  aisleRow.appendChild(aisleLbl); aisleRow.appendChild(aisleGap);
+  aisleRow.appendChild(mwMakeSeat(sd[42],busId,cat));
+  inner.appendChild(aisleRow);
+
+  inner.appendChild(makeRow([1,3,5,7,9,11,13,15,17,19],43));
+  inner.appendChild(makeRow([2,4,6,8,10,12,14,16,18,20],44));
+
+  var frontRow=document.createElement('div');
+  frontRow.style.cssText='display:flex;align-items:center;gap:8px;margin-top:6px;padding-top:6px;border-top:1px dashed #e0e0e0;';
+  var arr=document.createElement('div'); arr.style.cssText='font-size:10px;color:#aaa;flex-shrink:0;'; arr.textContent='← 앞';
+  var dseat=document.createElement('div');
+  dseat.style.cssText='padding:5px 14px;background:var(--cp);border:2px solid var(--cl);border-radius:10px;font-size:11px;font-weight:700;color:var(--c);white-space:nowrap;flex-shrink:0;';
+  dseat.textContent='🚌 운전석';
+  frontRow.appendChild(arr); frontRow.appendChild(dseat);
+  inner.appendChild(frontRow);
+  scrollWrap.appendChild(inner); wrap.appendChild(scrollWrap);
+}
+
+function mwBcat(cat, btn){
+  document.querySelectorAll('.mw-bcat').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  document.querySelectorAll('.mw-bsec').forEach(function(s){s.classList.remove('on');});
+  document.getElementById('mwbsec-'+cat).classList.add('on');
+  mwRenderSeats(cat);
+}
+window.mwBcat=mwBcat;
+
+function mwChip(btn, cat, route){
+  document.querySelectorAll('#mwchip-'+cat+' .mw-chip').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var dir=mwCurBus[cat].split('__')[1];
+  mwCurBus[cat]=route+'__'+dir;
+  mwSelSeat[cat]=null;
+  mwRenderSeats(cat);
+}
+window.mwChip=mwChip;
+
+function mwTime(btn, cat, dir){
+  document.querySelectorAll('#mwtime-'+cat+' .mw-tbtn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var route=mwCurBus[cat].split('__')[0];
+  mwCurBus[cat]=route+'__'+dir;
+  mwSelSeat[cat]=null;
+  mwRenderSeats(cat);
+}
+window.mwTime=mwTime;
+
+function mwReserve(cat){
+  var busId=mwCurBus[cat];
+  if(!mwSelSeat[cat]){mwToast('좌석을 먼저 선택하세요.');return;}
+  if(mwMySeats[busId]){mwToast('이미 예약된 좌석이 있습니다.');return;}
+  var seat=mwSelSeat[cat];
+  var overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  var box=document.createElement('div');
+  box.style.cssText='background:#fff;border-radius:18px;padding:28px 22px;width:310px;max-width:92vw;box-shadow:0 10px 40px rgba(0,0,0,.25);';
+  box.innerHTML='<div style="font-size:18px;font-weight:800;color:var(--c);margin-bottom:18px;">✏️ 예약 정보 입력</div>'+
+    '<div style="margin-bottom:12px;"><div style="font-size:13px;color:#555;margin-bottom:5px;">이름</div>'+
+    '<input id="mwrn" type="text" placeholder="홍길동" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid #ddd;border-radius:9px;font-size:15px;outline:none;font-family:inherit;"></div>'+
+    '<div style="margin-bottom:22px;"><div style="font-size:13px;color:#555;margin-bottom:5px;">학번</div>'+
+    '<input id="mwrs" type="text" placeholder="20241234" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid #ddd;border-radius:9px;font-size:15px;outline:none;font-family:inherit;"></div>'+
+    '<div style="display:flex;gap:10px;" id="mw-modal-btns"></div>';
+  var cancelBtn=document.createElement('button');
+  cancelBtn.textContent='취소';
+  cancelBtn.style.cssText='flex:1;padding:12px;border:1.5px solid #ddd;background:#fff;border-radius:9px;font-size:14px;cursor:pointer;font-family:inherit;';
+  cancelBtn.onclick=function(){overlay.remove();};
+  var confirmBtn=document.createElement('button');
+  confirmBtn.textContent='예약 확정';
+  confirmBtn.style.cssText='flex:1;padding:12px;background:#4a148c;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;';
+  confirmBtn.onclick=function(){
+    var name=document.getElementById('mwrn').value.trim();
+    var sid=document.getElementById('mwrs').value.trim();
+    if(!name){alert('이름을 입력해 주세요.');return;}
+    if(!sid){alert('학번을 입력해 주세요.');return;}
+    mwMySeats[busId]=seat; mwSelSeat[cat]=null; overlay.remove();
+    mwRenderSeats(cat); mwToast(seat+'번 예약 완료! ✅');
+    if(window.mwSaveRes) window.mwSaveRes(name,sid,busId,seat);
+    var qd=encodeURIComponent('목원대 셔틀|이름:'+name+'|학번:'+sid+'|노선:'+busId+'|좌석:'+seat+'번');
+    var qrO=document.createElement('div'); qrO.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;';
+    var qrBox=document.createElement('div');
+    qrBox.style.cssText='background:#fff;border-radius:20px;padding:30px 22px;width:300px;max-width:92vw;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.3);';
+    qrBox.innerHTML='<div style="font-size:22px;font-weight:800;color:#4a148c;margin-bottom:4px;">✅ 예약 완료!</div>'+
+      '<div style="font-size:13px;color:#888;margin-bottom:18px;">탑승 시 QR코드를 보여주세요</div>'+
+      '<div style="background:#f5f5f5;border-radius:12px;padding:14px;display:inline-block;margin-bottom:14px;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+qd+'" width="150" height="150" style="display:block;border-radius:6px;"></div>'+
+      '<div style="font-size:17px;font-weight:700;color:#222;margin-bottom:3px;">'+name+'</div>'+
+      '<div style="font-size:13px;color:#999;margin-bottom:3px;">'+sid+'</div>'+
+      '<div style="font-size:14px;color:#4a148c;font-weight:600;margin-bottom:20px;">'+busId.split('__')[0]+' · '+seat+'번 좌석</div>';
+    var closeBtn=document.createElement('button');
+    closeBtn.textContent='확인'; closeBtn.style.cssText='width:100%;padding:13px;background:#4a148c;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;';
+    closeBtn.onclick=function(){qrO.remove();}; qrBox.appendChild(closeBtn); qrO.appendChild(qrBox); document.body.appendChild(qrO);
+  };
+  box.querySelector('#mw-modal-btns').appendChild(cancelBtn);
+  box.querySelector('#mw-modal-btns').appendChild(confirmBtn);
+  overlay.appendChild(box); document.body.appendChild(overlay);
+  setTimeout(function(){var n=document.getElementById('mwrn');if(n)n.focus();},100);
+}
+window.mwReserve=mwReserve;
+
+function mwCancel(cat){
+  var busId=mwCurBus[cat];
+  if(!mwMySeats[busId]){mwToast('취소할 예약이 없습니다.');return;}
+  mwToast(mwMySeats[busId]+'번 예약이 취소됐습니다.');
+  delete mwMySeats[busId]; mwRenderSeats(cat);
+}
+window.mwCancel=mwCancel;
+
+function mwToast(msg){
+  var t=document.getElementById('mw-toast');
+  if(!t){t=document.createElement('div');t.id='mw-toast';t.className='mw-toast';document.body.appendChild(t);}
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('show');},2500);
+}
+
+/* ── Leaflet 지도 ── */
+var MW_MAP=null, MW_RL=null;
+var MW_ROUTES={
+  r1:{name:'1호차·산내·대전역',color:'#6a1b9a',stops:[{lat:36.2932,lng:127.4559,name:'산내소방서 앞'},{lat:36.3317,lng:127.4345,name:'대전역'},{lat:36.3094,lng:127.3349,name:'목원대학교'}]},
+  r2:{name:'2호차·법동·터미널',color:'#8e24aa',stops:[{lat:36.3684,lng:127.3956,name:'법동우체국'},{lat:36.3600,lng:127.4450,name:'대전복합터미널'},{lat:36.3094,lng:127.3349,name:'목원대학교'}]},
+  r3:{name:'3호차·신탄진·전민동',color:'#ab47bc',stops:[{lat:36.4532,lng:127.3911,name:'신탄진역'},{lat:36.3730,lng:127.3620,name:'대덕테크노밸리'},{lat:36.3094,lng:127.3349,name:'목원대학교'}]},
+  r4:{name:'4호차·세종·노은·유성',color:'#7b1fa2',stops:[{lat:36.5017,lng:127.2644,name:'도램마을'},{lat:36.4060,lng:127.3050,name:'반석역'},{lat:36.3780,lng:127.3290,name:'노은역'},{lat:36.3094,lng:127.3349,name:'목원대학교'}]},
+  r5:{name:'5호차·계룡·관저·가수원',color:'#9c27b0',stops:[{lat:36.2739,lng:127.1983,name:'하나로마트앞'},{lat:36.2980,lng:127.2800,name:'진잠4거리'},{lat:36.3080,lng:127.3250,name:'가수원네거리'},{lat:36.3094,lng:127.3349,name:'목원대학교'}]},
+  r6:{name:'6호차·둔산·월평·유성',color:'#ba68c8',stops:[{lat:36.3534,lng:127.3810,name:'샘머리아파트'},{lat:36.3680,lng:127.3290,name:'유성온천역'},{lat:36.3094,lng:127.3349,name:'목원대학교'}]},
+  r7:{name:'7호차·궁동·구암·유성',color:'#ce93d8',stops:[{lat:36.3680,lng:127.3080,name:'유성구청'},{lat:36.3590,lng:127.3260,name:'봉명네거리'},{lat:36.3094,lng:127.3349,name:'목원대학교'}]},
+  ex1:{name:'시외1호·서울',color:'#1565c0',stops:[{lat:37.4848,lng:127.0137,name:'교대역'},{lat:37.3340,lng:127.1093,name:'죽전'},{lat:36.3094,lng:127.3349,name:'목원대학교'}]},
+  ex2:{name:'시외2호·경기',color:'#0d47a1',stops:[{lat:37.2596,lng:127.0009,name:'수원'},{lat:36.9940,lng:127.0927,name:'평택'},{lat:36.3094,lng:127.3349,name:'목원대학교'}]}
+};
+
+function mwDrawRoute(key){
+  if(!MW_MAP) return;
+  if(MW_RL){try{MW_MAP.removeLayer(MW_RL);}catch(e){}MW_RL=null;}
+  var r=MW_ROUTES[key]; if(!r) return;
+  var ll=r.stops.map(function(s){return[s.lat,s.lng];});
+  MW_RL=L.polyline(ll,{color:r.color,weight:5,opacity:.85}).addTo(MW_MAP);
+  MW_MAP.fitBounds(MW_RL.getBounds(),{padding:[30,30]});
+  function mkIcon(c){return L.divIcon({html:'<div style="width:14px;height:14px;border-radius:50%;background:'+c+';border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);"></div>',iconSize:[14,14],iconAnchor:[7,7],className:''});}
+  var f=r.stops[0], la=r.stops[r.stops.length-1];
+  L.marker([f.lat,f.lng],{icon:mkIcon(r.color)}).addTo(MW_MAP).bindPopup('<b>🚌 출발: '+f.name+'</b>');
+  L.marker([la.lat,la.lng],{icon:mkIcon('#e53935')}).addTo(MW_MAP).bindPopup('<b>🏫 도착: '+la.name+'</b>');
+}
+window.mwDrawRoute=mwDrawRoute;
+
+function mwInitMap(){
+  var el=document.getElementById('mw-leaflet-map');
+  if(!el||typeof L==='undefined'){setTimeout(mwInitMap,500);return;}
+  if(MW_MAP){try{MW_MAP.remove();}catch(e){}MW_MAP=null;}
+  MW_MAP=L.map('mw-leaflet-map').setView([36.3094,127.3349],11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(MW_MAP);
+  setTimeout(function(){if(MW_MAP)MW_MAP.invalidateSize();},400);
+  mwDrawRoute('r1');
+}
+
+/* ── 초기화 ── */
+window.addEventListener('load',function(){
+  mwRenderSeats('city');
+  mwRenderSeats('intercity');
+  mwUpdatePanel();
+  setTimeout(mwInitMap,300);
+});
+</script>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app = initializeApp({apiKey:"AIzaSyAp_C6WjPEdjlYfybshFrzT-W0chlMnFrY",authDomain:"navicampus-2cb39.firebaseapp.com",projectId:"navicampus-2cb39",storageBucket:"navicampus-2cb39.firebasestorage.app",messagingSenderId:"683352639087",appId:"1:683352639087:web:668ebb956ef257763daf9a"});
+const db = getFirestore(app);
+window.mwSaveRes = async function(name, sid, busId, seat) {
+  try { await addDoc(collection(db,"reservations"),{name,studentId:sid,busId,seat,school:"목원대학교",createdAt:serverTimestamp()}); } catch(e) { console.error(e); }
+};
+</script>
+
+</body>
+</html>
